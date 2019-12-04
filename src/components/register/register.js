@@ -7,8 +7,13 @@ import {
   MDBCardBody,
   MDBInput,
   MDBBtn,
-  MDBModalFooter
+  MDBModalFooter,
+  MDBSelect,
+  MDBSelectInput,
+  MDBSelectOptions,
+  MDBSelectOption
 } from 'mdbreact';
+import { Dropdown, DropdownButton, ButtonToolbar } from 'react-bootstrap';
 import '../register/register.css';
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/user.action';
@@ -64,97 +69,112 @@ class Register extends React.Component {
         <form className="needs-validation" onSubmit={this.submitHandler}>
           <MDBContainer center>
             <MDBRow>
+              <MDBCol></MDBCol>
+            </MDBRow>
+            <MDBRow>
               <MDBCol className="d-flex justify-content-center">
                 <MDBCard>
                   <MDBCardBody>
-                    <div className="text-center">
-                      <h3 className="dark-grey-text mb-5">
-                        <strong>Đăng Ký</strong>
-                      </h3>
-                    </div>
-                    <MDBInput
-                      label="Tên đăng nhập"
-                      group
-                      type="text"
-                      validate
-                      containerClass="text-left"
-                      name="username"
-                      error="wrong"
-                      success="right"
-                      icon="user"
-                      onChange={this.onChangeHandler}
-                    >
-                      {submitted && !user.username ? (
-                        <div className="invalid-tooltip d-block">
-                          Tên đăng nhập không được bỏ trống
-                        </div>
-                      ) : null}
-
-                      <div className="valid-feedback">Looks good!</div>
-                    </MDBInput>
-                    <MDBInput
-                      label="Email"
-                      group
-                      type="email"
-                      name="email"
-                      validate
-                      containerClass="mb-0 text-left"
-                      icon="envelope"
-                      onChange={this.onChangeHandler}
-                    >
-                      {submitted && !user.email ? (
-                        <div className="invalid-tooltip d-block">
-                          Email không được bỏ trống
-                        </div>
-                      ) : null}
-                    </MDBInput>
-                    <MDBInput
-                      label="Mật khẩu"
-                      group
-                      type="password"
-                      name="password"
-                      validate
-                      containerClass="mb-0 text-left"
-                      icon="lock"
-                      onChange={this.onChangeHandler}
-                    >
-                      {submitted && !user.password ? (
-                        <div className="invalid-tooltip d-block">
-                          Mật khẩu không được bỏ trống
-                        </div>
-                      ) : null}
-                    </MDBInput>
-                    <MDBInput
-                      label="Xác nhận mật khẩu"
-                      group
-                      type="password"
-                      validate
-                      name="password2"
-                      containerClass="mb-0 text-left"
-                      icon="exclamation-triangle"
-                      onChange={this.onChangeHandler}
-                    >
-                      {submitted && !matchedPassword ? (
-                        <div className="invalid-tooltip d-block">
-                          Mật khẩu nhập lại không đúng
-                        </div>
-                      ) : null}
-                    </MDBInput>
-                    <div className="text-center mb-3">
-                      <MDBBtn
-                        type="submit"
-                        gradient="blue"
-                        rounded
-                        className="btn-block z-depth-1a"
+                    <div className="register-body">
+                      <div className="icon-logo">
+                        {/* <img src="https://res.cloudinary.com/dsqfchskj/image/upload/v1575451936/Tutor/Peddagogy_brand_icon_wkh5hk.png"></img> */}
+                      </div>
+                      <div className="text-center">
+                        <h3 className="dark-grey-text mb-5 register-title">
+                          <strong>Đăng Ký</strong>
+                        </h3>
+                      </div>
+                      <MDBInput
+                        label="Tên đăng nhập"
+                        group
+                        type="text"
+                        validate
+                        containerClass="text-left"
+                        name="username"
+                        error="wrong"
+                        success="right"
+                        icon="user"
+                        onChange={this.onChangeHandler}
                       >
-                        Đăng ký
-                        {loading ? (
-                          <div
-                            class="spinner-border spinner-border-sm fast"
-                            role="status"
-                          />
+                        {submitted && !user.username ? (
+                          <div className="invalid-tooltip d-block">
+                            Tên đăng nhập không được bỏ trống
+                          </div>
                         ) : null}
-                      </MDBBtn>
+
+                        <div className="valid-feedback">Looks good!</div>
+                      </MDBInput>
+                      <MDBInput
+                        label="Email"
+                        group
+                        type="email"
+                        name="email"
+                        validate
+                        containerClass="mb-0 text-left"
+                        icon="envelope"
+                        onChange={this.onChangeHandler}
+                      >
+                        {submitted && !user.email ? (
+                          <div className="invalid-tooltip d-block">
+                            Email không được bỏ trống
+                          </div>
+                        ) : null}
+                      </MDBInput>
+                      <MDBInput
+                        label="Mật khẩu"
+                        group
+                        type="password"
+                        name="password"
+                        validate
+                        containerClass="mb-0 text-left"
+                        icon="lock"
+                        onChange={this.onChangeHandler}
+                      >
+                        {submitted && !user.password ? (
+                          <div className="invalid-tooltip d-block">
+                            Mật khẩu không được bỏ trống
+                          </div>
+                        ) : null}
+                      </MDBInput>
+                      <MDBInput
+                        label="Xác nhận mật khẩu"
+                        group
+                        type="password"
+                        validate
+                        name="password2"
+                        containerClass="mb-0 text-left"
+                        icon="exclamation-triangle"
+                        onChange={this.onChangeHandler}
+                      >
+                        {submitted && !matchedPassword ? (
+                          <div className="invalid-tooltip d-block">
+                            Mật khẩu nhập lại không đúng
+                          </div>
+                        ) : null}
+                      </MDBInput>
+
+                      <select class="custom-select mb-5">
+                        <option selected>Chọn loại tài khoản</option>
+                        <option value="1">Học sinh</option>
+                        <option value="2">Gia sư</option>
+                      </select>
+
+                      <div className="text-center mb-3 mt-3">
+                        <MDBBtn
+                          type="submit"
+                          gradient="blue"
+                          rounded
+                          className="btn-block z-depth-1a"
+                        >
+                          Đăng ký
+                          {loading ? (
+                            <div
+                              class="spinner-border spinner-border-sm fast"
+                              role="status"
+                            />
+                          ) : null}
+                        </MDBBtn>
+                      </div>
                     </div>
                   </MDBCardBody>
                   <MDBModalFooter className="mx-5 pt-3 mb-1">
