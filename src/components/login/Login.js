@@ -26,7 +26,8 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
-      submitted: false
+      submitted: false,
+      loading: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,10 +57,18 @@ class Login extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ loading: false });
+  }
+
   render() {
-    const { submitted, username, password } = this.state;
+    const { submitted, username, password, loading } = this.state;
     const { loggingIn } = this.props;
 
+    if (loading) {
+      // if your component doesn't have to wait for an async action, remove this block
+      return null; // render null when app is not ready
+    }
     return (
       <div>
         <div>

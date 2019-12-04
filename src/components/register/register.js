@@ -30,7 +30,8 @@ class Register extends React.Component {
         password2: ''
       },
       matchedPassword: false,
-      submitted: false
+      submitted: false,
+      loading: true
     };
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -61,9 +62,16 @@ class Register extends React.Component {
       this.props.register(user);
     }
   }
+  componentDidMount() {
+    this.setState({ loading: false });
+  }
   render() {
-    const { user, submitted, matchedPassword } = this.state;
-    const { loading } = this.props;
+    const { user, submitted, matchedPassword, loading } = this.state;
+    const { isloading } = this.props;
+    if (loading) {
+      // if your component doesn't have to wait for an async action, remove this block
+      return null; // render null when app is not ready
+    }
     return (
       <div>
         <form className="needs-validation" onSubmit={this.submitHandler}>
@@ -167,7 +175,7 @@ class Register extends React.Component {
                           className="btn-block z-depth-1a"
                         >
                           Đăng ký
-                          {loading ? (
+                          {isloading ? (
                             <div
                               class="spinner-border spinner-border-sm fast"
                               role="status"

@@ -14,6 +14,7 @@ import { MDBContainer, MDBAlert, MDBNotification } from 'mdbreact';
 import { alertActions } from './actions/alert.action';
 import { connect } from 'react-redux';
 import { PrivateRoute } from './components/privateRoute/PrivateRoute';
+import { MDBSpinner } from 'mdbreact';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class App extends React.Component {
       console.log('history change');
     });
   }
+
   render() {
     const { alert } = this.props;
 
@@ -36,6 +38,11 @@ class App extends React.Component {
             {alert.message}
           </MDBAlert>
         )}
+
+        {/* <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div> */}
+
         <Router history={history}>
           <div className="main-route-place">
             <Switch>
