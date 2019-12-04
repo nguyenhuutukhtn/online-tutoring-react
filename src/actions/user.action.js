@@ -1,12 +1,9 @@
 import { userConstants } from '../constants/user.constants';
 import { userApis } from '../apis/user.api';
-import { alertActions } from '../actions/alert.action';
+import { alertActions } from "./alert.action";
 import { history } from '../helpers/history';
 
-export const userActions = {
-  register,
-  login
-};
+
 
 function register(user) {
   return dispatch => {
@@ -20,7 +17,7 @@ function register(user) {
         window.location.reload();
       },
       error => {
-        console.log('xxxxxxxxxx' + error);
+        console.log(`xxxxxxxxxx${error}`);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
@@ -51,20 +48,70 @@ function login(username, password) {
         window.location.reload();
       },
       error => {
-        console.log('xxxxxxxxxx' + error);
+        console.log(`xxxxxxxxxx${error}`);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
     );
   };
-
-  function request(username, password) {
-    return { type: userConstants.LOGIN_REQUEST, username, password };
-  }
-  function success(userInfo) {
-    return { type: userConstants.LOGIN_SUCCESS, userInfo };
-  }
-  function failure(error) {
-    return { type: userConstants.LOGIN_FAILURE, error };
-  }
 }
+
+function loginFB(name, fbId) {
+  return dispatch => {
+    dispatch(request(name, fbId));
+
+    userApis.loginFB(name, fbId).then(
+      userInfo => {
+        console.log(userInfo);
+        dispatch(success());
+        history.push('/');
+        dispatch(alertActions.success('Đăng nhập thành công'));
+        window.location.reload();
+      },
+      error => {
+        console.log(`xxxxxxxxxx${error}`);
+        dispatch(failure(error));
+        dispatch(alertActions.error(error));
+      }
+    );
+  };
+}
+
+function loginGG(name, googleId) {
+  return dispatch => {
+    dispatch(request(name, googleId));
+
+    userApis.loginGG(name, googleId).then(
+      userInfo => {
+        console.log(userInfo);
+        dispatch(success());
+        history.push('/');
+        dispatch(alertActions.success('Đăng nhập thành công'));
+        window.location.reload();
+      },
+      error => {
+        console.log(`xxxxxxxxxx${error}`);
+        dispatch(failure(error));
+        dispatch(alertActions.error(error));
+      }
+    );
+  };
+}
+
+function request(username, password) {
+  return { type: userConstants.LOGIN_REQUEST, username, password };
+}
+function success(userInfo) {
+  return { type: userConstants.LOGIN_SUCCESS, userInfo };
+}
+function failure(error) {
+  return { type: userConstants.LOGIN_FAILURE, error };
+}
+
+
+export const userActions = {
+  register,
+  login,
+  loginFB,
+  loginGG
+};

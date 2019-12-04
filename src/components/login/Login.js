@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/user.action';
 import { history } from '../../helpers/history';
+import Facebook from './Facebook';
+import Google from './Google';
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class Login extends React.Component {
     // this.props.logout();
 
     this.state = {
-      username: '',
+      email: '',
       password: '',
       submitted: false,
       loading: true
@@ -43,14 +45,14 @@ class Login extends React.Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { username, password } = this.state;
-    if (username && password) {
-      this.props.login(username, password);
+    const { email, password } = this.state;
+    if (email && password) {
+      this.props.login(email, password);
     }
   }
 
   checkLogin() {
-    var userInfo = localStorage.getItem('userInfo');
+    const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
       history.push('/');
       window.location.reload();
@@ -62,7 +64,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { submitted, username, password, loading } = this.state;
+    const { submitted, email, password, loading } = this.state;
     const { loggingIn } = this.props;
 
     if (loading) {
@@ -79,23 +81,23 @@ class Login extends React.Component {
                   <MDBCard>
                     <MDBCardBody>
                       <div className="login-con">
-                        <div className="icon-user"></div>
+                        <div className="icon-user" />
                         <div className="text-center">
                           <h3 className="dark-grey-text mb-5 login-title">
                             <strong>Đăng nhập</strong>
                           </h3>
                         </div>
                         <MDBInput
-                          label="Tên đăng nhập"
+                          label="Email"
                           group
-                          type="text"
+                          type="email"
                           validate
                           error="wrong"
                           success="right"
-                          name="username"
+                          name="email"
                           onChange={this.handleChange}
                         >
-                          {submitted && !username ? (
+                          {submitted && !email ? (
                             <div className="invalid-tooltip d-block">
                               Tên đăng nhập không được bỏ trống
                             </div>
@@ -140,33 +142,10 @@ class Login extends React.Component {
                         <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
                           Hoặc đăng nhập với:
                         </p>
-                        <div className="row my-3 d-flex justify-content-center">
-                          <MDBBtn
-                            type="button"
-                            color="white"
-                            rounded
-                            className="mr-md-3 z-depth-1a"
-                          >
-                            <MDBIcon
-                              fab
-                              icon="facebook-f"
-                              className="blue-text text-center"
-                            />
-                          </MDBBtn>
-
-                          <MDBBtn
-                            type="button"
-                            color="white"
-                            rounded
-                            className="z-depth-1a"
-                          >
-                            <MDBIcon
-                              fab
-                              icon="google-plus-g"
-                              className="blue-text"
-                            />
-                          </MDBBtn>
-                        </div>
+                        <Facebook />
+                        <br />
+                        <Google />
+                        <div className="row my-3 d-flex justify-content-center" />
                       </div>
                     </MDBCardBody>
                     <MDBModalFooter className="mx-5 pt-3 mb-1">
