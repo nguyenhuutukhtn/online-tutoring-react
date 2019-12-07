@@ -31,7 +31,7 @@ class Register extends React.Component {
       },
       matchedPassword: false,
       submitted: false,
-      loading: true
+      rendering: true
     };
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -63,12 +63,12 @@ class Register extends React.Component {
     }
   }
   componentDidMount() {
-    this.setState({ loading: false });
+    this.setState({ rendering: false });
   }
   render() {
-    const { user, submitted, matchedPassword, loading } = this.state;
-    const { isloading } = this.props;
-    if (loading) {
+    const { user, submitted, matchedPassword, rendering } = this.state;
+    const { loading } = this.props;
+    if (rendering) {
       // if your component doesn't have to wait for an async action, remove this block
       return null; // render null when app is not ready
     }
@@ -175,7 +175,7 @@ class Register extends React.Component {
                           className="btn-block z-depth-1a"
                         >
                           Đăng ký
-                          {isloading ? (
+                          {loading ? (
                             <div
                               class="spinner-border spinner-border-sm fast"
                               role="status"
