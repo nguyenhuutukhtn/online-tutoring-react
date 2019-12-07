@@ -3,7 +3,9 @@ import { constantApi } from './constants.api';
 
 export const userApis = {
   register,
-  login
+  login,
+  loginFB,
+  loginGG
 };
 
 function register(user) {
@@ -13,7 +15,7 @@ function register(user) {
     body: JSON.stringify(user)
   };
 
-  return fetch(constantApi.url + `/user/register`, requestOptions)
+  return fetch(`${constantApi.url}/users/register`, requestOptions)
     .then(handleResponse)
     .then(user => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -23,15 +25,51 @@ function register(user) {
     });
 }
 
-function login(username, password) {
+function login(email, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ email, password })
   };
-  console.log('request: ' + requestOptions);
+  console.log(`request: ${requestOptions}`);
 
-  return fetch(constantApi.url + `/user/login`, requestOptions)
+  return fetch(`${constantApi.url}/users/login`, requestOptions)
+    .then(handleResponse)
+    .then(userInfo => {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+      return userInfo;
+    });
+}
+
+function loginFB(name, fbId) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, fbId })
+  };
+  console.log(`request: ${requestOptions}`);
+
+  return fetch(`${constantApi.url}/users/loginFB`, requestOptions)
+    .then(handleResponse)
+    .then(userInfo => {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+      return userInfo;
+    });
+}
+
+function loginGG(name, googleId) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, googleId })
+  };
+  console.log(`request: ${requestOptions}`);
+
+  return fetch(`${constantApi.url}/users/loginGG`, requestOptions)
     .then(handleResponse)
     .then(userInfo => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -44,7 +82,7 @@ function login(username, password) {
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
-    console.log('aaaaaaaaaaaaaaaaaaa' + data);
+    console.log(`aaaaaaaaaaaaaaaaaaa${data}`);
     if (!response.ok) {
       if (response.status === 401) {
         // auto logout if 401 response returned from api

@@ -14,7 +14,7 @@ import {
   MDBSelectOption
 } from 'mdbreact';
 import { Dropdown, DropdownButton, ButtonToolbar } from 'react-bootstrap';
-import '../register/register.css';
+import './register.css';
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/user.action';
 
@@ -24,7 +24,7 @@ class Register extends React.Component {
 
     this.state = {
       user: {
-        username: '',
+        name: '',
         email: '',
         password: '',
         password2: ''
@@ -36,6 +36,10 @@ class Register extends React.Component {
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ loading: false });
   }
 
   onChangeHandler(event) {
@@ -58,7 +62,7 @@ class Register extends React.Component {
       submitted: true
     });
     const { user } = this.state;
-    if (user.username && user.email && user.password && user.password2) {
+    if (user.name && user.email && user.password && user.password2) {
       this.props.register(user);
     }
   }
@@ -77,7 +81,7 @@ class Register extends React.Component {
         <form className="needs-validation" onSubmit={this.submitHandler}>
           <MDBContainer center>
             <MDBRow>
-              <MDBCol></MDBCol>
+              <MDBCol />
             </MDBRow>
             <MDBRow>
               <MDBCol className="d-flex justify-content-center">
@@ -92,26 +96,7 @@ class Register extends React.Component {
                           <strong>Đăng Ký</strong>
                         </h3>
                       </div>
-                      <MDBInput
-                        label="Tên đăng nhập"
-                        group
-                        type="text"
-                        validate
-                        containerClass="text-left"
-                        name="username"
-                        error="wrong"
-                        success="right"
-                        icon="user"
-                        onChange={this.onChangeHandler}
-                      >
-                        {submitted && !user.username ? (
-                          <div className="invalid-tooltip d-block">
-                            Tên đăng nhập không được bỏ trống
-                          </div>
-                        ) : null}
 
-                        <div className="valid-feedback">Looks good!</div>
-                      </MDBInput>
                       <MDBInput
                         label="Email"
                         group
@@ -161,10 +146,35 @@ class Register extends React.Component {
                         ) : null}
                       </MDBInput>
 
-                      <select class="custom-select mb-5">
+                      <MDBInput
+                        label="Tên Người Dùng"
+                        group
+                        type="text"
+                        validate
+                        containerClass="text-left"
+                        name="name"
+                        error="wrong"
+                        success="right"
+                        icon="user"
+                        onChange={this.onChangeHandler}
+                      >
+                        {submitted && !user.name ? (
+                          <div className="invalid-tooltip d-block">
+                            Tên người dùng không được bỏ trống
+                          </div>
+                        ) : null}
+
+                        <div className="valid-feedback">Looks good!</div>
+                      </MDBInput>
+
+                      <select
+                        className="custom-select mb-5"
+                        name="role"
+                        onChange={this.onChangeHandler}
+                      >
                         <option selected>Chọn loại tài khoản</option>
-                        <option value="1">Học sinh</option>
-                        <option value="2">Gia sư</option>
+                        <option value="student">Học sinh</option>
+                        <option value="tutor">Gia sư</option>
                       </select>
 
                       <div className="text-center mb-3 mt-3">
@@ -177,7 +187,7 @@ class Register extends React.Component {
                           Đăng ký
                           {loading ? (
                             <div
-                              class="spinner-border spinner-border-sm fast"
+                              className="spinner-border spinner-border-sm fast"
                               role="status"
                             />
                           ) : null}
