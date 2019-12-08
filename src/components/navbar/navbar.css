@@ -1,0 +1,11 @@
+.navbar {
+  background: white;
+}
+.nav-link {
+  font-weight: bold;
+  color: dodgerblue;
+}
+
+.nav-item {
+  padding-left: 40px;
+}

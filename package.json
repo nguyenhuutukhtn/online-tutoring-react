@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.24.3",
     "bootstrap": "^4.3.1",
+    "classnames": "^2.2.6",
     "history": "^4.10.1",
     "mdbootstrap": "^4.8.11",
     "mdbreact": "^4.22.0",
@@ -18,7 +19,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.2.0",
     "react-scroll-to-component": "^1.0.2",
-    "reactstrap": "^8.1.1",
+    "reactstrap": "^8.2.0",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

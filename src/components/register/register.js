@@ -17,6 +17,7 @@ import { Dropdown, DropdownButton, ButtonToolbar } from 'react-bootstrap';
 import './register.css';
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/user.action';
+import CommonNavbar from '../navbar/CommonNavbar';
 
 class Register extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ class Register extends React.Component {
     }
     return (
       <div>
+        <CommonNavbar />
         <form className="needs-validation" onSubmit={this.submitHandler}>
           <MDBContainer center>
             <MDBRow>

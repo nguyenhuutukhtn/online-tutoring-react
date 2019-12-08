@@ -17,13 +17,6 @@
     0 4px 15px 0 rgba(36, 133, 255, 0.15);
 }
 
-.login-body {
-  /* margin: auto; */
-  /* width: 50%; */
-  /* border: 3px solid green; */
-  /* padding: 10px; */
-}
-
 div.icon-user {
   width: 120px;
   height: 120px;
@@ -37,15 +30,27 @@ div.icon-user {
 div.login-con {
   width: 450px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 60px;
   overflow: auto;
 }
 
 .login-title {
   width: 100%;
   height: 40px;
-  margin-top: 70px;
+  margin-top: 30px;
 }
 div.login-title strong {
-  margin-top: 20px;
+  margin-top: 0px;
+}
+
+div.title {
+  margin-top: 62px;
+}
+
+.card {
+  margin-top: 74px;
+}
+
+.page-header {
+  background: white;
 }
