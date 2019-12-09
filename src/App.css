@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: #f5f6f8;
 }
 
 .App-logo {
@@ -19,4 +20,8 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.main-route-place {
+  margin-top: 70px;
 }

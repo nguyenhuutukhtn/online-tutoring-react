@@ -1,12 +1,8 @@
-.profile-page {
-  background: #f2f3f5;
-}
-
-.main-profile {
-  margin-top: 75px;
-}
-
 .page-title {
   background: white;
   padding-top: 10px;
+}
+
+.card-header-title {
+  background: #0072bc;
 }

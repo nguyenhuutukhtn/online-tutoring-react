@@ -74,7 +74,6 @@ class Login extends React.Component {
     }
     return (
       <>
-        <CommonNavbar />
         <div className="page-header">
           <div>
             <div>

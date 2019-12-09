@@ -13,12 +13,15 @@ import UserAccountDetails from './components/profile/UserAccountDetails';
 import UserProfileLite from './components/profile/UserProfileLite';
 import PageTitle from './components/page-title/PageTitle';
 import Register from './components/register/register';
+import Home from './components/home/Home';
 import { history } from './helpers/history';
 import { MDBContainer, MDBAlert, MDBNotification } from 'mdbreact';
 import { alertActions } from './actions/alert.action';
 import { connect } from 'react-redux';
 import { PrivateRoute } from './components/privateRoute/PrivateRoute';
 import { MDBSpinner } from 'mdbreact';
+import CommonNavbar from './components/navbar/CommonNavbar';
+import Footer from './components/footer/Footer';
 
 class App extends React.Component {
   constructor(props) {
@@ -48,6 +51,7 @@ class App extends React.Component {
         </div> */}
 
         <Router history={history}>
+          <CommonNavbar />
           <div className="main-route-place">
             <Switch>
               <Route path="/register" component={Register} />
@@ -59,10 +63,12 @@ class App extends React.Component {
               />
               <Route path="/page-title" component={PageTitle} />
               <Route path="/profile" component={UserProfileLite} />
+              <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
             </Switch>
           </div>
+          <Footer />
         </Router>
       </div>
     );

@@ -22,13 +22,16 @@ import {
   FormLabel,
   Checkbox
 } from '@material-ui/core';
+import './profile.css';
 
 // import { KeyboardDatePicker } from '@material-ui/pickers';
 
 const UserAccountDetails = ({ title }) => (
   <Card small className="mb-4 mt-5">
-    <Card.Header className="border-bottom">
-      <h6 className="m-0">{title}</h6>
+    <Card.Header className="border-bottom card-header-title">
+      <h6 className="m-0" color="white">
+        {title}
+      </h6>
     </Card.Header>
     <ListGroup flush>
       <ListGroupItem className="p-3">

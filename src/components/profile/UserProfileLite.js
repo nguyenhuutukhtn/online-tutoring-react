@@ -7,8 +7,7 @@ import UserAccountDetails from '../profile/UserAccountDetails';
 import CommonNavbar from '../navbar/CommonNavbar';
 
 const UserProfileLite = () => (
-  <div className="mx-auto border border-dark profile-page">
-    <CommonNavbar />
+  <div className="mx-auto profile-page">
     <Container className="main-content-container main-profile" expand="lg">
       <Row className="page-header">
         <PageTitle

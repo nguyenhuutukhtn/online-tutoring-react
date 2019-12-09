@@ -79,7 +79,6 @@ class Register extends React.Component {
     }
     return (
       <div>
-        <CommonNavbar />
         <form
           className="needs-validation"
           className="main-page"
