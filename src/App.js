@@ -8,6 +8,10 @@ import {
   Switch
 } from 'react-router-dom';
 import Login from './components/login/Login';
+import UserDetails from './components/profile/UserDetails';
+import UserAccountDetails from './components/profile/UserAccountDetails';
+import UserProfileLite from './components/profile/UserProfileLite';
+import PageTitle from './components/page-title/PageTitle';
 import Register from './components/register/register';
 import { history } from './helpers/history';
 import { MDBContainer, MDBAlert, MDBNotification } from 'mdbreact';
@@ -48,6 +52,14 @@ class App extends React.Component {
             <Switch>
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
+              <Route path="/user-detail" component={UserDetails} />
+              <Route
+                path="/user-account-detail"
+                component={UserAccountDetails}
+              />
+              <Route path="/page-title" component={PageTitle} />
+              <Route path="/profile" component={UserProfileLite} />
+
               <Redirect from="*" to="/" />
             </Switch>
           </div>

@@ -80,7 +80,11 @@ class Register extends React.Component {
     return (
       <div>
         <CommonNavbar />
-        <form className="needs-validation" onSubmit={this.submitHandler}>
+        <form
+          className="needs-validation"
+          className="main-page"
+          onSubmit={this.submitHandler}
+        >
           <MDBContainer center>
             <MDBRow>
               <MDBCol />
