@@ -1,9 +1,7 @@
 import { userConstants } from '../constants/user.constants';
 import { userApis } from '../apis/user.api';
-import { alertActions } from "./alert.action";
+import { alertActions } from './alert.action';
 import { history } from '../helpers/history';
-
-
 
 function register(user) {
   return dispatch => {
@@ -108,10 +106,25 @@ function failure(error) {
   return { type: userConstants.LOGIN_FAILURE, error };
 }
 
-
+function updateAvatar(id, avatarUrl) {
+  return dispatch => {
+    userApis
+      .updateAvatar(id, avatarUrl)
+      .then(data => {
+        console.log('data---------', data);
+        dispatch(alertActions.success('Cập nhật ảnh đại diện thành công'));
+      })
+      .catch(error => {
+        console.log('err-------', error);
+        dispatch(failure(error));
+        dispatch(alertActions.error(error));
+      });
+  };
+}
 export const userActions = {
   register,
   login,
   loginFB,
-  loginGG
+  loginGG,
+  updateAvatar
 };
