@@ -14,6 +14,8 @@ import UserProfileLite from './components/profile/UserProfileLite';
 import PageTitle from './components/page-title/PageTitle';
 import Register from './components/register/register';
 import Home from './components/home/Home';
+import TutorItem from './components/tutor/TutorItem';
+import ListTutor from './components/tutor/ListTutor';
 import { history } from './helpers/history';
 import { MDBContainer, MDBAlert, MDBNotification } from 'mdbreact';
 import { alertActions } from './actions/alert.action';
@@ -40,17 +42,12 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        {alert.message && (
-          <MDBAlert className={`alert text-center ${alert.type}`}>
-            {alert.message}
-          </MDBAlert>
-        )}
-
-        {/* <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div> */}
-
         <Router history={history}>
+          {alert.message && (
+            <MDBAlert className={`alert text-center ${alert.type}`}>
+              {alert.message}
+            </MDBAlert>
+          )}
           <CommonNavbar />
           <div className="main-route-place">
             <Switch>
@@ -63,6 +60,8 @@ class App extends React.Component {
               />
               <Route path="/page-title" component={PageTitle} />
               <Route path="/profile" component={UserProfileLite} />
+              <Route path="/tutor-item" component={TutorItem} />
+              <Route path="/list-tutor" component={ListTutor} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />

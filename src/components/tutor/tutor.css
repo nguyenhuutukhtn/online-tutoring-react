@@ -1,0 +1,13 @@
+.page-title {
+  background: white;
+  padding-top: 10px;
+}
+
+.card-header-title {
+  background: #0072bc;
+}
+
+.MuiButton-root {
+  background: #007bff;
+  color: #007bff;
+}
