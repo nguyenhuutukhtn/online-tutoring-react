@@ -1,4 +1,4 @@
 import { createBrowserHistory } from 'history';
-import { browserHistory } from 'react-router';
 
-export const history = createBrowserHistory();
+const history = createBrowserHistory();
+export default history;

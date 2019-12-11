@@ -7,17 +7,11 @@ import {
   MDBCardBody,
   MDBInput,
   MDBBtn,
-  MDBModalFooter,
-  MDBSelect,
-  MDBSelectInput,
-  MDBSelectOptions,
-  MDBSelectOption
+  MDBModalFooter
 } from 'mdbreact';
-import { Dropdown, DropdownButton, ButtonToolbar } from 'react-bootstrap';
-import './register.css';
 import { connect } from 'react-redux';
-import { userActions } from '../../actions/user.action';
-import CommonNavbar from '../navbar/CommonNavbar';
+import './register.css';
+import userActions from '../../actions/user.action';
 
 class Register extends React.Component {
   constructor(props) {
@@ -40,7 +34,7 @@ class Register extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ loading: false });
+    this.setState({ rendering: false });
   }
 
   onChangeHandler(event) {
@@ -63,13 +57,12 @@ class Register extends React.Component {
       submitted: true
     });
     const { user } = this.state;
+    const { register } = this.props;
     if (user.name && user.email && user.password && user.password2) {
-      this.props.register(user);
+      register(user);
     }
   }
-  componentDidMount() {
-    this.setState({ rendering: false });
-  }
+
   render() {
     const { user, submitted, matchedPassword, rendering } = this.state;
     const { loading } = this.props;
@@ -80,8 +73,7 @@ class Register extends React.Component {
     return (
       <div>
         <form
-          className="needs-validation"
-          className="main-page"
+          className="needs-validation main-page"
           onSubmit={this.submitHandler}
         >
           <MDBContainer center>

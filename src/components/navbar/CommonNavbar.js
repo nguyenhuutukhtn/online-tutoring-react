@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // nodejs library that concatenates strings
 import classnames from 'classnames';
-import './navbar.css';
-
-// reactstrap components
 import {
   Collapse,
   NavbarBrand,
@@ -14,9 +11,12 @@ import {
   Nav,
   Container
 } from 'reactstrap';
+import './navbar.css';
+
+// reactstrap components
 
 function CommonNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState('navbar-blue');
+  const [setNavbarColor] = React.useState('navbar-blue');
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
 
   const toggleNavbarCollapse = () => {
@@ -65,6 +65,7 @@ function CommonNavbar() {
             />
           </NavbarBrand>
           <button
+            type="button"
             aria-expanded={navbarCollapse}
             className={classnames('navbar-toggler navbar-toggler', {
               toggled: navbarCollapse

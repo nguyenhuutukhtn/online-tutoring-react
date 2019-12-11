@@ -1,6 +1,6 @@
-import { userConstants } from '../constants/user.constants';
+import userConstants from '../constants/user.constants';
 
-export function users(state = {}, action) {
+const users = (state = {}, action) => {
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
       return {
@@ -45,4 +45,6 @@ export function users(state = {}, action) {
     default:
       return state;
   }
-}
+};
+
+export default users;
