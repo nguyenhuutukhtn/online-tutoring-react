@@ -80,8 +80,8 @@ export default class TutorItem extends React.Component {
               variant="determinate"
               className="progress-sm"
               now={userDetails.successfullyRatio}
-              label={userDetails.successfullyRatio + '%'}
-            ></ProgressBar>
+              label={`${userDetails.successfullyRatio}%`}
+            />
 
             <span>{userDetails.metaValue}</span>
           </ListGroupItem>
