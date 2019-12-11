@@ -2,14 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button, makeStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { userActions } from '../../actions/user.action';
+
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-export default class UserDetails extends React.Component {
+class UserDetails extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       userDetails: {
+        id: '1',
         name: 'Nguyễn Hữu Tú',
         avatar: 'https://placeimg.com/640/480/any',
         jobTitle: 'Gia sư cấp 3',
@@ -47,6 +51,10 @@ export default class UserDetails extends React.Component {
     }
   };
 
+  uploadAvatar = () => {
+    const { id, avatar } = this.state.userDetails;
+    this.props.updateAvatar(id, avatar);
+  };
   render() {
     const { userDetails } = this.state;
     return (
@@ -69,8 +77,18 @@ export default class UserDetails extends React.Component {
             variant="contained"
             color="default"
             // className={classes.button}
-            startIcon={<CloudUploadIcon />}
             onClick={this.showWidget}
+          >
+            Choose Image
+          </Button>
+          <br></br>
+          <Button
+            className="mt-3"
+            variant="contained"
+            color="default"
+            // className={classes.button}
+            startIcon={<CloudUploadIcon />}
+            onClick={this.uploadAvatar}
           >
             Upload
           </Button>
@@ -97,3 +115,17 @@ UserDetails.propTypes = {
    */
   userDetails: PropTypes.object
 };
+
+const actionCreators = {
+  updateAvatar: userActions.updateAvatar
+};
+function mapState(state) {
+  const { loggingIn } = state.login;
+  return { loggingIn };
+}
+const connectedUserDetailPage = connect(
+  mapState,
+  actionCreators
+)(UserDetails);
+
+export default connectedUserDetailPage;

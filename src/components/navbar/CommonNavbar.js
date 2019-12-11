@@ -46,7 +46,7 @@ function CommonNavbar() {
     };
   });
   return (
-    <Navbar className="fixed-top navbar" expand="lg">
+    <Navbar className="navbar" expand="lg">
       <Container>
         <div className="navbar-translate">
           <NavbarBrand

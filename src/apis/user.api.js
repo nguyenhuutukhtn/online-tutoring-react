@@ -5,7 +5,8 @@ export const userApis = {
   register,
   login,
   loginFB,
-  loginGG
+  loginGG,
+  updateAvatar
 };
 
 function register(user) {
@@ -79,6 +80,18 @@ function loginGG(name, googleId) {
     });
 }
 
+function updateAvatar(id, avatarUrl) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, avatarUrl })
+  };
+  return fetch(`${constantApi.url}/tutor/uploadAvatar`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
