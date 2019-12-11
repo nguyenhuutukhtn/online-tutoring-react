@@ -1,23 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Card,
-  CardHeader,
   ListGroup,
   ListGroupItem,
   Row,
   Col,
   Form,
-  FormGroup,
-  FormSelect,
-  FormTextarea,
   Button
 } from 'react-bootstrap';
 import {
   FormControl,
   TextField,
   FormControlLabel,
-  RadioGroup,
   Radio,
   FormLabel,
   Checkbox
@@ -27,13 +21,16 @@ import './profile.css';
 // import { KeyboardDatePicker } from '@material-ui/pickers';
 
 class UserAccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const { title } = this.props;
     return (
       <Card small className="mb-4 mt-5">
         <Card.Header className="border-bottom card-header-title">
           <h6 className="m-0" color="white">
-            {title}
+            Cập nhật thông tin
           </h6>
         </Card.Header>
         <ListGroup flush>
@@ -188,19 +185,5 @@ class UserAccountDetails extends React.Component {
     );
   }
 }
-// const UserAccountDetails = ({ title }) => (
-
-// );
-
-UserAccountDetails.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string
-};
-
-UserAccountDetails.defaultProps = {
-  title: 'Cập nhật thông tin'
-};
 
 export default UserAccountDetails;

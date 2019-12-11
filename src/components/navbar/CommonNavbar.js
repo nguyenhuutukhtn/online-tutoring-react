@@ -16,7 +16,6 @@ import './navbar.css';
 // reactstrap components
 
 function CommonNavbar() {
-  const [setNavbarColor] = React.useState('navbar-blue');
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
 
   const toggleNavbarCollapse = () => {
@@ -24,27 +23,6 @@ function CommonNavbar() {
     document.documentElement.classList.toggle('nav-open');
   };
 
-  React.useEffect(() => {
-    const updateNavbarColor = () => {
-      if (
-        document.documentElement.scrollTop > 299 ||
-        document.body.scrollTop > 299
-      ) {
-        setNavbarColor('');
-      } else if (
-        document.documentElement.scrollTop < 300 ||
-        document.body.scrollTop < 300
-      ) {
-        setNavbarColor('navbar-transparent');
-      }
-    };
-
-    window.addEventListener('scroll', updateNavbarColor);
-
-    return function cleanup() {
-      window.removeEventListener('scroll', updateNavbarColor);
-    };
-  });
   return (
     <Navbar className="navbar" expand="lg">
       <Container>
