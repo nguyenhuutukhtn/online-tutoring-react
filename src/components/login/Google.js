@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
-import { userActions } from '../../actions/user.action';
 import { MDBBtn, MDBIcon } from 'mdbreact';
+import userActions from '../../actions/user.action';
 
 class Google extends Component {
   responseGoogle = res => {
-    this.props.loginGG(res.w3.ig, res.w3.Eea);
+    const { loginGG } = this.props;
+    loginGG(res.w3.ig, res.w3.Eea);
   };
 
   responseGoogleFailed = res => {

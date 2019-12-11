@@ -1,36 +1,30 @@
-import { userConstants } from '../constants/user.constants';
-import { userApis } from '../apis/user.api';
-import { alertActions } from './alert.action';
-import { history } from '../helpers/history';
+import userApis from '../apis/user.api';
+import alertActions from './alert.action';
+import history from '../helpers/history';
+import { request, success, failure } from './login.actions';
+import {
+  requestRegister,
+  successRegister,
+  failureRegister
+} from './register.actions';
 
 function register(user) {
   return dispatch => {
-    dispatch(request(user));
+    dispatch(requestRegister(user));
 
     userApis.register(user).then(
-      user => {
-        dispatch(success());
+      () => {
+        dispatch(successRegister());
         history.push('/');
         dispatch(alertActions.success('Đăng ký tài khoản thành công'));
         window.location.reload();
       },
       error => {
-        console.log(`xxxxxxxxxx${error}`);
-        dispatch(failure(error));
+        dispatch(failureRegister(error));
         dispatch(alertActions.error(error));
       }
     );
   };
-
-  function request(user) {
-    return { type: userConstants.REGISTER_REQUEST, user };
-  }
-  function success(user) {
-    return { type: userConstants.REGISTER_SUCCESS, user };
-  }
-  function failure(error) {
-    return { type: userConstants.REGISTER_FAILURE, error };
-  }
 }
 
 function login(username, password) {
@@ -38,15 +32,13 @@ function login(username, password) {
     dispatch(request(username, password));
 
     userApis.login(username, password).then(
-      userInfo => {
-        console.log(userInfo);
+      () => {
         dispatch(success());
         history.push('/');
         dispatch(alertActions.success('Đăng nhập thành công'));
         window.location.reload();
       },
       error => {
-        console.log(`xxxxxxxxxx${error}`);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
@@ -59,15 +51,13 @@ function loginFB(name, fbId) {
     dispatch(request(name, fbId));
 
     userApis.loginFB(name, fbId).then(
-      userInfo => {
-        console.log(userInfo);
+      () => {
         dispatch(success());
         history.push('/');
         dispatch(alertActions.success('Đăng nhập thành công'));
         window.location.reload();
       },
       error => {
-        console.log(`xxxxxxxxxx${error}`);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
@@ -80,30 +70,18 @@ function loginGG(name, googleId) {
     dispatch(request(name, googleId));
 
     userApis.loginGG(name, googleId).then(
-      userInfo => {
-        console.log(userInfo);
+      () => {
         dispatch(success());
         history.push('/');
         dispatch(alertActions.success('Đăng nhập thành công'));
         window.location.reload();
       },
       error => {
-        console.log(`xxxxxxxxxx${error}`);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
     );
   };
-}
-
-function request(username, password) {
-  return { type: userConstants.LOGIN_REQUEST, username, password };
-}
-function success(userInfo) {
-  return { type: userConstants.LOGIN_SUCCESS, userInfo };
-}
-function failure(error) {
-  return { type: userConstants.LOGIN_FAILURE, error };
 }
 
 function updateAvatar(id, avatarUrl) {
@@ -121,10 +99,13 @@ function updateAvatar(id, avatarUrl) {
       });
   };
 }
-export const userActions = {
+
+const userActions = {
   register,
   login,
   loginFB,
   loginGG,
   updateAvatar
 };
+
+export default userActions;

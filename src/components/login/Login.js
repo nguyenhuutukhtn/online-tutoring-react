@@ -7,17 +7,14 @@ import {
   MDBCardBody,
   MDBInput,
   MDBBtn,
-  MDBIcon,
   MDBModalFooter
 } from 'mdbreact';
-import './login.css';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userActions } from '../../actions/user.action';
-import { history } from '../../helpers/history';
+import './login.css';
+import userActions from '../../actions/user.action';
+import history from '../../helpers/history';
 import Facebook from './Facebook';
 import Google from './Google';
-import CommonNavbar from '../navbar/CommonNavbar';
 
 class Login extends React.Component {
   constructor(props) {
@@ -37,6 +34,18 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({ loading: false });
+  }
+
+  checkLogin = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      history.push('/');
+      window.location.reload();
+    }
+  };
+
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -44,24 +53,13 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const { login } = this.props;
 
     this.setState({ submitted: true });
     const { email, password } = this.state;
     if (email && password) {
-      this.props.login(email, password);
+      login(email, password);
     }
-  }
-
-  checkLogin() {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      history.push('/');
-      window.location.reload();
-    }
-  }
-
-  componentDidMount() {
-    this.setState({ loading: false });
   }
 
   render() {

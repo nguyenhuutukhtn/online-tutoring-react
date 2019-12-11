@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button, makeStyles } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { userActions } from '../../actions/user.action';
-
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { connect } from 'react-redux';
+import userActions from '../../actions/user.action';
 
 class UserDetails extends React.Component {
   constructor(props) {
@@ -55,6 +54,7 @@ class UserDetails extends React.Component {
     const { id, avatar } = this.state.userDetails;
     this.props.updateAvatar(id, avatar);
   };
+
   render() {
     const { userDetails } = this.state;
     return (
@@ -81,7 +81,7 @@ class UserDetails extends React.Component {
           >
             Choose Image
           </Button>
-          <br></br>
+          <br />
           <Button
             className="mt-3"
             variant="contained"

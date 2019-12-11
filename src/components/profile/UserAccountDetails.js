@@ -21,13 +21,16 @@ import './profile.css';
 // import { KeyboardDatePicker } from '@material-ui/pickers';
 
 class UserAccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const { title } = this.props;
     return (
       <Card small className="mb-4 mt-5">
         <Card.Header className="border-bottom card-header-title">
           <h6 className="m-0" color="white">
-            {title}
+            Cập nhật thông tin
           </h6>
         </Card.Header>
         <ListGroup flush>
