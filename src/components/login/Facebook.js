@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { connect } from 'react-redux';
-import { userActions } from '../../actions/user.action';
 import { MDBBtn, MDBIcon } from 'mdbreact';
+import { userActions } from '../../actions/user.action';
 
 class Facebook extends Component {
   componentClicked = () => {

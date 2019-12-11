@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, ListGroup, ListGroupItem, ProgressBar } from 'react-bootstrap';
-import { Button, Icon, makeStyles, Box, Typography } from '@material-ui/core';
+import { Button, Box, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import './tutor.css';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { blue, red } from '@material-ui/core/colors';
 
 export default class TutorItem extends React.Component {
   constructor(props) {
@@ -80,8 +77,8 @@ export default class TutorItem extends React.Component {
               variant="determinate"
               className="progress-sm"
               now={userDetails.successfullyRatio}
-              label={userDetails.successfullyRatio + '%'}
-            ></ProgressBar>
+              label={`${userDetails.successfullyRatio}%`}
+            />
 
             <span>{userDetails.metaValue}</span>
           </ListGroupItem>

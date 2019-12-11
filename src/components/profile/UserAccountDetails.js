@@ -1,23 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Card,
-  CardHeader,
   ListGroup,
   ListGroupItem,
   Row,
   Col,
   Form,
-  FormGroup,
-  FormSelect,
-  FormTextarea,
   Button
 } from 'react-bootstrap';
 import {
   FormControl,
   TextField,
   FormControlLabel,
-  RadioGroup,
   Radio,
   FormLabel,
   Checkbox
@@ -188,19 +182,5 @@ class UserAccountDetails extends React.Component {
     );
   }
 }
-// const UserAccountDetails = ({ title }) => (
-
-// );
-
-UserAccountDetails.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string
-};
-
-UserAccountDetails.defaultProps = {
-  title: 'Cập nhật thông tin'
-};
 
 export default UserAccountDetails;
