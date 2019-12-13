@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -15,15 +16,154 @@ import {
 import PageTitle from '../page-title/PageTitle';
 import TutorItem from './TutorItem';
 import './tutor.css';
+import { requestListTutor, requestListSkill } from '../../actions/tutor.action';
 
-export default class ListTutor extends React.Component {
+class ListTutor extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      collapseSkill: false
+      collapseSkill: false,
+      listTutor: [],
+      listSkill: [],
+      currentPage: 1,
+      totalPage: 0,
+      listSkillChecked: [],
+      from: null,
+      to: null
     };
     this.collapseSkillClick = this.collapseSkillClick.bind(this);
+    this.handleCheckBoxOnChange = this.handleCheckBoxOnChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { listTutor, listSkill } = this.props;
+    listTutor(1, null, null, null, res => {
+      this.setState({
+        listTutor: res,
+        totalPage: Math.ceil(res.count / 9)
+      });
+    });
+    listSkill(res => {
+      this.setState({
+        listSkill: res.data.map(item => {
+          return {
+            id: item.id,
+            name: item.name,
+            isChecked: 0
+          };
+        })
+      });
+    });
+  }
+
+  onInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  renderListTutor = () => {
+    const { listTutor } = this.state;
+    const tutorMatrix = [];
+    if (listTutor.length === 0) return null;
+    for (let i = 0; i < listTutor.data.length; i += 3) {
+      const children = [];
+      for (let j = i; j < i + 3; j += 1) {
+        if (listTutor.data[j]) {
+          children.push(
+            <Col lg="4">
+              <TutorItem data={listTutor.data[j]} />
+            </Col>
+          );
+        }
+      }
+      tutorMatrix.push(<Row>{children}</Row>);
+    }
+    return tutorMatrix;
+  };
+
+  renderSkill = () => {
+    const { listSkill } = this.state;
+    const listSkillElement = listSkill.map((skill, idx) => {
+      if (idx < 6) {
+        return (
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label={skill.name}
+            value={skill.id}
+            className="float-left text-left"
+            checked={skill.isChecked}
+            onChange={this.handleCheckBoxOnChange}
+          />
+        );
+      }
+      return null;
+    });
+    return listSkillElement;
+  };
+
+  renderCollapseSkill = () => {
+    const { listSkill } = this.state;
+    const listSkillElement = listSkill.map((skill, idx) => {
+      if (idx >= 6) {
+        return (
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label={skill.name}
+            value={skill.id}
+            checked={skill.isChecked}
+            className="float-left text-left"
+            onChange={this.handleCheckBoxOnChange}
+          />
+        );
+      }
+      return null;
+    });
+    return listSkillElement;
+  };
+
+  handleFilter = () => {
+    const { listSkillChecked, listSkill, from, to } = this.state;
+    const { listTutor } = this.props;
+    const listIdSkillChecked = [];
+    listSkill.forEach(skill => {
+      if (skill.isChecked) {
+        listSkillChecked.push(skill);
+        listIdSkillChecked.push(skill.id);
+      }
+    });
+
+    listTutor(1, listIdSkillChecked, from, to, res => {
+      this.setState({
+        listTutor: res,
+        totalPage: Math.ceil(res.count / 9)
+      });
+    });
+  };
+
+  onPageChange = page => {
+    const { listTutor } = this.props;
+    listTutor(page, null, null, null, res => {
+      this.setState({
+        listTutor: res,
+        totalPage: Math.ceil(res.count / 9),
+        currentPage: page
+      });
+    });
+  };
+
+  handleCheckBoxOnChange(e) {
+    const { listSkill } = this.state;
+
+    listSkill.forEach(skill => {
+      // eslint-disable-next-line eqeqeq
+      if (skill.id == e.target.value) {
+        // eslint-disable-next-line no-param-reassign
+        skill.isChecked = e.target.checked;
+      }
+    });
+    this.setState({ listSkill });
   }
 
   collapseSkillClick() {
@@ -33,8 +173,25 @@ export default class ListTutor extends React.Component {
     });
   }
 
+  renderPage = () => {
+    const { totalPage, currentPage } = this.state;
+    const listPage = [];
+    for (let i = 0; i < totalPage; i += 1) {
+      listPage.push(
+        <Pagination.Item
+          active={currentPage === i + 1}
+          onClick={() => this.onPageChange(i + 1)}
+        >
+          {i + 1}
+        </Pagination.Item>
+      );
+    }
+    return listPage;
+  };
+
   render() {
     const { collapseSkill } = this.state;
+
     return (
       <div className="mx-auto list-tutor-page">
         <Container
@@ -57,60 +214,14 @@ export default class ListTutor extends React.Component {
                 style={{ paddingLeft: 0, paddingRight: 0 }}
                 className="noPadding noMargin container-fluid"
               >
-                <Row className="">
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                </Row>
-                <Row className="">
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                </Row>
-                <Row className="">
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                  <Col lg="4">
-                    <TutorItem />
-                  </Col>
-                </Row>
+                {this.renderListTutor()}
                 <Row>
                   <Col lg="12">
                     <Pagination
                       className="text-center mt-4 mx-auto float-center d-flex justify-content-center"
                       align="center"
                     >
-                      <Pagination.First />
-                      <Pagination.Prev />
-                      <Pagination.Item>{1}</Pagination.Item>
-                      <Pagination.Ellipsis />
-
-                      <Pagination.Item>{10}</Pagination.Item>
-                      <Pagination.Item>{11}</Pagination.Item>
-                      <Pagination.Item active>{12}</Pagination.Item>
-                      <Pagination.Item>{13}</Pagination.Item>
-                      <Pagination.Item disabled>{14}</Pagination.Item>
-
-                      <Pagination.Ellipsis />
-                      <Pagination.Item>{20}</Pagination.Item>
-                      <Pagination.Next />
-                      <Pagination.Last />
+                      {this.renderPage()}
                     </Pagination>
                   </Col>
                 </Row>
@@ -137,43 +248,9 @@ export default class ListTutor extends React.Component {
                         Theo kỹ năng
                       </FormLabel>
 
-                      <div>
-                        <FormControlLabel
-                          control={<Checkbox color="primary" />}
-                          label="Luyện thi đại học khối A"
-                          className="float-left text-left"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox color="primary" />}
-                          label="Huấn luyện người ngu hết thuốc chữa"
-                          className="float-left text-left"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox color="primary" />}
-                          label="Luyện thi đại học khối A"
-                          className="float-left text-left"
-                        />
-
-                        <FormControlLabel
-                          control={<Checkbox color="primary" />}
-                          label="Huấn luyện người ngu hết thuốc chữa"
-                          className="float-left text-left"
-                        />
-                      </div>
+                      <div>{this.renderSkill()}</div>
                       {collapseSkill ? (
-                        <div>
-                          <FormControlLabel
-                            control={<Checkbox color="primary" />}
-                            label="Luyện thi đại học khối A"
-                            className="float-left text-left"
-                          />
-
-                          <FormControlLabel
-                            control={<Checkbox color="primary" />}
-                            label="Huấn luyện người ngu hết thuốc chữa"
-                            className="float-left text-left"
-                          />
-                        </div>
+                        <div>{this.renderCollapseSkill()}</div>
                       ) : null}
                     </FormControl>
                   </Col>
@@ -225,6 +302,8 @@ export default class ListTutor extends React.Component {
                           id="price-from"
                           label="Từ (Đơn vị: ngàn/giờ)"
                           variant="outlined"
+                          name="from"
+                          onChange={this.onInputChange}
                         />
                         <div className="text-center mt-0 float-center d-flex justify-content-center minus-icon">
                           -
@@ -233,6 +312,8 @@ export default class ListTutor extends React.Component {
                           id="price-to"
                           label="Đến (Đơn vị: ngàn/giờ)"
                           variant="outlined"
+                          name="to"
+                          onChange={this.onInputChange}
                         />
                       </form>
                       <div />
@@ -249,6 +330,9 @@ export default class ListTutor extends React.Component {
                       variant="contained"
                       className="detail-button mt-4"
                       endIcon={<ArrowForwardIcon />}
+                      onClick={() => {
+                        this.handleFilter();
+                      }}
                     >
                       Lọc kết quả
                     </Button>
@@ -262,3 +346,14 @@ export default class ListTutor extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  listTutor: (page, listSkill, from, to, cb) =>
+    dispatch(requestListTutor(page, listSkill, from, to, cb)),
+  listSkill: cb => dispatch(requestListSkill(cb))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ListTutor);
