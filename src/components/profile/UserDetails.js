@@ -19,6 +19,7 @@ class UserDetails extends React.Component {
         metaTitle: 'Giới thiệu',
         metaValue: 'Gia sư này giỏi vkl'
       },
+      chosen: false,
       widget: window.cloudinary.createUploadWidget(
         {
           cloudName: 'dsqfchskj',
@@ -45,7 +46,8 @@ class UserDetails extends React.Component {
         userDetails: {
           ...this.state.userDetails,
           avatar: resultEvent.info.secure_url
-        }
+        },
+        chosen: true
       });
     }
   };
@@ -56,7 +58,7 @@ class UserDetails extends React.Component {
   };
 
   render() {
-    const { userDetails } = this.state;
+    const { userDetails, chosen } = this.state;
     return (
       <Card small className="mt-5">
         <Card.Header className="border-bottom text-center">
@@ -73,25 +75,29 @@ class UserDetails extends React.Component {
           <span className="text-muted d-block mb-2">
             {userDetails.jobTitle}
           </span>
-          <Button
-            variant="contained"
-            color="default"
-            // className={classes.button}
-            onClick={this.showWidget}
-          >
-            Choose Image
-          </Button>
-          <br />
-          <Button
-            className="mt-3"
-            variant="contained"
-            color="default"
-            // className={classes.button}
-            startIcon={<CloudUploadIcon />}
-            onClick={this.uploadAvatar}
-          >
-            Upload
-          </Button>
+          {!chosen ? (
+            <Button
+              variant="contained"
+              color="default"
+              // className={classes.button}
+              onClick={this.showWidget}
+            >
+              Choose Image
+            </Button>
+          ) : null}
+
+          {chosen ? (
+            <Button
+              variant="contained"
+              color="default"
+              // className={classes.button}
+              startIcon={<CloudUploadIcon />}
+              onClick={this.uploadAvatar}
+            >
+              Cập nhật
+            </Button>
+          ) : null}
+
           {/* <Button pill outline size="sm" className="mb-2">
         <i className="material-icons mr-1">person_add</i> Follow
       </Button> */}

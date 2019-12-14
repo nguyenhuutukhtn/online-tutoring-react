@@ -22,6 +22,10 @@ import alertActions from './actions/alert.action';
 // import { PrivateRoute } from './components/privateRoute/PrivateRoute';
 import CommonNavbar from './components/navbar/CommonNavbar';
 import Footer from './components/footer/Footer';
+import TutorInfo from './components/tutor/TutorInfo';
+import TutorHistory from './components/tutor/TutorHistory';
+import TutorDetail from './components/tutor/TutorDetail';
+import TutorReview from './components/tutor/TutorReview';
 
 class App extends React.Component {
   constructor(props) {
@@ -61,6 +65,10 @@ class App extends React.Component {
               <Route path="/profile" component={UserProfileLite} />
               <Route path="/tutor-item" component={TutorItem} />
               <Route path="/list-tutor" component={ListTutor} />
+              <Route path="/tutor-info" component={TutorInfo} />
+              <Route path="/tutor-history" component={TutorHistory} />
+              <Route path="/tutor-detail" component={TutorDetail} />
+              <Route path="/tutor-review" component={TutorReview} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
