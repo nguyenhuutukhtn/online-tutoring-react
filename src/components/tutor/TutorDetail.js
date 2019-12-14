@@ -1,39 +1,66 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import './tutor.css';
 import TutorHistory from './TutorHistory';
 import TutorInfo from './TutorInfo';
 import ListTutorSkill from './ListTutorSkill';
 import TutorReview from './TutorReview';
+import { requestTutorDetail } from '../../actions/tutor.action'
 
-export default class TutorDetail extends React.Component {
+class TutorDetail extends React.Component {
   constructor(props) {
     super(props);
+    const { location } = this.props;
+    const id = location.search.split("=")[1];
+    this.state = {
+      tutorId: id,
+      tutorData: null,
+    };
+  }
 
-    this.state = {};
+  componentDidMount = () => {
+    const { tutorId } = this.state;
+    const { getTutorDetail } = this.props;
+    getTutorDetail(tutorId, (res) => {
+      this.setState({
+        tutorData: res,
+      })
+    })
   }
 
   render() {
+    const { tutorData } = this.state;
     return (
       <Container>
         <Row>
           <Col md="4" className="noPadding noMargin tutor-info-col">
-            <TutorInfo />
+            <TutorInfo tutorData={tutorData ? tutorData.info : null} introduce={tutorData ? tutorData.introduce[0] : null} />
           </Col>
 
           <Col md="4" className="noPadding noMargin">
-            <TutorHistory className="history-item" />
+            <TutorHistory listOldStudent={tutorData ? tutorData.listOldStudent : null} className="history-item" />
           </Col>
           <Col md="4" className="noPadding noMargin">
-            <ListTutorSkill className="h-100 d-inline-block mw-100 list-tutor-item border border-dark" />
+            <ListTutorSkill tutorSkill={tutorData ? tutorData.skill : null} className="h-100 d-inline-block mw-100 list-tutor-item border border-dark" />
           </Col>
         </Row>
         <Row className="mt-4">
           <Col className="noPadding noMargin" md="12">
-            <TutorReview />
+            <TutorReview listRateAndComment={tutorData ? tutorData.rateAndComment : null} />
           </Col>
         </Row>
       </Container>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  getTutorDetail: (id, cb) =>
+    dispatch(requestTutorDetail(id, cb))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TutorDetail);;

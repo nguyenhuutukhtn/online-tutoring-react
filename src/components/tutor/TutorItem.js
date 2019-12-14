@@ -3,6 +3,7 @@ import { Card, ListGroup, ListGroupItem, ProgressBar } from 'react-bootstrap';
 import { Button, Box, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import history from '../../helpers/history';
 import './tutor.css';
 
 export default class TutorItem extends React.Component {
@@ -10,6 +11,15 @@ export default class TutorItem extends React.Component {
     super(props);
 
     this.state = {};
+  }
+
+  tranferDetail = () => {
+    const { data } = this.props;
+    history.push({
+      pathname: '/tutor-detail',
+      search: `?id=${data.id}`
+    });
+    window.location.reload();
   }
 
   render() {
@@ -75,6 +85,7 @@ export default class TutorItem extends React.Component {
         </ListGroup>
         <Card.Footer>
           <Button
+            onClick={this.tranferDetail}
             style={{
               backgroundColor: '#007BFF',
               color: '#ffffff'

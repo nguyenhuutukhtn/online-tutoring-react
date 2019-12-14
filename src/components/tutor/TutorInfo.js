@@ -18,20 +18,11 @@ export default class TutorInfo extends React.Component {
     super(props);
 
     this.state = {
-      userDetails: {
-        id: null,
-        name: 'Nguyễn Hữu Tú',
-        address: 'Quan 1',
-        avatar: 'https://placeimg.com/640/480/any',
-        pricePerHour: 100000,
-        avgRate: 4,
-        successfullyRatio: 80
-      }
-    };
+    }
   }
 
   render() {
-    const { userDetails } = this.state;
+    const { tutorData, introduce } = this.props;
     return (
       <Container className="noMargin noPadding h-100 tutor-info-col">
         <Row className="h-100">
@@ -41,20 +32,20 @@ export default class TutorInfo extends React.Component {
                 <div className="mb-3 mx-auto">
                   <img
                     className="rounded-circle"
-                    src={userDetails.avatar}
-                    alt={userDetails.name}
+                    src={tutorData ? tutorData.avatar : null}
+                    alt={tutorData ? tutorData.name : null}
                     width="110"
                     height="110"
                   />
                 </div>
 
-                <h4 className="mb-0">{userDetails.name}</h4>
+                <h4 className="mb-0">{tutorData ? tutorData.name : null}</h4>
 
                 <Box component="fieldset" mb={3} borderColor="transparent">
                   {/* <Typography component="legend">Tỉ lệ thành công</Typography> */}
                   <Rating
                     name="read-only"
-                    value={userDetails.avgRate}
+                    value={tutorData ? tutorData.avgRate : null}
                     readOnly
                   />
                 </Box>
@@ -92,20 +83,16 @@ export default class TutorInfo extends React.Component {
                     Địa chỉ
                   </strong>
                   <Typography component="legend" className="text-left">
-                    {userDetails.address}
+                    {tutorData ? tutorData.address : null}
                   </Typography>
-
-                  <span>{userDetails.metaValue}</span>
                 </ListGroupItem>
                 <ListGroupItem>
                   <strong className="text-muted d-block mb-0 text-left">
                     Học phí
                   </strong>
                   <Typography component="legend" className="text-left">
-                    {userDetails.pricePerHour}/giờ
+                    {tutorData ? tutorData.pricePerHour : null}/giờ
                   </Typography>
-
-                  <span>{userDetails.metaValue}</span>
                 </ListGroupItem>
                 <ListGroupItem className="p-4">
                   <strong className="text-muted d-block mb-2 text-left">
@@ -114,24 +101,17 @@ export default class TutorInfo extends React.Component {
                   <ProgressBar
                     variant="determinate"
                     className="progress-sm"
-                    now={userDetails.successfullyRatio}
-                    label={`${userDetails.successfullyRatio}%`}
+                    now={tutorData ? tutorData.successfullyRatio : null}
+                    label={tutorData ? `${tutorData.successfullyRatio}%` : ""}
                   />
-
-                  <span>{userDetails.metaValue}</span>
                 </ListGroupItem>
                 <ListGroupItem>
                   <strong className="text-muted d-block mb-0 text-left">
                     Giới thiệu
                   </strong>
                   <span className="text-left float-left">
-                    Các bác cho em hỏi chút... MAC Mini 2018 8GB RAM yếu quá.
-                    Bây giờ nâng cấp thành 16G hoặc 32G thì mua RAM gì, mua ở
-                    đâu (Em đã Google mà không thấy bán)? Cảm ơn các bác đã đọc
-                    bài
+                    {introduce ? introduce.content : null}
                   </span>
-
-                  <span>{userDetails.metaValue}</span>
                 </ListGroupItem>
               </ListGroup>
             </Card>
