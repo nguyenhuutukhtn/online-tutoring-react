@@ -119,6 +119,9 @@
   flex-grow: 1;
   background: white;
   overflow: hidden;
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
 }
 
 .tutor-info-col {

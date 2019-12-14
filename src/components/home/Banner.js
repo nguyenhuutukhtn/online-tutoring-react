@@ -14,7 +14,7 @@ class Banner extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container fluid className="noMargin noPadding">
         <Row className="banner">
           <Col
             md="6"

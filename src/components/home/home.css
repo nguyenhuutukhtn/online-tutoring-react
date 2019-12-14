@@ -33,3 +33,11 @@
   font-size: 36px;
   margin-top: 30px;
 }
+
+.list-tutor-page {
+  background: #edf2ff;
+}
+
+.feedback-content {
+  font-style: italic;
+}
