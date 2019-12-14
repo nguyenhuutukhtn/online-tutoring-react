@@ -9,40 +9,28 @@ export default class TutorItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userDetails: {
-        id: null,
-        name: 'Nguyễn Hữu Tú',
-        address: 'Quan 1',
-        avatar: 'https://placeimg.com/640/480/any',
-        pricePerHour: 100000,
-        avgRate: 4,
-        successfullyRatio: 80
-      }
-    };
+    this.state = {};
   }
 
   render() {
-    const { userDetails } = this.state;
+    const { data } = this.props;
     return (
       <Card small className="mt-5">
         <Card.Header className="border-bottom text-center">
           <div className="mb-3 mx-auto">
             <img
               className="rounded-circle"
-              src={userDetails.avatar}
-              alt={userDetails.name}
+              src={data.avatar ? data.avata : null}
+              alt={data.name}
               width="110"
               height="110"
             />
           </div>
-          <h4 className="mb-0">{userDetails.name}</h4>
-          <span className="text-muted d-block mb-2">
-            {userDetails.jobTitle}
-          </span>
+          <h5 className="mb-0 ml-0 mr-0 tutor-name">{data.name}</h5>
+          <span className="text-muted d-block mb-2">{data.jobTitle}</span>
           <Box component="fieldset" mb={3} borderColor="transparent">
             {/* <Typography component="legend">Tỉ lệ thành công</Typography> */}
-            <Rating name="read-only" value={userDetails.avgRate} readOnly />
+            <Rating name="read-only" value={data.avgRate} readOnly />
           </Box>
           {/* <Button pill outline size="sm" className="mb-2">
         <i className="material-icons mr-1">person_add</i> Follow
@@ -54,20 +42,22 @@ export default class TutorItem extends React.Component {
               Địa chỉ
             </strong>
             <Typography component="legend" className="text-left">
-              {userDetails.address}
+              {data.address ? data.address : 'Chưa cập nhật'}
             </Typography>
 
-            <span>{userDetails.metaValue}</span>
+            <span>{data.metaValue}</span>
           </ListGroupItem>
           <ListGroupItem>
             <strong className="text-muted d-block mb-0 text-left">
               Học phí
             </strong>
             <Typography component="legend" className="text-left">
-              {userDetails.pricePerHour}/giờ
+              {data.pricePerHour
+                ? data.pricePerHour.toString().concat('/giờ')
+                : 'Chưa cập nhật'}
             </Typography>
 
-            <span>{userDetails.metaValue}</span>
+            <span>{data.metaValue}</span>
           </ListGroupItem>
           <ListGroupItem className="p-4">
             <strong className="text-muted d-block mb-2 text-left">
@@ -76,11 +66,11 @@ export default class TutorItem extends React.Component {
             <ProgressBar
               variant="determinate"
               className="progress-sm"
-              now={userDetails.successfullyRatio}
-              label={`${userDetails.successfullyRatio}%`}
+              now={data.successfullyRatio}
+              label={`${data.successfullyRatio ? data.successfullyRatio : 0}%`}
             />
 
-            <span>{userDetails.metaValue}</span>
+            <span>{data.metaValue}</span>
           </ListGroupItem>
         </ListGroup>
         <Card.Footer>

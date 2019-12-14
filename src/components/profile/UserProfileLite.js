@@ -2,8 +2,8 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './profile.css';
 import PageTitle from '../page-title/PageTitle';
-import UserDetails from '../profile/UserDetails';
-import UserAccountDetails from '../profile/UserAccountDetails';
+import UserDetails from './UserDetails';
+import UserAccountDetails from './UserAccountDetails';
 import CommonNavbar from '../navbar/CommonNavbar';
 
 class UserProfileLite extends React.Component {
