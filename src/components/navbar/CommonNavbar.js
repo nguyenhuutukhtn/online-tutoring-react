@@ -11,6 +11,7 @@ import {
   Nav,
   Container
 } from 'reactstrap';
+import UserHeader from './UserHeader';
 import './navbar.css';
 
 // reactstrap components
@@ -88,6 +89,7 @@ function CommonNavbar() {
             </NavItem>
           </Nav>
         </Collapse>
+        <UserHeader />
       </Container>
     </Navbar>
   );

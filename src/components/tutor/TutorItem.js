@@ -30,7 +30,7 @@ export default class TutorItem extends React.Component {
           <div className="mb-3 mx-auto">
             <img
               className="rounded-circle"
-              src={data.avatar ? data.avata : null}
+              src={data.avatar ? data.avatar : null}
               alt={data.name}
               width="110"
               height="110"

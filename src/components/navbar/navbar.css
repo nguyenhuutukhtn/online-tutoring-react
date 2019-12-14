@@ -9,3 +9,18 @@
 .nav-item {
   padding-left: 40px;
 }
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.thumbnail-image {
+  height: 30px;
+  width: 30px;
+}
+
+.dropdown-title {
+  color: gray;
+  font-weight: normal;
+  font-size: 14px;
+}

@@ -27,8 +27,16 @@ export default class TutorInfo extends React.Component {
       <Container className="noMargin noPadding h-100 tutor-info-col">
         <Row className="h-100">
           <Col>
-            <Card small className="mt-5 tutor-info-col">
-              <Card.Header className="border-bottom text-center ">
+            <Card
+              small
+              className="mt-5 tutor-info-col shadow-none card-info"
+              style={{
+                borderLeft: '1px solid grey',
+                borderTop: '1px solid grey',
+                borderRight: '1px solid grey'
+              }}
+            >
+              <Card.Header className="border-bottom text-center noMargin noPadding">
                 <div className="mb-3 mx-auto">
                   <img
                     className="rounded-circle"

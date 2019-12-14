@@ -1,3 +1,47 @@
 .main-page {
   background: #f2f3f5;
 }
+
+.banner-img {
+  max-height: 440px;
+}
+
+.noPadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.noMargin {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.slogan-range {
+  background: #1d4575;
+}
+
+.slogan {
+  color: #eb59ae;
+  font-weight: bold;
+  font-size: 50px;
+  margin-top: 80px;
+}
+
+.slogan-description {
+  font-weight: bold;
+  color: white;
+  font-size: 36px;
+  margin-top: 30px;
+}
+
+.list-tutor-page {
+  background: #edf2ff;
+}
+
+.feedback-content {
+  font-style: italic;
+}
+
+.website-info {
+  background: white;
+}
