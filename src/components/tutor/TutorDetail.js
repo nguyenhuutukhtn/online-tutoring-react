@@ -17,7 +17,7 @@ export default class TutorDetail extends React.Component {
     return (
       <Container>
         <Row>
-          <Col md="4" className="noPadding noMargin tutor-info-col">
+          <Col md="4">
             <TutorInfo />
           </Col>
 
