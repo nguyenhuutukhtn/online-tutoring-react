@@ -59,7 +59,6 @@ div.benifit-value-right {
   width: 48%;
   height: 100px;
   float: left;
-  margin-left: 4%;
 }
 @media only screen and (max-width: 320px) {
   div.benifit-con {
@@ -79,7 +78,6 @@ div.benifit-value-right {
   div.benifit-value {
     width: 90%;
     height: 60px;
-    margin-left: 2%;
     margin-top: 20px;
   }
   div.benifit-value-left {
@@ -121,7 +119,6 @@ div.benifit-value-right {
     width: 100%;
     height: 100px;
     /* float: left; */
-    margin-left: 0%;
   }
 }
 @media only screen and (min-width: 321px) and (max-width: 375px) {
@@ -142,7 +139,6 @@ div.benifit-value-right {
   div.benifit-value {
     width: 90%;
     height: 60px;
-    margin-left: 4%;
     margin-top: 20px;
   }
   div.benifit-value-left {
@@ -184,7 +180,6 @@ div.benifit-value-right {
     width: 100%;
     height: 100px;
     /* float: left; */
-    margin-left: 0%;
   }
 }
 @media only screen and (min-width: 376px) and (max-width: 425px) {
@@ -205,7 +200,6 @@ div.benifit-value-right {
   div.benifit-value {
     width: 90%;
     height: 60px;
-    margin-left: 4%;
     margin-top: 20px;
   }
   div.benifit-value-left {
@@ -247,7 +241,6 @@ div.benifit-value-right {
     width: 100%;
     height: 100px;
     /* float: left; */
-    margin-left: 0%;
   }
 }
 @media only screen and (min-width: 426px) and (max-width: 768px) {
@@ -269,7 +262,6 @@ div.benifit-value-right {
   div.benifit-value {
     width: 90%;
     height: 60px;
-    margin-left: 6%;
     margin-top: 20px;
   }
   div.benifit-value-left {
@@ -291,7 +283,6 @@ div.benifit-value-right {
     width: 88%;
     height: 100%;
     float: left;
-    margin-left: 2%;
   }
   div.benifit-value-title1 {
     width: 100%;
@@ -314,14 +305,12 @@ div.benifit-value-right {
     width: 48%;
     height: 100px;
     float: left;
-    margin-left: 4%;
   }
 }
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
   div.benifit-value {
     width: 90%;
     height: 60px;
-    margin-left: 6%;
     margin-top: 20px;
   }
 }
