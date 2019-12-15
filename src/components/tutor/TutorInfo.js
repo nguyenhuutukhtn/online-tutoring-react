@@ -8,7 +8,17 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-import { Box, Typography, Button } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField
+} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import MessageIcon from '@material-ui/icons/Message';
 import './tutor.css';
@@ -18,11 +28,29 @@ export default class TutorInfo extends React.Component {
     super(props);
 
     this.state = {
-    }
+      openDialog: false
+    };
+  }
+
+  handleRegisterClick() {
+    const { openDialog } = this.state;
+    this.setState({ openDialog: true });
+  }
+
+  handleClose() {
+    const { openDialog } = this.state;
+    this.setState({ openDialog: false });
+  }
+
+  handleSendRegister() {
+    const { openDialog } = this.state;
+    this.setState({ openDialog: false });
+    //Call API Register and redirect to list contract
   }
 
   render() {
     const { tutorData, introduce } = this.props;
+    const { openDialog } = this.state;
     return (
       <Container className="noMargin noPadding h-100 tutor-info-col">
         <Row className="h-100">
@@ -63,7 +91,7 @@ export default class TutorInfo extends React.Component {
                     className="ml-4 button-register"
                     color="info"
                     href="#pablo"
-                    onClick={e => e.preventDefault()}
+                    onClick={() => this.handleRegisterClick()}
                     size="sm"
                   >
                     Đăng ký học
@@ -110,7 +138,7 @@ export default class TutorInfo extends React.Component {
                     variant="determinate"
                     className="progress-sm"
                     now={tutorData ? tutorData.successfullyRatio : null}
-                    label={tutorData ? `${tutorData.successfullyRatio}%` : ""}
+                    label={tutorData ? `${tutorData.successfullyRatio}%` : ''}
                   />
                 </ListGroupItem>
                 <ListGroupItem>
@@ -126,6 +154,35 @@ export default class TutorInfo extends React.Component {
           </Col>
         </Row>
         <div className="blank-div-tutor-info h-100" />
+        <div>
+          <Dialog
+            open={openDialog}
+            onClose={() => this.handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Đăng ký học</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Để đăng ký học, vui lòng nhập tổng số giờ bạn muốn đăng ký
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Tổng số tiền"
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => this.handleClose} color="primary">
+                Bỏ qua
+              </Button>
+              <Button onClick={() => this.handleSendRegister} color="primary">
+                Đăng Ký
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </Container>
     );
   }

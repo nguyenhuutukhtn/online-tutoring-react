@@ -26,6 +26,7 @@ import TutorInfo from './components/tutor/TutorInfo';
 import TutorHistory from './components/tutor/TutorHistory';
 import TutorDetail from './components/tutor/TutorDetail';
 import TutorReview from './components/tutor/TutorReview';
+import EContract from './components/contract/EContract';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class App extends React.Component {
       // clear alert on location change
       const { clearAlerts } = this.props;
       clearAlerts();
-      // window.location.reload();
+      window.location.reload();
       // console.log('history change');
     });
   }
@@ -69,6 +70,7 @@ class App extends React.Component {
               <Route path="/tutor-history" component={TutorHistory} />
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
+              <Route path="/e-contract" component={EContract} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
