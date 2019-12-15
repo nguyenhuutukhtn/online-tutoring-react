@@ -10,7 +10,7 @@ class OutstandingFeedback extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const listFeedBack = [
@@ -36,7 +36,7 @@ class OutstandingFeedback extends Component {
           'https://res.cloudinary.com/dsqfchskj/image/upload/v1576326328/Tutor/36304048_1026569650827217_7308953294523596800_o_ihegp9.jpg',
         description: 'Phụ huynh',
         content:
-          'Gia sư Tây rất nhiệt huyết và tận tình. Chị biết gia sư cũng cực lắm khi dạy 2 con chị, dạo gần đây 2 bé ngoan hơn, học tập tiến bộ hơn rất nhiều, gia sư còn dành cả tuần để dạy cho 2 bé khi biết 2 bé sắp thi. Chị rất cảm ơn công ty.'
+          'Gia sư Tây rất nhiệt huyết và tận tình. Anh biết gia sư cũng cực lắm khi dạy 2 con anh, dạo gần đây 2 bé ngoan hơn, học tập tiến bộ hơn rất nhiều, gia sư còn dành cả tuần để dạy cho 2 bé khi biết 2 bé sắp thi. Anh rất cảm ơn công ty.'
       }
     ];
     return (

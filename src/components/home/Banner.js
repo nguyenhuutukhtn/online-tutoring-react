@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import history from '../../helpers/history';
 import './home.css';
 
 class Banner extends Component {
@@ -10,7 +11,14 @@ class Banner extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
+
+  tranferToListTutor = () => {
+    history.push({
+      pathname: '/list-tutor',
+    });
+    window.location.reload();
+  }
 
   render() {
     return (
@@ -36,6 +44,7 @@ class Banner extends Component {
                 variant="contained"
                 className="detail-button pt-3 pb-3 pl-4 pr-4 mt-5 text-left float-left ml-5"
                 endIcon={<ArrowForwardIcon />}
+                onClick={this.tranferToListTutor}
               >
                 Tìm kiếm gia sư
               </Button>

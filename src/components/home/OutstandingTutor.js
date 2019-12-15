@@ -10,17 +10,31 @@ class OutstandingTutor extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+
+  renderListTutor = () => {
+    const { listOutStandingTutor } = this.props;
+    const tutorMatrix = [];
+    if (listOutStandingTutor) {
+      if (listOutStandingTutor.length === 0) return null;
+      for (let i = 0; i < listOutStandingTutor.length; i += 3) {
+        const children = [];
+        for (let j = i; j < i + 3; j += 1) {
+          if (listOutStandingTutor[j]) {
+            children.push(
+              <Col lg="4">
+                <TutorItem data={listOutStandingTutor[j]} />
+              </Col>
+            );
+          }
+        }
+        tutorMatrix.push(<Row>{children}</Row>);
+      }
+    }
+    return tutorMatrix;
+  };
 
   render() {
-    const data = {
-      avatar:
-        'https://res.cloudinary.com/dsqfchskj/image/upload/v1576326328/Tutor/78905118_2276223572479557_610009197119012864_o_xdb3x8.jpg',
-      name: 'Nguyễn Hữu Tú',
-      avgRate: 4.5,
-      pricePerHour: 100000,
-      successfullyRatio: 99
-    };
+
     return (
       <div className="noMargin noPadding border list-tutor-page">
         <div className="benifit-title">
@@ -28,26 +42,7 @@ class OutstandingTutor extends Component {
         </div>
         <Container className="mt-0 pb-5" expand="lg">
           <Row className="noPadding noMargin mt-0">
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
-          </Row>
-          <Row className="">
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
-            <Col lg="4">
-              <TutorItem data={data} />
-            </Col>
+            {this.renderListTutor()}
           </Row>
         </Container>
       </div>

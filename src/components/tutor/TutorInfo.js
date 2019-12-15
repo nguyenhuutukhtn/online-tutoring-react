@@ -99,7 +99,7 @@ export default class TutorInfo extends React.Component {
                     Học phí
                   </strong>
                   <Typography component="legend" className="text-left">
-                    {tutorData ? tutorData.pricePerHour : null}/giờ
+                    {tutorData ? tutorData.pricePerHour : null}K VNĐ/giờ
                   </Typography>
                 </ListGroupItem>
                 <ListGroupItem className="p-4">

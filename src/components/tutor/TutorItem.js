@@ -63,7 +63,7 @@ export default class TutorItem extends React.Component {
             </strong>
             <Typography component="legend" className="text-left">
               {data.pricePerHour
-                ? data.pricePerHour.toString().concat('/giờ')
+                ? data.pricePerHour.toString().concat('K VNĐ/giờ')
                 : 'Chưa cập nhật'}
             </Typography>
 

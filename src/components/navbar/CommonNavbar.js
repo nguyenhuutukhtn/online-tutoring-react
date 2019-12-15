@@ -31,7 +31,7 @@ function CommonNavbar() {
           <NavbarBrand
             data-placement="bottom"
             to="/index"
-            target="_blank"
+
             title="Coded by Creative Tim"
             tag={Link}
           >
@@ -63,27 +63,22 @@ function CommonNavbar() {
         >
           <Nav navbar>
             <NavItem className="nav-item">
-              <NavLink to="/index" tag={Link} className="nav-link">
+              <NavLink to="/list-tutor" tag={Link} className="nav-link">
                 Tìm gia sư
               </NavLink>
             </NavItem>
             <NavItem className="nav-item">
-              <NavLink href="" target="_blank">
+              <NavLink to="/register" tag={Link} className="nav-link">
                 Đăng ký gia sư
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="" target="_blank">
-                Đăng yêu cầu
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="" target="_blank">
+              <NavLink to="/login" tag={Link} className="nav-link">
                 Đăng nhập
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="" target="_blank">
+              <NavLink to="/register" tag={Link} className="nav-link">
                 Đăng ký
               </NavLink>
             </NavItem>
