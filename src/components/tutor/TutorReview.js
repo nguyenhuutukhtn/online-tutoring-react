@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
+import moment from 'moment';
 import Rating from '@material-ui/lab/Rating';
 import {
   Typography,
@@ -20,7 +21,61 @@ export default class TutorReview extends React.Component {
     this.state = {};
   }
 
+  renderListRateAndComment = () => {
+    const { listRateAndComment } = this.props;
+    let listRateAndCommentElement = [];
+    if (listRateAndComment) {
+      listRateAndCommentElement = listRateAndComment.map(rateAndComment => {
+        return (<div>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar
+                alt="Remy Sharp"
+                src={rateAndComment.avatar}
+              />
+            </ListItemAvatar>
+
+            <ListItemText
+              primary={rateAndComment.name}
+              secondary={
+                <div style={{ display: 'block' }}>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    style={{ display: 'block' }}
+                    color="textPrimary"
+                  >
+                    {moment(rateAndComment.date).format("DD-MM-YYYY HH:mm")}
+                  </Typography>
+                  <Rating
+                    name="read-only"
+                    value={rateAndComment.rate}
+                    readOnly
+                    className="ml-0"
+                  />
+                  <div className="text-left">
+                    {rateAndComment.comment}
+                  </div>
+                </div>
+              }
+            />
+          </ListItem>
+
+          <Divider variant="inset" component="li" />
+        </div>)
+      })
+    }
+    return listRateAndCommentElement;
+  }
+
   render() {
+    const { listRateAndComment } = this.props;
+    let totalRate = 0;
+    if (listRateAndComment) {
+      listRateAndComment.forEach(element => {
+        totalRate += element.rate;
+      });
+    }
     return (
       <Container fluid className="main-tutor-review noMargin noPadding">
         <Row>
@@ -33,65 +88,12 @@ export default class TutorReview extends React.Component {
         <Row className="border border-info pt-4 mt-2 pb-2 star-div mx-auto">
           <Col md="3">
             <Typography color="primary" variant="h6">
-              4,5/5
+              {listRateAndComment ? totalRate / listRateAndComment.length : 0}/5
             </Typography>
             <Box component="fieldset" borderColor="transparent">
-              <Typography component="legend">Tỉ lệ thành công</Typography>
-              <Rating name="read-only" value="4.6" readOnly precision={0.5} />
+              <Rating name="read-only" value={listRateAndComment ? totalRate / listRateAndComment.length : 0} readOnly precision={0.5} />
             </Box>
-            <div className="review-number">69 nhận xét</div>
-          </Col>
-          <Col md="9">
-            <div
-              className="text-left ml-2"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Rating name="read-only" value="5" readOnly />
-              <Box ml={2}>30 nhận xét</Box>
-            </div>
-            <div
-              className="text-left ml-2"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Rating name="read-only" value="4" readOnly />
-              <Box ml={2}>30 nhận xét</Box>
-            </div>
-            <div
-              className="text-left ml-2"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Rating name="read-only" value="3" readOnly />
-              <Box ml={2}>30 nhận xét</Box>
-            </div>
-            <div
-              className="text-left ml-2"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Rating name="read-only" value="2" readOnly />
-              <Box ml={2}>30 nhận xét</Box>
-            </div>
-            <div
-              className="text-left ml-2"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Rating name="read-only" value="1" readOnly />
-              <Box ml={2}>30 nhận xét</Box>
-            </div>
+            <div className="review-number">{listRateAndComment ? listRateAndComment.length : 0} nhận xét</div>
           </Col>
         </Row>
         <Row>
@@ -102,111 +104,7 @@ export default class TutorReview extends React.Component {
                 backgroundColor: '#fffff'
               }}
             >
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://placeimg.com/640/480/any"
-                  />
-                </ListItemAvatar>
-
-                <ListItemText
-                  primary="Nguyễn Hữu Tú"
-                  secondary={
-                    <div style={{ display: 'block' }}>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        style={{ display: 'block' }}
-                        color="textPrimary"
-                      >
-                        12/12/2019
-                      </Typography>
-                      <Rating
-                        name="read-only"
-                        value="5"
-                        readOnly
-                        className="ml-0"
-                      />
-                      <div className="text-left">
-                        Gia sư vừa giỏi vừa đẹp trai vkl, thật không thể tin nổi
-                      </div>
-                    </div>
-                  }
-                />
-              </ListItem>
-
-              <Divider variant="inset" component="li" />
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://placeimg.com/640/480/any"
-                  />
-                </ListItemAvatar>
-
-                <ListItemText
-                  primary="Nguyễn Hữu Tú"
-                  secondary={
-                    <div style={{ display: 'block' }}>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        style={{ display: 'block' }}
-                        color="textPrimary"
-                      >
-                        12/12/2019
-                      </Typography>
-                      <Rating
-                        name="read-only"
-                        value="5"
-                        readOnly
-                        className="ml-0"
-                      />
-                      <div className="text-left">
-                        Gia sư vừa giỏi vừa đẹp trai vkl, thật không thể tin nổi
-                      </div>
-                    </div>
-                  }
-                />
-              </ListItem>
-
-              <Divider variant="inset" component="li" />
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://placeimg.com/640/480/any"
-                  />
-                </ListItemAvatar>
-
-                <ListItemText
-                  primary="Nguyễn Hữu Tú"
-                  secondary={
-                    <div style={{ display: 'block' }}>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        style={{ display: 'block' }}
-                        color="textPrimary"
-                      >
-                        12/12/2019
-                      </Typography>
-                      <Rating
-                        name="read-only"
-                        value="5"
-                        readOnly
-                        className="ml-0"
-                      />
-                      <div className="text-left">
-                        Gia sư vừa giỏi vừa đẹp trai vkl, thật không thể tin nổi
-                      </div>
-                    </div>
-                  }
-                />
-              </ListItem>
-
-              <Divider variant="inset" component="li" />
+              {this.renderListRateAndComment()}
             </List>
           </Col>
         </Row>

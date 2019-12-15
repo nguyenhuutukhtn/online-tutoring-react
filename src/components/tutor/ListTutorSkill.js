@@ -17,6 +17,22 @@ export default class ListTutorSkill extends React.Component {
     this.state = {};
   }
 
+  renderListSkill = () => {
+    const { tutorSkill } = this.props;
+    let listtutorSkillElement = [];
+    if (tutorSkill) {
+      listtutorSkillElement = tutorSkill.map(skill => {
+        return (<ListItem>
+          <ListItemAvatar>
+            <CardMembershipIcon style={{ color: '#007bff' }} />
+          </ListItemAvatar>
+          <ListItemText primary={skill.name} />
+        </ListItem>)
+      })
+    }
+    return listtutorSkillElement;
+  }
+
   render() {
     return (
       <Container className="h-100">
@@ -26,25 +42,7 @@ export default class ListTutorSkill extends React.Component {
               Kỹ năng nổi bật
             </div>
             <List className="mt-2">
-              <ListItem>
-                <ListItemAvatar>
-                  <CardMembershipIcon style={{ color: '#007bff' }} />
-                </ListItemAvatar>
-                <ListItemText primary="Luyện thi khối A" />
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar>
-                  <CardMembershipIcon style={{ color: '#007bff' }} />
-                </ListItemAvatar>
-                <ListItemText primary="Quăng bom" />
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar>
-                  <CardMembershipIcon style={{ color: '#007bff' }} />
-                </ListItemAvatar>
-                <ListItemText primary="Chém gió" />
-              </ListItem>
-              ,
+              {this.renderListSkill()}
             </List>
           </Col>
         </Row>

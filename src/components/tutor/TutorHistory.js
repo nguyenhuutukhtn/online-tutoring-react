@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
+import moment from 'moment';
 import {
   VerticalTimeline,
   VerticalTimelineElement
@@ -16,6 +17,34 @@ export default class TutorHistory extends React.Component {
     this.state = {};
   }
 
+  renderListOldStudent = () => {
+    const { listOldStudent } = this.props;
+    let listOldStudentElement = [];
+    if (listOldStudent) {
+      listOldStudentElement = listOldStudent.map(student => {
+        return (<VerticalTimelineElement
+          className="vertical-timeline-element--work "
+          date={student.complete_date ? `Kết thúc: ${moment(student.complete_date).format("DD-MM-YYYY HH:mm")}` : "Kết thúc: "}
+          contentStyle={{}}
+          iconStyle={{
+            background: '#6782a3',
+            color: '#fff'
+          }}
+          icon={<CheckCircleIcon />}
+        >
+          <h6 className="vertical-timeline-element-title text-left">
+            Học sinh: {student.name}
+          </h6>
+          <h6 className="vertical-timeline-element-subtitle text-left">
+            Thời gian thuê: {student.hours_hire} giờ
+          </h6>
+          <p className="text-left">Giá: {student.price / student.hours_hire}/giờ</p>
+        </VerticalTimelineElement>)
+      })
+    }
+    return listOldStudentElement;
+  }
+
   render() {
     return (
       <Container className="h-100">
@@ -26,60 +55,7 @@ export default class TutorHistory extends React.Component {
             </div>
 
             <VerticalTimeline animate={false} layout="1-column">
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work "
-                date="Kết thúc: 6/12/2019"
-                contentStyle={{}}
-                iconStyle={{
-                  background: '#6782a3',
-                  color: '#fff'
-                }}
-                icon={<CheckCircleIcon />}
-              >
-                <h6 className="vertical-timeline-element-title text-left">
-                  Học sinh: Nguyễn Hữu Tú
-                </h6>
-                <h6 className="vertical-timeline-element-subtitle text-left">
-                  Tổng thời gian: 80 giờ
-                </h6>
-                <p className="text-left">Giá: 69k/giờ</p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Kết thúc: 6/12/2019"
-                contentStyle={{}}
-                iconStyle={{
-                  background: '#6782a3',
-                  color: '#fff'
-                }}
-                icon={<CheckCircleIcon />}
-              >
-                <h6 className="vertical-timeline-element-title text-left">
-                  Học sinh: Nguyễn Hữu Tú
-                </h6>
-                <h6 className="vertical-timeline-element-subtitle text-left">
-                  Tổng thời gian: 80 giờ
-                </h6>
-                <p className="text-left">Giá: 69k/giờ</p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Kết thúc: 6/12/2019"
-                contentStyle={{}}
-                iconStyle={{
-                  background: '#6782a3',
-                  color: '#fff'
-                }}
-                icon={<CheckCircleIcon />}
-              >
-                <h6 className="vertical-timeline-element-title text-left">
-                  Học sinh: Nguyễn Hữu Tú
-                </h6>
-                <h6 className="vertical-timeline-element-subtitle text-left">
-                  Tổng thời gian: 80 giờ
-                </h6>
-                <p className="text-left">Giá: 69k/giờ</p>
-              </VerticalTimelineElement>
+              {this.renderListOldStudent()}
             </VerticalTimeline>
           </Col>
         </Row>

@@ -81,3 +81,31 @@ export const requestListSkill = cb => {
       });
   };
 };
+
+export const requestTutorDetail = (id, cb) => {
+  return () => {
+    let check = true;
+    const url = `http://localhost:3100/tutor/${id}`;
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        // eslint-disable-next-line no-console
+        if (check) {
+          cb(response);
+        }
+      });
+  };
+};
+
