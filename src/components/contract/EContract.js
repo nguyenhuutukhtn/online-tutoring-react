@@ -27,7 +27,7 @@ class EContract extends Component {
   render() {
     return (
       <div style={{ height: '600px' }}>
-        <PDFViewer width="100%" height="100%">
+        <PDFViewer width="80%" height="100%">
           <PDFContract />
         </PDFViewer>
       </div>
