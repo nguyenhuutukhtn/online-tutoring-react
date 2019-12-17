@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Page, Text, Document, StyleSheet, Font } from '@react-pdf/renderer';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 
-WebFont.load({
-  google: {
-    families: ['Be Vietnam', 'sans-serif']
-  }
-});
+// WebFont.load({
+//   google: {
+//     families: ['Be Vietnam', 'sans-serif']
+//   }
+// });
 
 export default class PDFContract extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class PDFContract extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (

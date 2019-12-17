@@ -36,6 +36,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.setState({ loading: false });
+    this.checkLogin();
   }
 
   checkLogin = () => {

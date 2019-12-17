@@ -1,17 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux'
 // reactstrap components
 import { NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { NavLink } from 'reactstrap';
 import './navbar.css';
+import userActions from '../../actions/user.action';
 
-export default class UserHeader extends React.Component {
+
+class UserHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userDetail: null
+    };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { data } = this.props;
+    const userInfo = JSON.parse(data);
+    const { getProfile } = this.props;
+    getProfile(userInfo.userId, res => {
+      this.setState({
+        userDetail: res.data
+      })
+    })
+  }
 
   render() {
+    const { userDetail } = this.state;
     return (
       <>
         <NavDropdown
@@ -23,23 +40,40 @@ export default class UserHeader extends React.Component {
             >
               <img
                 className="thumbnail-image rounded-circle"
-                src="https://res.cloudinary.com/dsqfchskj/image/upload/v1576326328/Tutor/78905118_2276223572479557_610009197119012864_o_xdb3x8.jpg"
+                src={userDetail ? userDetail.avatar : null}
                 alt="user pic"
               />
               <div style={{ display: 'inline' }} className="ml-3">
-                Nguyễn Hữu Tú
+                {userDetail ? userDetail.name : null}
               </div>
             </div>
           }
           id="basic-nav-dropdown"
         >
-          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Item><NavLink to="/profile" tag={Link}>
+            Thông tin cá nhân
+          </NavLink></NavDropdown.Item>
+          <NavDropdown.Item><NavLink to="/profile" tag={Link} >
+            Lịch sử thuê
+          </NavLink></NavDropdown.Item>
+          <NavDropdown.Item><NavLink to="/profile" tag={Link} >
+            Đổi mật khẩu
+          </NavLink></NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+          <NavDropdown.Item><NavLink to="/profile" tag={Link}>
+            Đăng xuất
+          </NavLink></NavDropdown.Item>
         </NavDropdown>
       </>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  getProfile: (id, cb) => dispatch(userActions.requestProfile(id, cb))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserHeader);
