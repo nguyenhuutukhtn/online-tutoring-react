@@ -179,7 +179,7 @@ export default class TutorInfo extends React.Component {
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Tổng số tiền"
+                label="Tổng số giờ"
                 fullWidth
               />
             </DialogContent>
