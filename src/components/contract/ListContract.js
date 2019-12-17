@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Badge, Card, Media, Table, Button } from 'react-bootstrap';
 
 import './contract.css';
+import history from '../../helpers/history';
 
 class ListContracts extends Component {
   constructor(props) {
@@ -11,6 +12,10 @@ class ListContracts extends Component {
       showPopup: false
     };
   }
+
+  handleDetailClick = e => {
+    history.push('/contract-detail');
+  };
 
   componentDidMount() {}
 
@@ -67,7 +72,11 @@ class ListContracts extends Component {
                 </Badge>
               </td>
               <td className="text-right">
-                <Button variant="info" className="detail-button">
+                <Button
+                  variant="info"
+                  className="detail-button"
+                  onClick={() => this.handleDetailClick()}
+                >
                   Chi tiết
                 </Button>
               </td>
@@ -107,7 +116,11 @@ class ListContracts extends Component {
                 </Badge>
               </td>
               <td className="text-right">
-                <Button variant="info" className="detail-button">
+                <Button
+                  variant="info"
+                  className="detail-button"
+                  onClick={() => this.handleDetailClick()}
+                >
                   Chi tiết
                 </Button>
               </td>

@@ -51,3 +51,12 @@
 .detail-button {
   padding: 6px !important;
 }
+
+.title-field {
+  font-weight: bold;
+}
+
+.party-name {
+  color: #1d4575;
+  font-weight: 500;
+}

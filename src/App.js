@@ -28,6 +28,7 @@ import TutorDetail from './components/tutor/TutorDetail';
 import TutorReview from './components/tutor/TutorReview';
 import TutorContracy from './components/contract/TutorContract';
 import PersonalInfo from './components/personalPage/PersonalInfo';
+import ContractDetail from './components/contract/ContractDetail';
 
 class App extends React.Component {
   constructor(props) {
@@ -73,6 +74,7 @@ class App extends React.Component {
               <Route path="/tutor-review" component={TutorReview} />
               <Route path="/tutor-contract" component={TutorContracy} />
               <Route path="/personal-info" component={PersonalInfo} />
+              <Route path="/contract-detail" component={ContractDetail} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
