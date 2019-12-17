@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Container, Tab, Row, Col, Nav, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
 
 import {
   ListItem,
@@ -17,6 +17,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 import './contract.css';
 import history from '../../helpers/history';
@@ -115,7 +116,7 @@ class ContractDetail extends Component {
                     </Col>
                     <Col md="8">
                       <div className="text-left content-detail mt-3">
-                        Đã xác nhận
+                        <Badge variant="danger">Chưa thanh toán</Badge>
                       </div>
                     </Col>
                   </Row>
@@ -145,6 +146,19 @@ class ContractDetail extends Component {
                           className="ml-5"
                         >
                           Hủy
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          style={{
+                            color: '#1D4575',
+                            background: null,
+                            border: '1px solid #1D4575',
+                            borderRadius: 6
+                          }}
+                          startIcon={<PaymentIcon />}
+                          className="ml-5"
+                        >
+                          Thanh toán
                         </Button>
                         <Button
                           style={{
