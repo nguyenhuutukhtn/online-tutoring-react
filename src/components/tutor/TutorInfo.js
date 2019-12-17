@@ -43,7 +43,7 @@ export default class TutorInfo extends React.Component {
 
   handleSendRegister() {
     this.setState({ openDialog: false });
-    //Call API Register and redirect to list contract
+    // Call API Register and redirect to list contract
     history.push('/tutor-contract');
   }
 
@@ -67,7 +67,11 @@ export default class TutorInfo extends React.Component {
                 <div className="mb-3 mx-auto">
                   <img
                     className="rounded-circle"
-                    src={tutorData ? tutorData.avatar : null}
+                    src={
+                      tutorData && tutorData.avatar
+                        ? tutorData.avatar
+                        : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
+                    }
                     alt={tutorData ? tutorData.name : null}
                     width="110"
                     height="110"

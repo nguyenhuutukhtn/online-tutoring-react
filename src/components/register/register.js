@@ -71,12 +71,12 @@ class Register extends React.Component {
       return null; // render null when app is not ready
     }
     return (
-      <div>
+      <div classNam="mt-5 pb-5">
         <form
           className="needs-validation main-page"
           onSubmit={this.submitHandler}
         >
-          <MDBContainer center>
+          <MDBContainer center className="mt-4 pb-5">
             <MDBRow>
               <MDBCol />
             </MDBRow>

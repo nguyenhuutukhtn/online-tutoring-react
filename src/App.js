@@ -30,6 +30,7 @@ import TutorContracy from './components/contract/TutorContract';
 import PersonalInfo from './components/personalPage/PersonalInfo';
 import ContractDetail from './components/contract/ContractDetail';
 import ChangePassword from './components/profile/ChangePassword';
+import ChatWindow from './components/chat/ChatWindow';
 
 class App extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { alert } = this.props;
+    const { alert, showChat } = this.props;
 
     return (
       <div className="App">
@@ -77,11 +78,13 @@ class App extends React.Component {
               <Route path="/personal-info" component={PersonalInfo} />
               <Route path="/contract-detail" component={ContractDetail} />
               <Route path="/change-password" component={ChangePassword} />
+              {/* <Route path="/chat" component={ChatWindow} /> */}
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
             </Switch>
           </div>
+
           <Footer />
         </Router>
       </div>
