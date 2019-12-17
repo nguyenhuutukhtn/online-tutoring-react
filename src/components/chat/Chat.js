@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 import Messenger from './Messenger';
 
 class Chat extends React.Component {

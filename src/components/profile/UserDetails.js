@@ -45,10 +45,9 @@ class UserDetails extends React.Component {
           id: userInfo.userId,
           metaValue: introduce.content
         }
-      }
-      )
+      });
     }
-  }
+  };
 
   showWidget = () => {
     console.log('clicked');
@@ -128,13 +127,6 @@ class UserDetails extends React.Component {
     );
   }
 }
-
-UserDetails.propTypes = {
-  /**
-   * The user details object.
-   */
-  userDetails: PropTypes.object
-};
 
 const actionCreators = {
   updateAvatar: userActions.updateAvatar
