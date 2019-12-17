@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import './home.css';
 import Banner from './Banner';
 import WebsiteInfo from './WebsiteInfo';
 import OutstandingTutor from './OutstandingTutor';
 import OutstandingFeedback from './OutstandingFeedback';
+import { requestOutStandingTutor } from '../../actions/tutor.action';
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      listOutStandingTutor: []
+    };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { getListOutStandingTutor } = this.props;
+    getListOutStandingTutor((res) => {
+      this.setState({
+        listOutStandingTutor: res.data
+      })
+    })
+  }
 
   render() {
+    const { listOutStandingTutor } = this.state;
     return (
       <div>
         <Container fluid className="noPadding noMargin">
@@ -30,7 +42,7 @@ class Home extends Component {
           </Row>
           <Row className="noMargin noPadding">
             <Col className="noMargin noPadding">
-              <OutstandingTutor />
+              <OutstandingTutor listOutStandingTutor={listOutStandingTutor} />
             </Col>
           </Row>
           <Row className="noMargin noPadding">
@@ -44,4 +56,12 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => ({
+  getListOutStandingTutor: cb => dispatch(requestOutStandingTutor(cb))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Home);
+

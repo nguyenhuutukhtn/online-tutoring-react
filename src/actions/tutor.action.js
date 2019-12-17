@@ -19,9 +19,6 @@ export const requestListTutor = (page, listSkill, from, to, cb) => {
     });
 
     url = url.slice(0, url.length - 1);
-
-    console.log('----url', url);
-
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -29,20 +26,14 @@ export const requestListTutor = (page, listSkill, from, to, cb) => {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       }
-      // body: JSON.stringify({
-      //   email,
-      //   password
-      // })
     })
       .then(response => {
         if (response.status !== 200) {
-          console.log('xxxxxx');
           check = false;
         }
         return response.json();
       })
       .then(response => {
-        // eslint-disable-next-line no-console
         if (check) {
           cb(response);
         }
@@ -61,20 +52,14 @@ export const requestListSkill = cb => {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       }
-      // body: JSON.stringify({
-      //   email,
-      //   password
-      // })
     })
       .then(response => {
         if (response.status !== 200) {
-          console.log('xxxxxx');
           check = false;
         }
         return response.json();
       })
       .then(response => {
-        // eslint-disable-next-line no-console
         if (check) {
           cb(response);
         }
@@ -101,7 +86,6 @@ export const requestTutorDetail = (id, cb) => {
         return response.json();
       })
       .then(response => {
-        // eslint-disable-next-line no-console
         if (check) {
           cb(response);
         }
@@ -109,3 +93,28 @@ export const requestTutorDetail = (id, cb) => {
   };
 };
 
+export const requestOutStandingTutor = (cb) => {
+  return () => {
+    let check = true;
+    const url = `http://localhost:3100/tutor/listOutStanding`;
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+      });
+  };
+};

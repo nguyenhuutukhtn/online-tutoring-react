@@ -38,7 +38,7 @@ export default class TutorHistory extends React.Component {
           <h6 className="vertical-timeline-element-subtitle text-left">
             Thời gian thuê: {student.hours_hire} giờ
           </h6>
-          <p className="text-left">Giá: {student.price / student.hours_hire}/giờ</p>
+          <p className="text-left">Giá: {student.price / student.hours_hire}K VNĐ/giờ</p>
         </VerticalTimelineElement>)
       })
     }
