@@ -180,6 +180,7 @@ class Register extends React.Component {
                           gradient="blue"
                           rounded
                           className="btn-block z-depth-1a"
+                          style={{ borderRadius: 23 }}
                         >
                           Đăng ký
                           {loading ? (

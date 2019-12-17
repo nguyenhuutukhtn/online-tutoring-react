@@ -41,15 +41,15 @@ class ContractDetail extends Component {
     this.handleRatingChange = this.handleRatingChange.bind(this);
   }
 
-  handleBackClick = e => {
-    history.push('/tutor-contract');
-  };
+  componentDidMount() {}
 
-  handleCompleteClick() {
+  handlePaymentClick = () => {};
+
+  handleCancelClick() {
     this.setState({ openDialog: true });
   }
 
-  handleCancelClick() {
+  handleCompleteClick() {
     this.setState({ openDialog: true });
   }
 
@@ -59,16 +59,12 @@ class ContractDetail extends Component {
 
   handleSendRequest() {
     this.setState({ openDialog: false });
-    //Call API
+    // Call API
   }
 
   handleRatingChange(e) {
     this.setState({ ratingValue: e.target.value });
   }
-
-  handlePaymentClick = () => {};
-
-  componentDidMount() {}
 
   render() {
     const { openDialog, ratingValue } = this.state;
