@@ -26,7 +26,9 @@ import TutorInfo from './components/tutor/TutorInfo';
 import TutorHistory from './components/tutor/TutorHistory';
 import TutorDetail from './components/tutor/TutorDetail';
 import TutorReview from './components/tutor/TutorReview';
-import EContract from './components/contract/EContract';
+import TutorContracy from './components/contract/TutorContract';
+import PersonalInfo from './components/personalPage/PersonalInfo';
+import ContractDetail from './components/contract/ContractDetail';
 
 class App extends React.Component {
   constructor(props) {
@@ -70,7 +72,9 @@ class App extends React.Component {
               <Route path="/tutor-history" component={TutorHistory} />
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
-              <Route path="/e-contract" component={EContract} />
+              <Route path="/tutor-contract" component={TutorContracy} />
+              <Route path="/personal-info" component={PersonalInfo} />
+              <Route path="/contract-detail" component={ContractDetail} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />

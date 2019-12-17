@@ -21,6 +21,7 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import MessageIcon from '@material-ui/icons/Message';
+import history from '../../helpers/history';
 import './tutor.css';
 
 export default class TutorInfo extends React.Component {
@@ -33,19 +34,17 @@ export default class TutorInfo extends React.Component {
   }
 
   handleRegisterClick() {
-    const { openDialog } = this.state;
     this.setState({ openDialog: true });
   }
 
   handleClose() {
-    const { openDialog } = this.state;
     this.setState({ openDialog: false });
   }
 
   handleSendRegister() {
-    const { openDialog } = this.state;
     this.setState({ openDialog: false });
     //Call API Register and redirect to list contract
+    history.push('/tutor-contract');
   }
 
   render() {
@@ -174,10 +173,10 @@ export default class TutorInfo extends React.Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => this.handleClose} color="primary">
+              <Button onClick={() => this.handleClose()} color="primary">
                 Bỏ qua
               </Button>
-              <Button onClick={() => this.handleSendRegister} color="primary">
+              <Button onClick={() => this.handleSendRegister()} color="primary">
                 Đăng Ký
               </Button>
             </DialogActions>

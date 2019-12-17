@@ -1,0 +1,62 @@
+.noPadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.noMargin {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.nav-item-tab {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  margin-top: 5px;
+}
+
+.nav-link-tab {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.avatar {
+  color: #fff;
+  background-color: #adb5bd;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+}
+.avatar img {
+  width: 100%;
+  border-radius: 50%;
+}
+.avatar + .avatar-content {
+  display: inline-block;
+  margin-left: 0.75rem;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.table.align-items-center td,
+.table.align-items-center th {
+  vertical-align: middle;
+}
+
+.detail-button {
+  padding: 6px !important;
+}
+
+.title-field {
+  font-weight: bold;
+}
+
+.party-name {
+  color: #1d4575;
+  font-weight: 500;
+}
