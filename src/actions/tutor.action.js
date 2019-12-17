@@ -118,3 +118,58 @@ export const requestOutStandingTutor = (cb) => {
       });
   };
 };
+
+export const requestTutorIntroduce = (id, cb) => {
+  let check = true;
+  return () => {
+    const url = `http://localhost:3100/tutor/introduce?id=${id}`;
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+      });
+  };
+};
+
+export const requestTutorSkills = (id, cb) => {
+  let check = true;
+  return () => {
+    const url = `http://localhost:3100/tutor/listSkill?id=${id}`;
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+      });
+  };
+};
+
+
+

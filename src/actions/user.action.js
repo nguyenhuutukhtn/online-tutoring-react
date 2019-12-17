@@ -100,12 +100,40 @@ function updateAvatar(id, avatarUrl) {
   };
 }
 
+const requestProfile = (id, cb) => {
+  let check = true;
+  return () => {
+    const url = `http://localhost:3100/users/profile?id=${id}`;
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+      });
+  };
+};
+
+
 const userActions = {
   register,
   login,
   loginFB,
   loginGG,
-  updateAvatar
+  updateAvatar,
+  requestProfile
 };
 
 export default userActions;

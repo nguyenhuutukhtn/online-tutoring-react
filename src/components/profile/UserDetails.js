@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import userActions from '../../actions/user.action';
@@ -15,7 +15,6 @@ class UserDetails extends React.Component {
         id: '1',
         name: 'Nguyễn Hữu Tú',
         avatar: 'https://placeimg.com/640/480/any',
-        jobTitle: 'Gia sư cấp 3',
         metaTitle: 'Giới thiệu',
         metaValue: 'Gia sư này giỏi vkl'
       },
@@ -32,6 +31,23 @@ class UserDetails extends React.Component {
     };
 
     this.showWidget = this.showWidget.bind(this);
+  }
+
+  componentDidMount = () => {
+    const { userDetail: userInfo, introduce } = this.props;
+    const { userDetails } = this.state;
+    if (userInfo && introduce) {
+      this.setState({
+        userDetails: {
+          ...userDetails,
+          avatar: userInfo.avatar,
+          name: userInfo.name,
+          id: userInfo.userId,
+          metaValue: introduce.content
+        }
+      }
+      )
+    }
   }
 
   showWidget = () => {
@@ -72,9 +88,7 @@ class UserDetails extends React.Component {
             />
           </div>
           <h4 className="mb-0">{userDetails.name}</h4>
-          <span className="text-muted d-block mb-2">
-            {userDetails.jobTitle}
-          </span>
+          <br />
           {!chosen ? (
             <Button
               variant="contained"
