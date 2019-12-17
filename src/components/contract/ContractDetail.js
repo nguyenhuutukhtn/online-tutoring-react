@@ -35,7 +35,8 @@ class ContractDetail extends Component {
     super(props);
     this.state = {
       openDialog: false,
-      ratingValue: 0
+      ratingValue: 0,
+      openPaymentDialog: false
     };
     this.handleRatingChange = this.handleRatingChange.bind(this);
   }
@@ -64,6 +65,8 @@ class ContractDetail extends Component {
   handleRatingChange(e) {
     this.setState({ ratingValue: e.target.value });
   }
+
+  handlePaymentClick = () => {};
 
   componentDidMount() {}
 
