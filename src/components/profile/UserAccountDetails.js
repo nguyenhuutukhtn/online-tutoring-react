@@ -21,17 +21,109 @@ import './profile.css';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class UserAccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listAllSkill: [{}],
+      listChosenSkill: [{}],
+      name: '',
+      address: '',
+      introduce: '',
+      pricePerHour: ''
+    };
+    this.handleCheckBoxOnChange = this.handleCheckBoxOnChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
 
+  componentDidMount() {
+    const { listAllSkill, listTutorSkill, userDetail, introduce } = this.props;
+    this.setState(
+      {
+        name: userDetail.name,
+        address: userDetail.address,
+        introduce: introduce.content,
+        pricePerHour: userDetail.pricePerHour,
+        listAllSkill: listAllSkill.map(itemInAllSkill => {
+          var isChosen = false;
+          listTutorSkill.map(itemInTutorSkill => {
+            if (itemInAllSkill.id === itemInTutorSkill.id_tag) isChosen = true;
+          });
+
+          return {
+            id: itemInAllSkill.id,
+            name: itemInAllSkill.name,
+            isChecked: isChosen
+          };
+        })
+      },
+      () => this.updateListChosenSkill()
+    );
+  }
+
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  updateListChosenSkill = () => {
+    const { listAllSkill, listChosenSkill } = this.state;
+    this.setState({
+      listChosenSkill: listAllSkill.filter(item => item.isChecked == true)
+    });
+  };
+
+  renderAllSkill = () => {
+    const { listAllSkill } = this.state;
+    const listAllSkillElement = listAllSkill.map((skill, idx) => {
+      return (
+        <FormControlLabel
+          control={<Checkbox color="primary" />}
+          label={skill.name}
+          value={skill.id}
+          checked={skill.isChecked}
+          onChange={this.handleCheckBoxOnChange}
+        />
+      );
+
+      return null;
+    });
+    return listAllSkillElement;
+  };
+
+  handleCheckBoxOnChange(e) {
+    const { listAllSkill } = this.state;
+
+    listAllSkill.forEach(skill => {
+      if (skill.id == e.target.value) {
+        skill.isChecked = e.target.checked;
+      }
+    });
+    this.setState({ listAllSkill }, () => this.updateListChosenSkill);
+  }
+
+  updateInfo = () => {
+    const {
+      listChosenSkill,
+      name,
+      address,
+      introduce,
+      pricePerHour
+    } = this.state;
+    console.log('listChosenSkill: ----', listChosenSkill);
+    console.log('name: ----', name);
+    console.log('address: ----', address);
+    console.log('introduce: ----', introduce);
+    console.log('pricePerHour: ----', pricePerHour);
+  };
 
   render() {
-    const { userDetail, listTutorSkill, introduce, listAllSkill } = this.props;
-    console.log('-------listTutorSkill', listTutorSkill);
-    console.log('-------introduce', introduce);
-    console.log('-------userDetail', userDetail);
-    console.log('-------listAllSkill', listAllSkill);
+    const { userDetail } = this.props;
+    const { listAllSkill, name, address, introduce, pricePerHour } = this.state;
 
-    if (userDetail && listTutorSkill.length && introduce) {
-      if (userDetail.role === "tutor") {
+    if (userDetail && introduce) {
+      if (userDetail.role === 'tutor') {
         return (
           <Card small className="mb-4 mt-5">
             <Card.Header className="border-bottom card-header-title">
@@ -50,7 +142,9 @@ class UserAccountDetails extends React.Component {
                             id="name"
                             label="Họ tên"
                             className="float-left"
-                            defaultValue={userDetail.name}
+                            defaultValue={name}
+                            name="name"
+                            onChange={this.handleInputChange}
                           />
                         </Col>
                       </Row>
@@ -61,7 +155,9 @@ class UserAccountDetails extends React.Component {
                             id="address"
                             label="Địa chỉ"
                             className="float-left"
-                            defaultValue={userDetail.address}
+                            defaultValue={address}
+                            name="address"
+                            onChange={this.handleInputChange}
                           />
                         </Col>
                       </Row>
@@ -70,11 +166,13 @@ class UserAccountDetails extends React.Component {
                           <TextField
                             id="outlined-multiline-flexible"
                             label="Tự giới thiệu"
-                            defaultValue={introduce.content}
+                            defaultValue={introduce}
                             fullWidth
                             multiline
                             rows="4"
                             variant="outlined"
+                            onChange={this.handleInputChange}
+                            name="introduce"
                           />
                         </Col>
                       </Row>
@@ -97,9 +195,11 @@ class UserAccountDetails extends React.Component {
                             id="fee"
                             label="Học phí (x1000 VND/ giờ)"
                             className="float-left"
-                            defaultValue={userDetail.pricePerHour}
+                            defaultValue={pricePerHour}
                             variant="outlined"
                             required
+                            onChange={this.handleInputChange}
+                            name="pricePerHour"
                           />
                         </Col>
                       </Row>
@@ -114,19 +214,22 @@ class UserAccountDetails extends React.Component {
                               Chọn kĩ năng
                             </FormLabel>
 
-                            <FormControlLabel
+                            {this.renderAllSkill()}
+                            {/* <FormControlLabel
                               control={<Checkbox color="primary" />}
                               label="Luyện thi đại học khối A"
                             />
                             <FormControlLabel
                               control={<Checkbox color="primary" />}
                               label="Huấn luyện người ngu hết thuốc chữa"
-                            />
+                            /> */}
                           </FormControl>
                         </Col>
                       </Row>
 
-                      <Button theme="accent">Cập nhật</Button>
+                      <Button theme="accent" onClick={() => this.updateInfo()}>
+                        Cập nhật
+                      </Button>
                     </Form>
                   </Col>
                 </Row>
@@ -142,4 +245,3 @@ class UserAccountDetails extends React.Component {
 }
 
 export default UserAccountDetails;
-
