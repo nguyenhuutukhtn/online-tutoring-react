@@ -100,7 +100,7 @@ class UserAccountDetails extends React.Component {
         skill.isChecked = e.target.checked;
       }
     });
-    this.setState({ listAllSkill }, () => this.updateListChosenSkill);
+    this.setState({ listAllSkill }, () => this.updateListChosenSkill());
   }
 
   updateInfo = () => {
