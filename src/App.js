@@ -32,6 +32,7 @@ import ContractDetail from './components/contract/ContractDetail';
 import ChangePassword from './components/profile/ChangePassword';
 // import Messenger from './components/chat/Messenger';
 import Chat from './components/chat/Chat';
+import IncomeStatistic from './components/tutor/IncomStatistic';
 
 class App extends React.Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class App extends React.Component {
                 component={ChangePassword}
               />
               <Route path="/chat" component={Chat} />
+              <Route path="/income-statistic" component={IncomeStatistic} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
