@@ -19,7 +19,7 @@ import TutorItem from './components/tutor/TutorItem';
 import ListTutor from './components/tutor/ListTutor';
 import history from './helpers/history';
 import alertActions from './actions/alert.action';
-// import { PrivateRoute } from './components/privateRoute/PrivateRoute';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 import CommonNavbar from './components/navbar/CommonNavbar';
 import Footer from './components/footer/Footer';
 import TutorInfo from './components/tutor/TutorInfo';
@@ -68,7 +68,7 @@ class App extends React.Component {
                 component={UserAccountDetails}
               />
               <Route path="/page-title" component={PageTitle} />
-              <Route path="/profile" component={UserProfileLite} />
+              <PrivateRoute path="/profile" component={UserProfileLite} />
               <Route path="/tutor-item" component={TutorItem} />
               <Route path="/list-tutor" component={ListTutor} />
               <Route path="/tutor-info" component={TutorInfo} />
@@ -78,7 +78,10 @@ class App extends React.Component {
               <Route path="/tutor-contract" component={TutorContracy} />
               <Route path="/personal-info" component={PersonalInfo} />
               <Route path="/contract-detail" component={ContractDetail} />
-              <Route path="/change-password" component={ChangePassword} />
+              <PrivateRoute
+                path="/change-password"
+                component={ChangePassword}
+              />
               <Route path="/chat" component={Chat} />
               <Route path="/" component={Home} />
 

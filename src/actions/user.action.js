@@ -106,8 +106,25 @@ const updateProfile = (token, name, address) => {
         dispatch(alertActions.success('Cập nhật profile thành công'));
       })
       .catch(error => {
-        console.log('----------------err', error);
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
 
+const changePassword = (
+  token,
+  currentPassword,
+  newPassword,
+  confirmPassword
+) => {
+  return dispatch => {
+    userApis
+      .changePassword(token, currentPassword, newPassword, confirmPassword)
+      .then(() => {
+        dispatch(alertActions.success('Cập nhật mật khẩu thành công'));
+      })
+      .catch(error => {
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
       });
@@ -147,7 +164,8 @@ const userActions = {
   loginGG,
   updateAvatar,
   requestProfile,
-  updateProfile
+  updateProfile,
+  changePassword
 };
 
 export default userActions;

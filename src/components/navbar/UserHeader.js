@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 // reactstrap components
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'reactstrap';
 import './navbar.css';
 import userActions from '../../actions/user.action';
-
+import history from '../../helpers/history';
 
 class UserHeader extends React.Component {
   constructor(props) {
@@ -23,9 +23,15 @@ class UserHeader extends React.Component {
     getProfile(userInfo.userId, res => {
       this.setState({
         userDetail: res.data
-      })
-    })
+      });
+    });
   }
+
+  logOut = () => {
+    localStorage.clear();
+    history.push('/');
+    window.location.reload();
+  };
 
   render() {
     const { userDetail } = this.state;
@@ -50,19 +56,27 @@ class UserHeader extends React.Component {
           }
           id="basic-nav-dropdown"
         >
-          <NavDropdown.Item><NavLink to="/profile" tag={Link}>
-            Thông tin cá nhân
-          </NavLink></NavDropdown.Item>
-          <NavDropdown.Item><NavLink to="/profile" tag={Link} >
-            Lịch sử thuê
-          </NavLink></NavDropdown.Item>
-          <NavDropdown.Item><NavLink to="/profile" tag={Link} >
-            Đổi mật khẩu
-          </NavLink></NavDropdown.Item>
+          <NavDropdown.Item>
+            <NavLink to="/profile" tag={Link}>
+              Thông tin cá nhân
+            </NavLink>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <NavLink to="/profile" tag={Link}>
+              Lịch sử thuê
+            </NavLink>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <NavLink to="/change-password" tag={Link}>
+              Đổi mật khẩu
+            </NavLink>
+          </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item><NavLink to="/profile" tag={Link}>
-            Đăng xuất
-          </NavLink></NavDropdown.Item>
+          <NavDropdown.Item>
+            <NavLink tag={Link} onClick={this.logOut}>
+              Đăng xuất
+            </NavLink>
+          </NavDropdown.Item>
         </NavDropdown>
       </>
     );
