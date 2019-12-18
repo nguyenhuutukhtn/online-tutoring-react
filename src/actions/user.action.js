@@ -88,17 +88,31 @@ function updateAvatar(id, avatarUrl) {
   return dispatch => {
     userApis
       .updateAvatar(id, avatarUrl)
-      .then(data => {
-        console.log('data---------', data);
+      .then(() => {
         dispatch(alertActions.success('Cập nhật ảnh đại diện thành công'));
       })
       .catch(error => {
-        console.log('err-------', error);
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       });
   };
 }
+
+const updateProfile = (token, name, address) => {
+  return dispatch => {
+    userApis
+      .updateProfile(token, name, address)
+      .then(() => {
+        dispatch(alertActions.success('Cập nhật profile thành công'));
+      })
+      .catch(error => {
+        console.log('----------------err', error);
+
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
 
 const requestProfile = (id, cb) => {
   let check = true;
@@ -126,14 +140,14 @@ const requestProfile = (id, cb) => {
   };
 };
 
-
 const userActions = {
   register,
   login,
   loginFB,
   loginGG,
   updateAvatar,
-  requestProfile
+  requestProfile,
+  updateProfile
 };
 
 export default userActions;

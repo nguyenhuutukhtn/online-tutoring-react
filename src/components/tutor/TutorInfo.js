@@ -43,7 +43,7 @@ export default class TutorInfo extends React.Component {
 
   handleSendRegister() {
     this.setState({ openDialog: false });
-    //Call API Register and redirect to list contract
+    // Call API Register and redirect to list contract
     history.push('/tutor-contract');
   }
 

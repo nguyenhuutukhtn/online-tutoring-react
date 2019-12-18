@@ -2,16 +2,19 @@
 import constantApi from './constants.api';
 
 function handleResponse(response) {
+  if (!response.ok) {
+    if (response.status === 401) {
+      // auto logout if 401 response returned from api
+      // logout();
+      localStorage.clear();
+      window.location.reload(true);
+      return Promise.reject(response.statusText);
+    }
+  }
+
   return response.text().then(text => {
     const data = text && JSON.parse(text);
-    console.log(`aaaaaaaaaaaaaaaaaaa${data}`);
     if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        // logout();
-        window.location.reload(true);
-      }
-
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
@@ -108,12 +111,30 @@ function updateAvatar(id, avatarUrl) {
     });
 }
 
+function updateProfile(token, name, address) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ name, address })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/users/changeProfile`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
 const userApis = {
   register,
   login,
   loginFB,
   loginGG,
-  updateAvatar
+  updateAvatar,
+  updateProfile
 };
 
 export default userApis;

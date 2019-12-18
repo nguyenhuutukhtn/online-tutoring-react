@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -16,7 +15,7 @@ class UserDetails extends React.Component {
         name: 'Nguyễn Hữu Tú',
         avatar: 'https://placeimg.com/640/480/any',
         metaTitle: 'Giới thiệu',
-        metaValue: 'Gia sư này giỏi vkl'
+        metaValue: ''
       },
       chosen: false,
       widget: window.cloudinary.createUploadWidget(
@@ -36,19 +35,18 @@ class UserDetails extends React.Component {
   componentDidMount = () => {
     const { userDetail: userInfo, introduce } = this.props;
     const { userDetails } = this.state;
-    if (userInfo && introduce) {
+    if (userInfo) {
       this.setState({
         userDetails: {
           ...userDetails,
           avatar: userInfo.avatar,
           name: userInfo.name,
           id: userInfo.userId,
-          metaValue: introduce.content
+          metaValue: introduce ? introduce.content : ''
         }
-      }
-      )
+      });
     }
-  }
+  };
 
   showWidget = () => {
     console.log('clicked');
@@ -57,10 +55,11 @@ class UserDetails extends React.Component {
   };
 
   checkUploadResult = resultEvent => {
+    const { userDetails } = this.state;
     if (resultEvent.event === 'success') {
       this.setState({
         userDetails: {
-          ...this.state.userDetails,
+          ...userDetails,
           avatar: resultEvent.info.secure_url
         },
         chosen: true
@@ -69,12 +68,15 @@ class UserDetails extends React.Component {
   };
 
   uploadAvatar = () => {
-    const { id, avatar } = this.state.userDetails;
-    this.props.updateAvatar(id, avatar);
+    const { userDetails } = this.state;
+    const { updateAvatar } = this.props;
+    const { id, avatar } = userDetails;
+    updateAvatar(id, avatar);
   };
 
   render() {
     const { userDetails, chosen } = this.state;
+    const { userDetail } = this.props;
     return (
       <Card small className="mt-5">
         <Card.Header className="border-bottom text-center">
@@ -116,25 +118,20 @@ class UserDetails extends React.Component {
         <i className="material-icons mr-1">person_add</i> Follow
       </Button> */}
         </Card.Header>
-        <ListGroup flush>
-          <ListGroupItem className="p-4">
-            <strong className="text-muted d-block mb-2">
-              {userDetails.metaTitle}
-            </strong>
-            <span>{userDetails.metaValue}</span>
-          </ListGroupItem>
-        </ListGroup>
+        {userDetail.role === 'tutor' ? (
+          <ListGroup flush>
+            <ListGroupItem className="p-4">
+              <strong className="text-muted d-block mb-2">
+                {userDetails.metaTitle}
+              </strong>
+              <span>{userDetails.metaValue}</span>
+            </ListGroupItem>
+          </ListGroup>
+        ) : null}
       </Card>
     );
   }
 }
-
-UserDetails.propTypes = {
-  /**
-   * The user details object.
-   */
-  userDetails: PropTypes.object
-};
 
 const actionCreators = {
   updateAvatar: userActions.updateAvatar

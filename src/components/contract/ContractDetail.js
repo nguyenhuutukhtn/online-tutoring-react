@@ -59,7 +59,7 @@ class ContractDetail extends Component {
 
   handleSendRequest() {
     this.setState({ openDialog: false });
-    //Call API
+    // Call API
   }
 
   handleRatingChange(e) {
