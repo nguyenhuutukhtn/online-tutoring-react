@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { AppBar, Tab, Tabs, Typography, Box } from '@material-ui/core';
+import { Tab, Tabs, Typography, Box } from '@material-ui/core';
 
 class PersonalInfo extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ class PersonalInfo extends Component {
   componentDidMount() {}
 
   handleChange = (event, value) => {
-    const { currentTab } = this.state;
     this.setState({ currentTab: value });
   };
 
@@ -66,6 +65,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}

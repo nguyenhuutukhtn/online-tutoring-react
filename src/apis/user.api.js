@@ -128,13 +128,31 @@ function updateProfile(token, name, address) {
     });
 }
 
+function changePassword(token, currentPassword, newPassword, confirmPassword) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/users/changePassword`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
 const userApis = {
   register,
   login,
   loginFB,
   loginGG,
   updateAvatar,
-  updateProfile
+  updateProfile,
+  changePassword
 };
 
 export default userApis;

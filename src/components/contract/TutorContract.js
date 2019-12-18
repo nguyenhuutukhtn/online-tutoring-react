@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Container, Tab, Row, Col, Nav } from 'react-bootstrap';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import { Button } from '@material-ui/core';
 
 import './contract.css';
 import ListContracts from './ListContract';
@@ -12,8 +11,8 @@ class TutorContract extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numPages: null,
-      pageNumber: 4
+      // numPages: null,
+      // pageNumber: 4
     };
   }
 

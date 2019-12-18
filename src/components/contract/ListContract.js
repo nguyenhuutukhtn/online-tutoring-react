@@ -9,15 +9,15 @@ class ListContracts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPopup: false
+      // showPopup: false
     };
   }
 
-  handleDetailClick = e => {
+  componentDidMount() {}
+
+  handleDetailClick = () => {
     history.push('/contract-detail');
   };
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -33,7 +33,7 @@ class ListContracts extends Component {
               <th scope="col">Xác nhận</th>
               <th scope="col">Trạng thái</th>
               <th scope="col">Thanh toán</th>
-              <th scope="col" />
+              <th scope="col"> </th>
             </tr>
           </thead>
           <tbody>

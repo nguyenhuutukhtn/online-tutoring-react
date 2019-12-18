@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { NavLink } from 'reactstrap';
 import './navbar.css';
 import userActions from '../../actions/user.action';
+import history from '../../helpers/history';
 
 class UserHeader extends React.Component {
   constructor(props) {
@@ -26,8 +27,9 @@ class UserHeader extends React.Component {
     });
   }
 
-  logout = () => {
+  logOut = () => {
     localStorage.clear();
+    history.push('/');
     window.location.reload();
   };
 
@@ -65,13 +67,15 @@ class UserHeader extends React.Component {
             </NavLink>
           </NavDropdown.Item>
           <NavDropdown.Item>
-            <NavLink to="/profile" tag={Link}>
+            <NavLink to="/change-password" tag={Link}>
               Đổi mật khẩu
             </NavLink>
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item onClick={() => this.logout()}>
-            <NavLink tag={Link}>Đăng xuất</NavLink>
+          <NavDropdown.Item>
+            <NavLink tag={Link} onClick={this.logOut}>
+              Đăng xuất
+            </NavLink>
           </NavDropdown.Item>
         </NavDropdown>
       </>

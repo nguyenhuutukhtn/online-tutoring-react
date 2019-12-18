@@ -1,6 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
 
 const PageTitle = ({ title, subtitle, className, ...attrs }) => {
@@ -13,22 +13,12 @@ const PageTitle = ({ title, subtitle, className, ...attrs }) => {
   );
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Col xs="12" sm="4" className={classes} {...attrs}>
       <span className="text-uppercase page-subtitle">{subtitle}</span>
       <h3 className="page-title">{title}</h3>
     </Col>
   );
-};
-
-PageTitle.propTypes = {
-  /**
-   * The page title.
-   */
-  title: PropTypes.string,
-  /**
-   * The page subtitle.
-   */
-  subtitle: PropTypes.string
 };
 
 export default PageTitle;

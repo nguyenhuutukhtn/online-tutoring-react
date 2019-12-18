@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import {
   MDBContainer,
   MDBRow,
@@ -9,17 +11,16 @@ import {
   MDBBtn
 } from 'mdbreact';
 import './profile.css';
+import userActions from '../../actions/user.action';
 
 class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {
-        oldPassword: '',
-        newPassword: '',
-        newPassword2: ''
-      },
+      oldPassword: '',
+      newPassword: '',
+      newPassword2: '',
       matchedPassword: false,
       submitted: false
     };
@@ -30,27 +31,32 @@ class ChangePassword extends React.Component {
 
   onChangeHandler(event) {
     const { name, value } = event.target;
-    const { user } = this.state;
+    const { newPassword } = this.state;
     this.setState({
-      user: {
-        ...user,
-        [name]: value
-      }
+      [name]: value
     });
-    if (name === 'newPassword2' && user.newPassword === event.target.value) {
+    if (name === 'newPassword2' && newPassword === event.target.value) {
       this.setState({ matchedPassword: true });
+    } else {
+      this.setState({ matchedPassword: false });
     }
   }
 
   submitHandler(event) {
     event.preventDefault();
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    const { oldPassword, newPassword, newPassword2 } = this.state;
+    const { changePassword } = this.props;
     this.setState({
       submitted: true
     });
+    if (newPassword === newPassword2) {
+      changePassword(token, oldPassword, newPassword, newPassword2);
+    }
   }
 
   render() {
-    const { user, submitted, matchedPassword } = this.state;
+    const { oldPassword, newPassword, submitted, matchedPassword } = this.state;
 
     return (
       <div className="mt-4 pb-4">
@@ -79,7 +85,7 @@ class ChangePassword extends React.Component {
                         containerClass="mb-0 text-left"
                         onChange={this.onChangeHandler}
                       >
-                        {submitted && !user.oldPassword ? (
+                        {submitted && !oldPassword ? (
                           <div className="invalid-tooltip d-block">
                             Không được bỏ trống
                           </div>
@@ -94,7 +100,7 @@ class ChangePassword extends React.Component {
                         containerClass="mb-0 text-left"
                         onChange={this.onChangeHandler}
                       >
-                        {submitted && !user.newPassword ? (
+                        {submitted && !newPassword ? (
                           <div className="invalid-tooltip d-block">
                             Không được bỏ trống ô này
                           </div>
@@ -139,4 +145,11 @@ class ChangePassword extends React.Component {
   }
 }
 
-export default ChangePassword;
+const mapDispatchToProps = {
+  changePassword: userActions.changePassword
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ChangePassword);
