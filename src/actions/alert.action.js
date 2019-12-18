@@ -8,8 +8,8 @@ function error(message) {
   return { type: alertConstants.ERROR, message };
 }
 
-function clear() {
-  return { type: alertConstants.CLEAR };
+function clear(message) {
+  return { type: alertConstants.CLEAR, message };
 }
 
 const alertActions = {

@@ -51,8 +51,7 @@ class Register extends React.Component {
     }
   }
 
-  submitHandler(event) {
-    event.preventDefault();
+  submitHandler() {
     this.setState({
       submitted: true
     });
@@ -72,10 +71,7 @@ class Register extends React.Component {
     }
     return (
       <div classNam="mt-5 pb-5">
-        <form
-          className="needs-validation main-page"
-          onSubmit={this.submitHandler}
-        >
+        <div className="needs-validation main-page">
           <MDBContainer center className="mt-4 pb-5">
             <MDBRow>
               <MDBCol />
@@ -181,6 +177,7 @@ class Register extends React.Component {
                           rounded
                           className="btn-block z-depth-1a"
                           style={{ borderRadius: 23 }}
+                          onClick={this.submitHandler}
                         >
                           Đăng ký
                           {loading ? (
@@ -205,7 +202,7 @@ class Register extends React.Component {
               </MDBCol>
             </MDBRow>
           </MDBContainer>
-        </form>
+        </div>
       </div>
     );
   }

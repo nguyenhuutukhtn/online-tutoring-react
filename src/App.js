@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import {
   Route,
@@ -5,9 +6,9 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import { MDBAlert } from 'mdbreact';
 import { connect } from 'react-redux';
 import './App.css';
+
 import Login from './components/login/Login';
 import UserDetails from './components/profile/UserDetails';
 import UserAccountDetails from './components/profile/UserAccountDetails';
@@ -19,6 +20,7 @@ import TutorItem from './components/tutor/TutorItem';
 import ListTutor from './components/tutor/ListTutor';
 import history from './helpers/history';
 import alertActions from './actions/alert.action';
+
 // import { PrivateRoute } from './components/privateRoute/PrivateRoute';
 import CommonNavbar from './components/navbar/CommonNavbar';
 import Footer from './components/footer/Footer';
@@ -33,18 +35,21 @@ import ChangePassword from './components/profile/ChangePassword';
 // import Messenger from './components/chat/Messenger';
 import Chat from './components/chat/Chat';
 import IncomeStatistic from './components/tutor/IncomStatistic';
+import CustomAlert from './customs/CustomAlert';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     history.listen(() => {
-      // clear alert on location change
-      const { clearAlerts } = this.props;
-      clearAlerts();
       window.location.reload();
-      // console.log('history change');
     });
+    this.clearAlert = this.clearAlert.bind(this);
+  }
+
+  clearAlert() {
+    const { clearAlert } = this.props;
+    clearAlert('clear');
   }
 
   render() {
@@ -53,11 +58,22 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router history={history}>
-          {alert.message && (
+          {/* {alert.message && (
             <MDBAlert className={`alert text-center ${alert.type}`}>
               {alert.message}
             </MDBAlert>
+          )} */}
+          {alert && (
+            <CustomAlert
+              open={alert.open}
+              variant={alert.type}
+              message={alert.message ? alert.message : ' '}
+              onClose={this.clearAlert}
+            />
           )}
+
+          {/* <CustomAlert open variant="success" message="abs" /> */}
+
           <CommonNavbar />
           <div className="main-route-place">
             <Switch>
@@ -100,9 +116,11 @@ function mapState(state) {
   return { alert };
 }
 
-const actionCreators = {
-  clearAlerts: alertActions.clear
-};
+const actionCreators = dispatch => ({
+  clearAlert: message => {
+    dispatch(alertActions.clear(message));
+  }
+});
 
 const connectedApp = connect(
   mapState,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Line, Doughnut, Radar, Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Typography } from '@material-ui/core';
 
 class IncomeStatistic extends React.Component {
