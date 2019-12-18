@@ -1,3 +1,6 @@
+import tutorApis from '../apis/tutor.api';
+import alertActions from './alert.action';
+
 export const requestListTutor = (page, listSkill, from, to, cb) => {
   let check = true;
   return () => {
@@ -93,7 +96,7 @@ export const requestTutorDetail = (id, cb) => {
   };
 };
 
-export const requestOutStandingTutor = (cb) => {
+export const requestOutStandingTutor = cb => {
   return () => {
     let check = true;
     const url = `http://localhost:3100/tutor/listOutStanding`;
@@ -171,5 +174,29 @@ export const requestTutorSkills = (id, cb) => {
   };
 };
 
-
-
+export const updateTutorProfile = (
+  name,
+  pricePerHour,
+  address,
+  introduce,
+  listSkill,
+  token
+) => {
+  return dispatch => {
+    tutorApis
+      .updateTutorProfile(
+        name,
+        pricePerHour,
+        address,
+        introduce,
+        listSkill,
+        token
+      )
+      .then(() => {
+        dispatch(alertActions.success('Cập nhật profile thành công'));
+      })
+      .catch(error => {
+        dispatch(alertActions.error(error));
+      });
+  };
+};

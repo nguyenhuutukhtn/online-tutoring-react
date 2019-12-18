@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Card,
   ListGroup,
@@ -16,6 +17,8 @@ import {
   Checkbox
 } from '@material-ui/core';
 import './profile.css';
+import { updateTutorProfile } from '../../actions/tutor.action';
+import userActions from '../../actions/user.action';
 
 // import { KeyboardDatePicker } from '@material-ui/pickers';
 
@@ -41,11 +44,11 @@ class UserAccountDetails extends React.Component {
       {
         name: userDetail.name,
         address: userDetail.address,
-        introduce: introduce.content,
+        introduce: introduce ? introduce.content : '',
         pricePerHour: userDetail.pricePerHour,
         listAllSkill: listAllSkill.map(itemInAllSkill => {
-          var isChosen = false;
-          listTutorSkill.map(itemInTutorSkill => {
+          let isChosen = false;
+          listTutorSkill.forEach(itemInTutorSkill => {
             if (itemInAllSkill.id === itemInTutorSkill.id_tag) isChosen = true;
           });
 
@@ -60,23 +63,16 @@ class UserAccountDetails extends React.Component {
     );
   }
 
-  handleInputChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  }
-
   updateListChosenSkill = () => {
-    const { listAllSkill, listChosenSkill } = this.state;
+    const { listAllSkill } = this.state;
     this.setState({
-      listChosenSkill: listAllSkill.filter(item => item.isChecked == true)
+      listChosenSkill: listAllSkill.filter(item => item.isChecked === true)
     });
   };
 
   renderAllSkill = () => {
     const { listAllSkill } = this.state;
-    const listAllSkillElement = listAllSkill.map((skill, idx) => {
+    const listAllSkillElement = listAllSkill.map(skill => {
       return (
         <FormControlLabel
           control={<Checkbox color="primary" />}
@@ -86,22 +82,9 @@ class UserAccountDetails extends React.Component {
           onChange={this.handleCheckBoxOnChange}
         />
       );
-
-      return null;
     });
     return listAllSkillElement;
   };
-
-  handleCheckBoxOnChange(e) {
-    const { listAllSkill } = this.state;
-
-    listAllSkill.forEach(skill => {
-      if (skill.id == e.target.value) {
-        skill.isChecked = e.target.checked;
-      }
-    });
-    this.setState({ listAllSkill }, () => this.updateListChosenSkill());
-  }
 
   updateInfo = () => {
     const {
@@ -111,56 +94,87 @@ class UserAccountDetails extends React.Component {
       introduce,
       pricePerHour
     } = this.state;
-    console.log('listChosenSkill: ----', listChosenSkill);
-    console.log('name: ----', name);
-    console.log('address: ----', address);
-    console.log('introduce: ----', introduce);
-    console.log('pricePerHour: ----', pricePerHour);
+    const { updateTutorInfo, userDetail, updateStudentProfile } = this.props;
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    const listSkill = listChosenSkill.map(skill => {
+      return skill.id;
+    });
+    if (userDetail.role === 'tutor') {
+      updateTutorInfo(name, pricePerHour, address, introduce, listSkill, token);
+    } else {
+      updateStudentProfile(token, name, address);
+    }
+
+    // console.log('listChosenSkill: ----', listChosenSkill);
+    // console.log('name: ----', name);
+    // console.log('address: ----', address);
+    // console.log('introduce: ----', introduce);
+    // console.log('pricePerHour: ----', pricePerHour);
   };
+
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleCheckBoxOnChange(e) {
+    const { listAllSkill } = this.state;
+
+    listAllSkill.forEach(skill => {
+      // eslint-disable-next-line eqeqeq
+      if (skill.id == e.target.value) {
+        // eslint-disable-next-line no-param-reassign
+        skill.isChecked = e.target.checked;
+      }
+    });
+    this.setState({ listAllSkill }, () => this.updateListChosenSkill());
+  }
 
   render() {
     const { userDetail } = this.props;
-    const { listAllSkill, name, address, introduce, pricePerHour } = this.state;
+    const { introduce } = this.state;
 
-    if (userDetail && introduce) {
-      if (userDetail.role === 'tutor') {
-        return (
-          <Card small className="mb-4 mt-5">
-            <Card.Header className="border-bottom card-header-title">
-              <h6 className="m-0" color="white">
-                Cập nhật thông tin
-              </h6>
-            </Card.Header>
-            <ListGroup flush>
-              <ListGroupItem className="p-3">
-                <Row>
-                  <Col>
-                    <Form>
-                      <Row form>
-                        <Col md="6" className="form-group">
-                          <TextField
-                            id="name"
-                            label="Họ tên"
-                            className="float-left"
-                            defaultValue={name}
-                            name="name"
-                            onChange={this.handleInputChange}
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="form-group">
-                        <Col md="12">
-                          <TextField
-                            fullWidth
-                            id="address"
-                            label="Địa chỉ"
-                            className="float-left"
-                            defaultValue={address}
-                            name="address"
-                            onChange={this.handleInputChange}
-                          />
-                        </Col>
-                      </Row>
+    if (userDetail) {
+      return (
+        <Card small className="mb-4 mt-5">
+          <Card.Header className="border-bottom card-header-title">
+            <h6 className="m-0" color="white">
+              Cập nhật thông tin
+            </h6>
+          </Card.Header>
+          <ListGroup flush>
+            <ListGroupItem className="p-3">
+              <Row>
+                <Col>
+                  <Form>
+                    <Row form>
+                      <Col md="6" className="form-group">
+                        <TextField
+                          id="name"
+                          label="Họ tên"
+                          className="float-left"
+                          defaultValue={userDetail.name}
+                          name="name"
+                          onChange={this.handleInputChange}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="form-group">
+                      <Col md="12">
+                        <TextField
+                          fullWidth
+                          id="address"
+                          label="Địa chỉ"
+                          className="float-left"
+                          defaultValue={userDetail.address}
+                          name="address"
+                          onChange={this.handleInputChange}
+                        />
+                      </Col>
+                    </Row>
+                    {userDetail.role === 'tutor' ? (
                       <Row className="form-group">
                         <Col md="12">
                           <TextField
@@ -176,72 +190,82 @@ class UserAccountDetails extends React.Component {
                           />
                         </Col>
                       </Row>
-                    </Form>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            </ListGroup>
-            <Card.Header className="border-bottom">
-              <h6 className="m-0">Thông tin giảng dạy</h6>
-            </Card.Header>
-            <ListGroup flush>
-              <ListGroupItem className="p-3">
-                <Row>
-                  <Col>
-                    <Form>
-                      <Row form>
-                        <Col md="6" className="form-group">
-                          <TextField
-                            id="fee"
-                            label="Học phí (x1000 VND/ giờ)"
-                            className="float-left"
-                            defaultValue={pricePerHour}
-                            variant="outlined"
-                            required
-                            onChange={this.handleInputChange}
-                            name="pricePerHour"
-                          />
-                        </Col>
-                      </Row>
-                      <Row form>
-                        <Col md="12">
-                          <FormControl className="float-left text-left">
-                            <FormLabel
-                              component="legend"
-                              className="float-left text-left"
-                              fullWidth
-                            >
-                              Chọn kĩ năng
-                            </FormLabel>
-
-                            {this.renderAllSkill()}
-                            {/* <FormControlLabel
-                              control={<Checkbox color="primary" />}
-                              label="Luyện thi đại học khối A"
-                            />
-                            <FormControlLabel
-                              control={<Checkbox color="primary" />}
-                              label="Huấn luyện người ngu hết thuốc chữa"
-                            /> */}
-                          </FormControl>
-                        </Col>
-                      </Row>
-
+                    ) : (
                       <Button theme="accent" onClick={() => this.updateInfo()}>
                         Cập nhật
                       </Button>
-                    </Form>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            </ListGroup>
-          </Card>
-        );
-      }
-      return null;
+                    )}
+                  </Form>
+                </Col>
+              </Row>
+            </ListGroupItem>
+          </ListGroup>
+          {userDetail.role === 'tutor' ? (
+            <div>
+              <Card.Header className="border-bottom">
+                <h6 className="m-0">Thông tin giảng dạy</h6>
+              </Card.Header>
+              <ListGroup flush>
+                <ListGroupItem className="p-3">
+                  <Row>
+                    <Col>
+                      <Form>
+                        <Row form>
+                          <Col md="6" className="form-group">
+                            <TextField
+                              id="fee"
+                              label="Học phí (x1000 VND/ giờ)"
+                              className="float-left"
+                              defaultValue={userDetail.pricePerHour}
+                              variant="outlined"
+                              required
+                              onChange={this.handleInputChange}
+                              name="pricePerHour"
+                            />
+                          </Col>
+                        </Row>
+                        <Row form>
+                          <Col md="12">
+                            <FormControl className="float-left text-left">
+                              <FormLabel
+                                component="legend"
+                                className="float-left text-left"
+                                fullWidth
+                              >
+                                Chọn kĩ năng
+                              </FormLabel>
+
+                              {this.renderAllSkill()}
+                            </FormControl>
+                          </Col>
+                        </Row>
+
+                        <Button
+                          theme="accent"
+                          onClick={() => this.updateInfo()}
+                        >
+                          Cập nhật
+                        </Button>
+                      </Form>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              </ListGroup>
+            </div>
+          ) : null}
+        </Card>
+      );
     }
     return null;
   }
 }
 
-export default UserAccountDetails;
+const mapDispatchToProps = {
+  updateTutorInfo: updateTutorProfile,
+  updateStudentProfile: userActions.updateProfile
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserAccountDetails);

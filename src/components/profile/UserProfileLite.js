@@ -61,7 +61,12 @@ class UserProfileLite extends React.Component {
 
   render() {
     const { userDetail, listTutorSkill, introduce, listAllSkill } = this.state;
-    if (userDetail && listTutorSkill && introduce && listAllSkill) {
+
+    // console.log('userDetail: ----', userDetail);
+    // console.log('listTutorSkill: ----', listTutorSkill);
+    // console.log('introduce: ----', introduce);
+    // console.log('listAllSkill: ----', listAllSkill);
+    if (userDetail && listTutorSkill && listAllSkill) {
       return (
         <div className="mx-auto profile-page">
           <Container
