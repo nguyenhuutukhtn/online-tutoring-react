@@ -11,6 +11,7 @@ import {
   requestListSkill
 } from '../../actions/tutor.action';
 import userActions from '../../actions/user.action';
+import ProfileSkeleton from '../skeleton/ProfileSkeleton';
 
 class UserProfileLite extends React.Component {
   constructor(props) {
@@ -97,7 +98,7 @@ class UserProfileLite extends React.Component {
         </div>
       );
     }
-    return null;
+    return <ProfileSkeleton />;
   }
 }
 

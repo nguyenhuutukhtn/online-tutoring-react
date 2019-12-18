@@ -28,7 +28,6 @@ import ErrorIcon from '@material-ui/icons/Error';
 import PaymentIcon from '@material-ui/icons/Payment';
 
 import './contract.css';
-import history from '../../helpers/history';
 
 class ContractDetail extends Component {
   constructor(props) {
@@ -36,25 +35,36 @@ class ContractDetail extends Component {
     this.state = {
       openDialog: false,
       ratingValue: 0,
-      openPaymentDialog: false
+      openPaymentDialog: false,
+      openReportDialog: false
     };
     this.handleRatingChange = this.handleRatingChange.bind(this);
   }
 
-  handleBackClick = e => {
-    history.push('/tutor-contract');
-  };
-
-  handleCompleteClick() {
-    this.setState({ openDialog: true });
-  }
+  componentDidMount() {}
 
   handleCancelClick() {
     this.setState({ openDialog: true });
   }
 
+  handleCompleteClick() {
+    this.setState({ openDialog: true });
+  }
+
+  handlePaymentClick() {
+    this.setState({ openPaymentDialog: true });
+  }
+
+  handleReportClick() {
+    this.setState({ openReportDialog: true });
+  }
+
   handleDialogClose() {
-    this.setState({ openDialog: false });
+    this.setState({
+      openDialog: false,
+      openPaymentDialog: false,
+      openReportDialog: false
+    });
   }
 
   handleSendRequest() {
@@ -66,12 +76,13 @@ class ContractDetail extends Component {
     this.setState({ ratingValue: e.target.value });
   }
 
-  handlePaymentClick = () => {};
-
-  componentDidMount() {}
-
   render() {
-    const { openDialog, ratingValue } = this.state;
+    const {
+      openDialog,
+      ratingValue,
+      openPaymentDialog,
+      openReportDialog
+    } = this.state;
     return (
       <div>
         <Container className="pb-5">
@@ -187,7 +198,7 @@ class ContractDetail extends Component {
                             }}
                             startIcon={<CloseIcon />}
                             className="ml-5"
-                            onClick={() => this.handleCompleteClick()}
+                            onClick={() => this.handleCancelClick()}
                           >
                             Hủy
                           </Button>
@@ -201,6 +212,7 @@ class ContractDetail extends Component {
                             }}
                             startIcon={<PaymentIcon />}
                             className="ml-5"
+                            onClick={() => this.handlePaymentClick()}
                           >
                             Thanh toán
                           </Button>
@@ -213,6 +225,7 @@ class ContractDetail extends Component {
                             }}
                             startIcon={<ErrorIcon />}
                             className="ml-5"
+                            onClick={() => this.handleReportClick()}
                           >
                             Khiếu nại
                           </Button>
@@ -297,6 +310,102 @@ class ContractDetail extends Component {
             </Button>
             <Button onClick={() => this.handleSendRequest()} color="primary">
               Hoàn thành
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={openPaymentDialog}
+          onClose={() => this.handleDialogClose()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Vui lòng kiểm tra lại thông tin
+          </DialogTitle>
+          <DialogContent>
+            <Container>
+              <Row>
+                <Col md="6">
+                  <div className="text-left title-field">Ngày thanh toán</div>
+                </Col>
+                <Col md="6">
+                  <div className="text-left content-detail">Nguyễn Hữu Tú</div>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <div className="text-left title-field mt-3">
+                    Thanh toán cho
+                  </div>
+                </Col>
+                <Col md="6">
+                  <div className="text-left content-detail mt-3">
+                    Nguyễn Ngô Tín
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <div className="text-left title-field mt-3">Số tiền:</div>
+                </Col>
+                <Col md="6">
+                  <div className="text-left content-detail mt-3">
+                    1000000 VND
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <div className="text-left title-field mt-3">Nội dung</div>
+                </Col>
+                <Col md="6">
+                  <div className="text-left content-detail mt-3">
+                    Thanh toán hợp đồng gia sư
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.handleDialogClose()} color="primary">
+              Hủy bỏ
+            </Button>
+            <Button
+              onClick={() => this.handleDialogClose()}
+              color="primary"
+              autoFocus
+            >
+              Tiếp tục
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={openReportDialog}
+          onClose={() => this.handleDialogClose()}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Khiếu nại</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Vui lòng cho biết nội dung bạn muốn khiếu nại để chúng tôi xem xét
+              giải quyết
+            </DialogContentText>
+            <TextField
+              margin="dense"
+              id="name"
+              label="Nội dung khiếu nại"
+              fullWidth
+              multiline
+              variant="outlined"
+              rows="5"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.handleDialogClose()} color="primary">
+              Bỏ qua
+            </Button>
+            <Button onClick={() => this.handleDialogClose()} color="primary">
+              Đăng Ký
             </Button>
           </DialogActions>
         </Dialog>

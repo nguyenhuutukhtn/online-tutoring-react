@@ -29,6 +29,9 @@ import TutorReview from './components/tutor/TutorReview';
 import TutorContracy from './components/contract/TutorContract';
 import PersonalInfo from './components/personalPage/PersonalInfo';
 import ContractDetail from './components/contract/ContractDetail';
+import ChangePassword from './components/profile/ChangePassword';
+// import Messenger from './components/chat/Messenger';
+import Chat from './components/chat/Chat';
 
 class App extends React.Component {
   constructor(props) {
@@ -75,11 +78,14 @@ class App extends React.Component {
               <Route path="/tutor-contract" component={TutorContracy} />
               <Route path="/personal-info" component={PersonalInfo} />
               <Route path="/contract-detail" component={ContractDetail} />
+              <Route path="/change-password" component={ChangePassword} />
+              <Route path="/chat" component={Chat} />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
             </Switch>
           </div>
+
           <Footer />
         </Router>
       </div>

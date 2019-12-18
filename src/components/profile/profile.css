@@ -6,3 +6,8 @@
 .card-header-title {
   background: #0072bc;
 }
+
+.change-pass-body {
+  width: 450px;
+  margin: auto;
+}

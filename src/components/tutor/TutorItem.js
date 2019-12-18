@@ -20,7 +20,7 @@ export default class TutorItem extends React.Component {
       search: `?id=${data.id}`
     });
     window.location.reload();
-  }
+  };
 
   render() {
     const { data } = this.props;
@@ -30,7 +30,11 @@ export default class TutorItem extends React.Component {
           <div className="mb-3 mx-auto">
             <img
               className="rounded-circle"
-              src={data.avatar ? data.avatar : null}
+              src={
+                data.avatar
+                  ? data.avatar
+                  : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
+              }
               alt={data.name}
               width="110"
               height="110"

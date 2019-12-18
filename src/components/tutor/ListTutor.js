@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import Skeleton from 'react-loading-skeleton';
 import {
   FormControl,
   FormControlLabel,
@@ -13,6 +14,7 @@ import {
   TextField,
   Button
 } from '@material-ui/core';
+import TutorItemSkeleton from '../skeleton/TutorItemSkeleton';
 import PageTitle from '../page-title/PageTitle';
 import TutorItem from './TutorItem';
 import './tutor.css';
@@ -190,7 +192,7 @@ class ListTutor extends React.Component {
   };
 
   render() {
-    const { collapseSkill } = this.state;
+    const { collapseSkill, listSkill, listTutor } = this.state;
 
     return (
       <div className="mx-auto list-tutor-page">
@@ -214,6 +216,43 @@ class ListTutor extends React.Component {
                 style={{ paddingLeft: 0, paddingRight: 0 }}
                 className="noPadding noMargin container-fluid"
               >
+                {listTutor.length !== 0 ? null : (
+                  <div>
+                    <Row>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                      <Col md="4">
+                        <TutorItemSkeleton />
+                      </Col>
+                    </Row>
+                  </div>
+                )}
                 {this.renderListTutor()}
                 <Row>
                   <Col lg="12">
@@ -247,7 +286,11 @@ class ListTutor extends React.Component {
                       >
                         Theo kỹ năng
                       </FormLabel>
-
+                      {listSkill.length !== 0 ? null : (
+                        <div>
+                          <Skeleton count={10} />
+                        </div>
+                      )}
                       <div>{this.renderSkill()}</div>
                       {collapseSkill ? (
                         <div>{this.renderCollapseSkill()}</div>

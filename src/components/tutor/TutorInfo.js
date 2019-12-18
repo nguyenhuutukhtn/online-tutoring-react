@@ -21,6 +21,7 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import MessageIcon from '@material-ui/icons/Message';
+import Skeleton from 'react-loading-skeleton';
 import history from '../../helpers/history';
 import './tutor.css';
 
@@ -67,22 +68,32 @@ export default class TutorInfo extends React.Component {
                 <div className="mb-3 mx-auto">
                   <img
                     className="rounded-circle"
-                    src={tutorData ? tutorData.avatar : null}
-                    alt={tutorData ? tutorData.name : null}
+                    src={
+                      tutorData && tutorData.avatar
+                        ? tutorData.avatar
+                        : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
+                    }
+                    alt={tutorData ? tutorData.name : <Skeleton />}
                     width="110"
                     height="110"
                   />
                 </div>
 
-                <h4 className="mb-0">{tutorData ? tutorData.name : null}</h4>
+                <h4 className="mb-0">
+                  {tutorData ? tutorData.name : <Skeleton />}
+                </h4>
 
                 <Box component="fieldset" mb={3} borderColor="transparent">
                   {/* <Typography component="legend">Tỉ lệ thành công</Typography> */}
-                  <Rating
-                    name="read-only"
-                    value={tutorData ? tutorData.avgRate : null}
-                    readOnly
-                  />
+                  {tutorData ? (
+                    <Rating
+                      name="read-only"
+                      value={tutorData ? tutorData.avgRate : 0}
+                      readOnly
+                    />
+                  ) : (
+                    <Skeleton />
+                  )}
                 </Box>
                 <div className="d-flex justify-content-between">
                   <Button
@@ -118,7 +129,7 @@ export default class TutorInfo extends React.Component {
                     Địa chỉ
                   </strong>
                   <Typography component="legend" className="text-left">
-                    {tutorData ? tutorData.address : null}
+                    {tutorData ? tutorData.address : <Skeleton />}
                   </Typography>
                 </ListGroupItem>
                 <ListGroupItem>
@@ -126,7 +137,7 @@ export default class TutorInfo extends React.Component {
                     Học phí
                   </strong>
                   <Typography component="legend" className="text-left">
-                    {tutorData ? tutorData.pricePerHour : null}K VNĐ/giờ
+                    {tutorData ? tutorData.pricePerHour : <Skeleton />}K VNĐ/giờ
                   </Typography>
                 </ListGroupItem>
                 <ListGroupItem className="p-4">
@@ -136,7 +147,7 @@ export default class TutorInfo extends React.Component {
                   <ProgressBar
                     variant="determinate"
                     className="progress-sm"
-                    now={tutorData ? tutorData.successfullyRatio : null}
+                    now={tutorData ? tutorData.successfullyRatio : <Skeleton />}
                     label={tutorData ? `${tutorData.successfullyRatio}%` : ''}
                   />
                 </ListGroupItem>
@@ -145,7 +156,7 @@ export default class TutorInfo extends React.Component {
                     Giới thiệu
                   </strong>
                   <span className="text-left float-left">
-                    {introduce ? introduce.content : null}
+                    {introduce ? introduce.content : <Skeleton count={6} />}
                   </span>
                 </ListGroupItem>
               </ListGroup>
@@ -168,7 +179,7 @@ export default class TutorInfo extends React.Component {
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Tổng số tiền"
+                label="Tổng số giờ"
                 fullWidth
               />
             </DialogContent>
