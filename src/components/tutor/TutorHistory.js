@@ -126,7 +126,7 @@ export default class TutorHistory extends React.Component {
         </Row>
         <Row>
           <Col>
-            {!collapsed && (
+            {!collapsed && listOldStudent && listOldStudent.length > 4 && (
               <Button
                 variant="contained"
                 color="secondary"
