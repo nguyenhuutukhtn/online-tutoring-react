@@ -39,7 +39,7 @@ export default class ListTutorSkill extends React.Component {
   render() {
     const { tutorSkill } = this.props;
     return (
-      <Container className="h-100">
+      <Container className="h-100 list-skill-container ">
         <Row className="h-100">
           <Col md="12" className="list-skill">
             <div className="ml-sm-auto mr-sm-auto mt-4 list-skill-title">

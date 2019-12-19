@@ -1,0 +1,12 @@
+.success {
+  background: #43a047 !important;
+}
+.error {
+  background: #d32f2f !important;
+}
+.warning {
+  background: #ffa000 !important;
+}
+.info {
+  background: #1976d2 !important;
+}
