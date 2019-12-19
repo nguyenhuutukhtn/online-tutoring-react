@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Card,
   ListGroup,
@@ -22,19 +23,29 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import MessageIcon from '@material-ui/icons/Message';
 import Skeleton from 'react-loading-skeleton';
-import history from '../../helpers/history';
+// import history from '../../helpers/history';
 import './tutor.css';
+import userActions from '../../actions/user.action';
 
-export default class TutorInfo extends React.Component {
+class TutorInfo extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      openDialog: false
+      openDialog: false,
+      hoursHire: null
     };
   }
 
-  handleRegisterClick() {
+  onChangeHandler = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleRegisterClick(e) {
+    e.preventDefault();
     this.setState({ openDialog: true });
   }
 
@@ -44,8 +55,14 @@ export default class TutorInfo extends React.Component {
 
   handleSendRegister() {
     this.setState({ openDialog: false });
+    const { registerPolicy, tutorData } = this.props;
+    const { hoursHire } = this.state;
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    registerPolicy(tutorData.id, hoursHire, token);
+
+    // console.log('senddddddddddddđ');
     // Call API Register and redirect to list contract
-    history.push('/tutor-contract');
+    // history.push('/tutor-contract');
   }
 
   render() {
@@ -100,8 +117,9 @@ export default class TutorInfo extends React.Component {
                     style={{ background: '#007bff', color: '#ffffff' }}
                     className="ml-4 button-register"
                     color="info"
+                    type="button"
                     href="#pablo"
-                    onClick={() => this.handleRegisterClick()}
+                    onClick={e => this.handleRegisterClick(e)}
                     size="sm"
                   >
                     Đăng ký học
@@ -173,13 +191,16 @@ export default class TutorInfo extends React.Component {
             <DialogTitle id="form-dialog-title">Đăng ký học</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Để đăng ký học, vui lòng nhập tổng số giờ bạn muốn đăng ký
+                Để đăng ký học, vui lòng nhập tổng số giờ bạn muốn đăng ký học
               </DialogContentText>
               <TextField
                 autoFocus
                 margin="dense"
+                type="number"
                 id="name"
+                name="hoursHire"
                 label="Tổng số giờ"
+                onChange={this.onChangeHandler}
                 fullWidth
               />
             </DialogContent>
@@ -197,3 +218,12 @@ export default class TutorInfo extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = {
+  registerPolicy: userActions.requestRegisterPolicy
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TutorInfo);

@@ -157,6 +157,24 @@ const requestProfile = (id, cb) => {
   };
 };
 
+const requestRegisterPolicy = (tutorId, hoursHire, token) => {
+  return dispatch => {
+    userApis
+      .registerPolicy(tutorId, hoursHire, token)
+      .then(() => {
+        dispatch(
+          alertActions.success(
+            'Đăng ký học thành công, vui lòng thanh toán và chờ giáo viên chấp nhận'
+          )
+        );
+      })
+      .catch(error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
+
 const userActions = {
   register,
   login,
@@ -165,7 +183,8 @@ const userActions = {
   updateAvatar,
   requestProfile,
   updateProfile,
-  changePassword
+  changePassword,
+  requestRegisterPolicy
 };
 
 export default userActions;

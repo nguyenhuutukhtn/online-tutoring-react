@@ -19,7 +19,6 @@ import './navbar.css';
 // reactstrap components
 
 class CommonNavbar extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -34,57 +33,67 @@ class CommonNavbar extends React.Component {
   renderNav = () => {
     let userInfo = localStorage.getItem('userInfo');
     if (!userInfo) {
-      return (<Nav navbar>
+      return (
+        <Nav navbar>
+          <NavItem className="nav-item">
+            <NavLink to="/list-tutor" tag={Link} className="nav-link">
+              Tìm gia sư
+            </NavLink>
+          </NavItem>
+          <NavItem className="nav-item">
+            <NavLink to="/register" tag={Link} className="nav-link">
+              Đăng ký gia sư
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/login" tag={Link} className="nav-link">
+              Đăng nhập
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/register" tag={Link} className="nav-link">
+              Đăng ký
+            </NavLink>
+          </NavItem>
+        </Nav>
+      );
+    }
+    userInfo = JSON.parse(userInfo);
+    if (userInfo.role === 'tutor') {
+      return (
+        <Nav navbar>
+          <NavItem className="nav-item">
+            <NavLink to="/tutor-contract" tag={Link} className="nav-link">
+              Quản lí hợp đồng học
+            </NavLink>
+          </NavItem>
+        </Nav>
+      );
+    }
+    return (
+      <Nav navbar>
         <NavItem className="nav-item">
           <NavLink to="/list-tutor" tag={Link} className="nav-link">
             Tìm gia sư
           </NavLink>
         </NavItem>
-        <NavItem className="nav-item">
-          <NavLink to="/register" tag={Link} className="nav-link">
-            Đăng ký gia sư
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/login" tag={Link} className="nav-link">
-            Đăng nhập
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/register" tag={Link} className="nav-link">
-            Đăng ký
-          </NavLink>
-        </NavItem>
-      </Nav>)
-    }
-    userInfo = JSON.parse(userInfo);
-    if (userInfo.role === "tutor") {
-      return null;
-    }
-    return (<Nav navbar>
-      <NavItem className="nav-item">
-        <NavLink to="/list-tutor" tag={Link} className="nav-link">
-          Tìm gia sư
-        </NavLink>
-      </NavItem>
-    </Nav>);
+      </Nav>
+    );
   };
 
   renderUserHeader = () => {
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
-      return (
-        <UserHeader data={userInfo} />
-      )
+      return <UserHeader data={userInfo} />;
     }
     return null;
-  }
+  };
 
   toggleNavbarCollapse = () => {
     const { navbarCollapse } = this.state;
     this.setState({
       navbarCollapse: !navbarCollapse
-    })
+    });
     document.documentElement.classList.toggle('nav-open');
   };
 
@@ -98,7 +107,6 @@ class CommonNavbar extends React.Component {
             <NavbarBrand
               data-placement="bottom"
               to="/index"
-
               title="Coded by Creative Tim"
               tag={Link}
             >

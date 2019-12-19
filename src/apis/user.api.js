@@ -145,6 +145,23 @@ function changePassword(token, currentPassword, newPassword, confirmPassword) {
     });
 }
 
+function registerPolicy(tutorId, hoursHire, token) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id_teacher: tutorId, hours_hire: hoursHire })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/register`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
 const userApis = {
   register,
   login,
@@ -152,7 +169,8 @@ const userApis = {
   loginGG,
   updateAvatar,
   updateProfile,
-  changePassword
+  changePassword,
+  registerPolicy
 };
 
 export default userApis;
