@@ -25,14 +25,17 @@ class TutorInfo extends React.Component {
 
     this.state = {
       openDialog: false,
-      hoursHire: null
+      hoursHire: null,
+      totalPrice: null
     };
   }
 
   onChangeHandler = event => {
     const { name, value } = event.target;
+    const { tutorData } = this.props;
     this.setState({
-      [name]: value
+      [name]: value,
+      totalPrice: value * tutorData.pricePerHour
     });
   };
 
@@ -50,8 +53,9 @@ class TutorInfo extends React.Component {
     const { registerPolicy, tutorData } = this.props;
     const { hoursHire } = this.state;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
-    registerPolicy(tutorData.id, hoursHire, token);
-
+    if (hoursHire > 0) {
+      registerPolicy(tutorData.id, hoursHire, token);
+    }
     // console.log('senddddddddddddđ');
     // Call API Register and redirect to list contract
     // history.push('/tutor-contract');
@@ -59,7 +63,7 @@ class TutorInfo extends React.Component {
 
   render() {
     const { tutorData, introduce } = this.props;
-    const { openDialog } = this.state;
+    const { openDialog, totalPrice } = this.state;
     return (
       <Card
         small
@@ -184,9 +188,13 @@ class TutorInfo extends React.Component {
                 id="name"
                 name="hoursHire"
                 label="Tổng số giờ"
+                InputProps={{ inputProps: { min: 0, max: 24 } }}
                 onChange={this.onChangeHandler}
                 fullWidth
               />
+              <DialogContentText>
+                Tổng tiền: {totalPrice || 0}K VNĐ
+              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={() => this.handleClose()} color="primary">

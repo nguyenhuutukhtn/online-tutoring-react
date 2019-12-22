@@ -1,5 +1,6 @@
 import tutorApis from '../apis/tutor.api';
 import alertActions from './alert.action';
+import history from '../helpers/history';
 
 export const requestListTutor = (page, listSkill, from, to, cb) => {
   let check = true;
@@ -257,9 +258,15 @@ export const requestApprovePolicy = (id, token) => {
       .approvePolicy(id, token)
       .then(() => {
         dispatch(alertActions.success('chấp nhận hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(alertActions.error(error));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };
@@ -270,9 +277,15 @@ export const requestCancelPolicy = (id, token) => {
       .cancelPolicy(id, token)
       .then(() => {
         dispatch(alertActions.success('từ chối hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(alertActions.error(error));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };

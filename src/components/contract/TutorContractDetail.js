@@ -124,12 +124,10 @@ class TutorContractDetail extends Component {
     const { setApprovePolicy, setCancelPolicy } = this.props;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
     if (approvePolicy) {
-      return setApprovePolicy(policy.id, token);
+      setApprovePolicy(policy.id, token);
+    } else if (cancelPolicy) {
+      setCancelPolicy(policy.id, token);
     }
-    if (cancelPolicy) {
-      return setCancelPolicy(policy.id, token);
-    }
-    return null;
   }
 
   render() {

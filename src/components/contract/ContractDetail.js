@@ -107,9 +107,6 @@ class ContractDetail extends Component {
     this.setState({
       openCancelDialog: false
     });
-    setTimeout(() => {
-      history.push('/student-contract');
-    }, 7000);
   };
 
   handleCancelClick = () => {
@@ -130,9 +127,6 @@ class ContractDetail extends Component {
     this.setState({
       openDialog: false
     });
-    setTimeout(() => {
-      history.push('/student-contract');
-    }, 7000);
   };
 
   handlePaymentClick = () => {
@@ -147,9 +141,6 @@ class ContractDetail extends Component {
     this.setState({
       openPaymentDialog: false
     });
-    setTimeout(() => {
-      history.push('/student-contract');
-    }, 7000);
   };
 
   handleReportClick = () => {
@@ -169,9 +160,6 @@ class ContractDetail extends Component {
     this.setState({
       openPaymentDialog: false
     });
-    setTimeout(() => {
-      history.push('/student-contract');
-    }, 7000);
   };
 
   handleDialogClose = () => {

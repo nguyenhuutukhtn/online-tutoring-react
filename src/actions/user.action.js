@@ -137,10 +137,16 @@ const requestPayPolicy = (token, id) => {
       .requestPayPolicy(token, id)
       .then(() => {
         dispatch(alertActions.success('Thanh toán hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };
@@ -151,10 +157,16 @@ const requestCancelPolicy = (token, id) => {
       .requestCancelPolicy(token, id)
       .then(() => {
         dispatch(alertActions.success('Huỷ hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };
@@ -165,10 +177,16 @@ const requestCompletePolicy = (token, id, comment, rate) => {
       .requestCompletePolicy(token, id, comment, rate)
       .then(() => {
         dispatch(alertActions.success('Hoàn tất hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };
@@ -179,10 +197,16 @@ const requestReportPolicy = (token, id, content) => {
       .requestReportPolicy(token, id, content)
       .then(() => {
         dispatch(alertActions.success('Khiếu nại hợp đồng thành công'));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       })
       .catch(error => {
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
+        setTimeout(() => {
+          history.push('/tutor-contract');
+        }, 4000);
       });
   };
 };
