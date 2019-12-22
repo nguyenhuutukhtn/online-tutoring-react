@@ -28,6 +28,7 @@ import TutorHistory from './components/tutor/TutorHistory';
 import TutorDetail from './components/tutor/TutorDetail';
 import TutorReview from './components/tutor/TutorReview';
 import TutorContracy from './components/contract/TutorContract';
+import StudentContract from './components/contract/StudentContract';
 import PersonalInfo from './components/personalPage/PersonalInfo';
 import ContractDetail from './components/contract/ContractDetail';
 import TutorContractDetail from './components/contract/TutorContractDetail';
@@ -86,6 +87,7 @@ class App extends React.Component {
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
               <Route path="/tutor-contract" component={TutorContracy} />
+              <Route path="/student-contract" component={StudentContract} />
               <Route path="/personal-info" component={PersonalInfo} />
               <Route path="/contract-detail" component={ContractDetail} />
               <Route

@@ -25,8 +25,15 @@ class ListContracts extends Component {
   };
 
   handleDetailClick = id => {
-    history.push({
-      pathname: '/tutor-contract-detail',
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo.role === 'tutor') {
+      return history.push({
+        pathname: '/tutor-contract-detail',
+        search: `?id=${id}`
+      });
+    }
+    return history.push({
+      pathname: '/contract-detail',
       search: `?id=${id}`
     });
   };
@@ -94,7 +101,7 @@ class ListContracts extends Component {
   renderPage = () => {
     const { currentPage } = this.state;
     const { count } = this.props;
-    const totalPage = Math.ceil(count / 9);
+    const totalPage = Math.ceil(count / 5);
     const listPage = [];
     for (let i = 0; i < totalPage; i += 1) {
       listPage.push(

@@ -94,7 +94,7 @@ class TutorContractDetail extends Component {
 
   checkDisable = policy => {
     if (!policy) {
-      return false;
+      return true;
     }
     if (policy.status === 'new' && policy.payment_status === 'yes') {
       return false;

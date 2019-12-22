@@ -131,6 +131,62 @@ const changePassword = (
   };
 };
 
+const requestPayPolicy = (token, id) => {
+  return dispatch => {
+    userApis
+      .requestPayPolicy(token, id)
+      .then(() => {
+        dispatch(alertActions.success('Thanh toán hợp đồng thành công'));
+      })
+      .catch(error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
+
+const requestCancelPolicy = (token, id) => {
+  return dispatch => {
+    userApis
+      .requestCancelPolicy(token, id)
+      .then(() => {
+        dispatch(alertActions.success('Huỷ hợp đồng thành công'));
+      })
+      .catch(error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
+
+const requestCompletePolicy = (token, id, comment, rate) => {
+  return dispatch => {
+    userApis
+      .requestCompletePolicy(token, id, comment, rate)
+      .then(() => {
+        dispatch(alertActions.success('Hoàn tất hợp đồng thành công'));
+      })
+      .catch(error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
+
+const requestReportPolicy = (token, id, content) => {
+  return dispatch => {
+    userApis
+      .requestReportPolicy(token, id, content)
+      .then(() => {
+        dispatch(alertActions.success('Khiếu nại hợp đồng thành công'));
+      })
+      .catch(error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.toString()));
+      });
+  };
+};
+
 const requestProfile = (id, cb) => {
   let check = true;
   return () => {
@@ -175,6 +231,63 @@ const requestRegisterPolicy = (tutorId, hoursHire, token) => {
   };
 };
 
+export const requestPolicyOfStudent = (
+  page,
+  unpaidPolicy,
+  validPolicy,
+  token,
+  cb
+) => {
+  let check = true;
+  let url = 'http://localhost:3100/student/policy';
+  const params = {
+    p: page,
+    unpaidPolicy,
+    validPolicy
+  };
+  if (Object.keys(params)) {
+    url = url.concat('?');
+  }
+
+  Object.keys(params).forEach(key => {
+    if (params[key]) {
+      url = url.concat(`${key}=${params[key]}&`);
+    }
+  });
+
+  url = url.slice(0, url.length - 1);
+
+  return () => {
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+        return null;
+      });
+  };
+};
+
+const requestPolicyDetail = (id, token, cb) => {
+  return () => {
+    userApis.requestPolicyDetail(id, token, cb);
+  };
+};
+
 const userActions = {
   register,
   login,
@@ -184,7 +297,13 @@ const userActions = {
   requestProfile,
   updateProfile,
   changePassword,
-  requestRegisterPolicy
+  requestRegisterPolicy,
+  requestPolicyOfStudent,
+  requestPolicyDetail,
+  requestPayPolicy,
+  requestCancelPolicy,
+  requestCompletePolicy,
+  requestReportPolicy
 };
 
 export default userActions;
