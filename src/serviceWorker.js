@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */

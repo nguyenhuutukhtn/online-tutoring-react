@@ -1,3 +1,6 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable import/imports-first */
+/* eslint-disable import/order */
 import React from 'react';
 import {
   Card,
@@ -24,14 +27,20 @@ import MessageIcon from '@material-ui/icons/Message';
 import Skeleton from 'react-loading-skeleton';
 import history from '../../helpers/history';
 import './tutor.css';
+import { connect } from 'react-redux';
 
-export default class TutorInfo extends React.Component {
+class TutorInfo extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       openDialog: false
     };
+  }
+
+  componentDidMount() {
+    // const { tutorData, loadDataTutor } = this.props;
+    // loadDataTutor(tutorData);
   }
 
   handleRegisterClick() {
@@ -47,6 +56,11 @@ export default class TutorInfo extends React.Component {
     // Call API Register and redirect to list contract
     history.push('/tutor-contract');
   }
+
+  handleSendMessage = () => {
+    const { tutorData } = this.props;
+    history.push(`/chat?idOther=${tutorData.id}`);
+  };
 
   render() {
     const { tutorData, introduce } = this.props;
@@ -100,7 +114,6 @@ export default class TutorInfo extends React.Component {
                     style={{ background: '#007bff', color: '#ffffff' }}
                     className="ml-4 button-register"
                     color="info"
-                    href="#pablo"
                     onClick={() => this.handleRegisterClick()}
                     size="sm"
                   >
@@ -110,8 +123,7 @@ export default class TutorInfo extends React.Component {
                     style={{ color: '#007bff' }}
                     className="float-right mr-4"
                     color="default"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
+                    onClick={this.handleSendMessage}
                     size="sm"
                     startIcon={<MessageIcon />}
                   >
@@ -197,3 +209,20 @@ export default class TutorInfo extends React.Component {
     );
   }
 }
+
+function mapState(state) {
+  const { loggingIn } = state.login;
+  return { loggingIn };
+}
+
+const actionCreators = {
+  // login: userActions.login
+  // logout: userActions.logout
+};
+
+const connectedTutorInfoPage = connect(
+  mapState,
+  actionCreators
+)(TutorInfo);
+
+export default connectedTutorInfoPage;

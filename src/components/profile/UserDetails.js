@@ -49,7 +49,6 @@ class UserDetails extends React.Component {
   };
 
   showWidget = () => {
-    console.log('clicked');
     const { widget } = this.state;
     widget.open();
   };
