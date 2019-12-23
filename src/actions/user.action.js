@@ -17,9 +17,15 @@ function register(user) {
     userApis.register(user).then(
       () => {
         dispatch(successRegister());
-        history.push('/');
-        dispatch(alertActions.success('Đăng ký tài khoản thành công'));
-        window.location.reload();
+        dispatch(
+          alertActions.success(
+            'Đăng ký tài khoản thành công, chúng tôi có gửi cho bạn 1 email để kích hoạt tài khoản, vui lòng kiểm tra'
+          )
+        );
+        setTimeout(() => {
+          history.push('/');
+          window.location.reload();
+        }, 4000);
       },
       error => {
         dispatch(failureRegister(error));

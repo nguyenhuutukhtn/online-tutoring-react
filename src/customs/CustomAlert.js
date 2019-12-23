@@ -18,7 +18,7 @@ class CustomAlert extends React.Component {
           horizontal: 'center'
         }}
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={onClose}
       >
         {!open ? null : (
