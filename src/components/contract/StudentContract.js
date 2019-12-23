@@ -7,23 +7,25 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 import './contract.css';
 import ListContracts from './ListContract';
-import { requestPolicyOfTutor } from '../../actions/tutor.action';
+import { requestPolicyOfStudent } from '../../actions/user.action';
 
-class TutorContract extends Component {
+class StudentContract extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNew: true,
+      unpaidPolicy: true,
+      validPolicy: false,
       count: null,
       data: null
     };
   }
 
   componentDidMount() {
-    const { isNew } = this.state;
+    const { unpaidPolicy, validPolicy } = this.state;
     const { getListPolicy } = this.props;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
-    getListPolicy(1, isNew, token, res => {
+    getListPolicy(1, unpaidPolicy, validPolicy, token, res => {
+      console.log('----rés', res);
       this.setState({
         count: res.count,
         data: res.data
@@ -32,10 +34,10 @@ class TutorContract extends Component {
   }
 
   onPageChange = page => {
-    const { isNew } = this.state;
+    const { unpaidPolicy, validPolicy } = this.state;
     const { getListPolicy } = this.props;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
-    getListPolicy(page, isNew, token, res => {
+    getListPolicy(page, unpaidPolicy, validPolicy, token, res => {
       this.setState({
         count: res.count,
         data: res.data
@@ -46,33 +48,50 @@ class TutorContract extends Component {
   getAllPolicy = () => {
     const { getListPolicy } = this.props;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
-    getListPolicy(1, false, token, res => {
+    getListPolicy(1, false, false, token, res => {
       this.setState({
         count: res.count,
         data: res.data
       });
     });
     this.setState({
-      isNew: false
+      unpaidPolicy: false,
+      validPolicy: false
     });
   };
 
-  getNewPolicy = () => {
+  getUnpaidPolicy = () => {
     const { getListPolicy } = this.props;
     const { token } = JSON.parse(localStorage.getItem('userInfo'));
-    getListPolicy(1, true, token, res => {
+    getListPolicy(1, true, false, token, res => {
       this.setState({
         count: res.count,
         data: res.data
       });
     });
     this.setState({
-      isNew: true
+      unpaidPolicy: true,
+      validPolicy: false
+    });
+  };
+
+  getValidPolicy = () => {
+    const { getListPolicy } = this.props;
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    getListPolicy(1, false, true, token, res => {
+      this.setState({
+        count: res.count,
+        data: res.data
+      });
+    });
+    this.setState({
+      unpaidPolicy: false,
+      validPolicy: true
     });
   };
 
   render() {
-    const { isNew, count, data } = this.state;
+    const { unpaidPolicy, validPolicy, count, data } = this.state;
 
     return (
       <Container className="pb-5">
@@ -87,27 +106,37 @@ class TutorContract extends Component {
                   >
                     <Nav.Item className="nav-item-tab ">
                       <Nav.Link
-                        active={isNew}
+                        active={unpaidPolicy}
                         className="nav-link-tab"
-                        onClick={this.getNewPolicy}
+                        onClick={this.getUnpaidPolicy}
                       >
                         <AccountBoxIcon lassName="d-inline" />
                         <div className="d-inline ml-1 ">
-                          Danh sách hợp đồng chờ duyệt
+                          Hợp đồng chưa thanh toán
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="nav-item-tab ">
+                      <Nav.Link
+                        active={validPolicy}
+                        className="nav-link-tab"
+                        onClick={this.getValidPolicy}
+                      >
+                        <AccountBoxIcon lassName="d-inline" />
+                        <div className="d-inline ml-1 ">
+                          Hợp đồng đang hiệu lực
                         </div>
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item className="nav-item-tab mt-2 ">
                       <Nav.Link
-                        active={!isNew}
+                        active={!unpaidPolicy && !validPolicy}
                         eventKey="second"
                         className=" nav-link-tab "
                         onClick={this.getAllPolicy}
                       >
                         <AssignmentIcon className="d-inline" />
-                        <div className="d-inline ml-1 ">
-                          Danh sách hợp đồng{' '}
-                        </div>
+                        <div className="d-inline ml-1 ">Tất cả hợp đồng </div>
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
@@ -133,11 +162,11 @@ class TutorContract extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getListPolicy: (page, isNew, token, cb) =>
-    dispatch(requestPolicyOfTutor(page, isNew, token, cb))
+  getListPolicy: (page, unpaidPolicy, validPolicy, token, cb) =>
+    dispatch(requestPolicyOfStudent(page, unpaidPolicy, validPolicy, token, cb))
 });
 
 export default connect(
   null,
   mapDispatchToProps
-)(TutorContract);
+)(StudentContract);

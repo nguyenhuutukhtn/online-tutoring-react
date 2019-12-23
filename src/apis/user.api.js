@@ -155,6 +155,57 @@ function getAllMessage(idStudent, idTutor) {
       return data;
     });
 }
+
+function requestPayPolicy(token, id) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/payPolicy`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
+function requestCancelPolicy(token, id) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/cancelPolicy`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
+function requestCompletePolicy(token, id, comment, rate) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id, comment, rate })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/completePolicy`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
 function sendMessage(message) {
   const requestOptions = {
     method: 'POST',
@@ -169,6 +220,66 @@ function sendMessage(message) {
       return data;
     });
 }
+function requestReportPolicy(token, id, content) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id, content })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/complainPolicy`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
+function registerPolicy(tutorId, hoursHire, token) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id_teacher: tutorId, hours_hire: hoursHire })
+  };
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/register`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+const requestPolicyDetail = (id, token, cb) => {
+  let check = true;
+  const requestOptions = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/student/policy/${id}`, requestOptions)
+    .then(response => {
+      if (response.status !== 200) {
+        check = false;
+        return false;
+      }
+      return response.json();
+    })
+    .then(response => {
+      if (check) {
+        cb(response);
+      }
+    });
+};
+
 const userApis = {
   register,
   login,
@@ -178,7 +289,13 @@ const userApis = {
   updateProfile,
   changePassword,
   getAllMessage,
-  sendMessage
+  sendMessage,
+  registerPolicy,
+  requestPolicyDetail,
+  requestPayPolicy,
+  requestCancelPolicy,
+  requestCompletePolicy,
+  requestReportPolicy
 };
 
 export default userApis;

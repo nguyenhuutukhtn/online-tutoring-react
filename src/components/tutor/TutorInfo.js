@@ -2,15 +2,8 @@
 /* eslint-disable import/imports-first */
 /* eslint-disable import/order */
 import React from 'react';
-import {
-  Card,
-  ListGroup,
-  ListGroupItem,
-  ProgressBar,
-  Container,
-  Row,
-  Col
-} from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Card, ListGroup, ListGroupItem, ProgressBar } from 'react-bootstrap';
 import {
   Box,
   Typography,
@@ -27,23 +20,30 @@ import MessageIcon from '@material-ui/icons/Message';
 import Skeleton from 'react-loading-skeleton';
 import history from '../../helpers/history';
 import './tutor.css';
-import { connect } from 'react-redux';
+import userActions from '../../actions/user.action';
 
 class TutorInfo extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      openDialog: false
+      openDialog: false,
+      hoursHire: null,
+      totalPrice: null
     };
   }
 
-  componentDidMount() {
-    // const { tutorData, loadDataTutor } = this.props;
-    // loadDataTutor(tutorData);
-  }
+  onChangeHandler = event => {
+    const { name, value } = event.target;
+    const { tutorData } = this.props;
+    this.setState({
+      [name]: value,
+      totalPrice: value * tutorData.pricePerHour
+    });
+  };
 
-  handleRegisterClick() {
+  handleRegisterClick(e) {
+    e.preventDefault();
     this.setState({ openDialog: true });
   }
 
@@ -53,8 +53,15 @@ class TutorInfo extends React.Component {
 
   handleSendRegister() {
     this.setState({ openDialog: false });
+    const { registerPolicy, tutorData } = this.props;
+    const { hoursHire } = this.state;
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    if (hoursHire > 0) {
+      registerPolicy(tutorData.id, hoursHire, token);
+    }
+    // console.log('senddddddddddddđ');
     // Call API Register and redirect to list contract
-    history.push('/tutor-contract');
+    // history.push('/tutor-contract');
   }
 
   handleSendMessage = () => {
@@ -64,118 +71,111 @@ class TutorInfo extends React.Component {
 
   render() {
     const { tutorData, introduce } = this.props;
-    const { openDialog } = this.state;
+    const { openDialog, totalPrice } = this.state;
     return (
-      <Container className="noMargin noPadding h-100 tutor-info-col">
-        <Row className="h-100">
-          <Col>
-            <Card
-              small
-              className="mt-5 tutor-info-col shadow-none card-info"
-              style={{
-                borderLeft: '1px solid grey',
-                borderTop: '1px solid grey',
-                borderRight: '1px solid grey'
-              }}
+      <Card
+        small
+        className="shadow-none card-info"
+        style={{
+          borderLeft: '1px solid grey',
+          borderTop: '1px solid grey',
+          borderRight: '1px solid grey',
+          borderBottom: '1px solid grey'
+        }}
+      >
+        <Card.Header className=" text-center ">
+          <div className="mb-3 mx-auto">
+            <img
+              className="rounded-circle"
+              src={
+                tutorData && tutorData.avatar
+                  ? tutorData.avatar
+                  : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
+              }
+              alt={tutorData ? tutorData.name : <Skeleton />}
+              width="110"
+              height="110"
+            />
+          </div>
+
+          <h4 className="mb-0">{tutorData ? tutorData.name : <Skeleton />}</h4>
+
+          <Box component="fieldset" mb={3} borderColor="transparent">
+            {/* <Typography component="legend">Tỉ lệ thành công</Typography> */}
+            {tutorData ? (
+              <Rating
+                name="read-only"
+                value={tutorData ? tutorData.avgRate : 0}
+                readOnly
+              />
+            ) : (
+              <Skeleton />
+            )}
+          </Box>
+          <div className="d-flex justify-content-between">
+            <Button
+              style={{ background: '#007bff', color: '#ffffff' }}
+              className="ml-4 button-register"
+              color="info"
+              type="button"
+              onClick={e => this.handleRegisterClick(e)}
+              size="sm"
             >
-              <Card.Header className="border-bottom text-center noMargin noPadding">
-                <div className="mb-3 mx-auto">
-                  <img
-                    className="rounded-circle"
-                    src={
-                      tutorData && tutorData.avatar
-                        ? tutorData.avatar
-                        : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
-                    }
-                    alt={tutorData ? tutorData.name : <Skeleton />}
-                    width="110"
-                    height="110"
-                  />
-                </div>
-
-                <h4 className="mb-0">
-                  {tutorData ? tutorData.name : <Skeleton />}
-                </h4>
-
-                <Box component="fieldset" mb={3} borderColor="transparent">
-                  {/* <Typography component="legend">Tỉ lệ thành công</Typography> */}
-                  {tutorData ? (
-                    <Rating
-                      name="read-only"
-                      value={tutorData ? tutorData.avgRate : 0}
-                      readOnly
-                    />
-                  ) : (
-                    <Skeleton />
-                  )}
-                </Box>
-                <div className="d-flex justify-content-between">
-                  <Button
-                    style={{ background: '#007bff', color: '#ffffff' }}
-                    className="ml-4 button-register"
-                    color="info"
-                    onClick={() => this.handleRegisterClick()}
-                    size="sm"
-                  >
-                    Đăng ký học
-                  </Button>
-                  <Button
-                    style={{ color: '#007bff' }}
-                    className="float-right mr-4"
-                    color="default"
-                    onClick={this.handleSendMessage}
-                    size="sm"
-                    startIcon={<MessageIcon />}
-                  >
-                    Message
-                  </Button>
-                </div>
-                {/* <Button pill outline size="sm" className="mb-2">
+              Đăng ký học
+            </Button>
+            <Button
+              style={{ color: '#007bff' }}
+              className="float-right mr-4"
+              color="default"
+              onClick={this.handleSendMessage}
+              size="sm"
+              startIcon={<MessageIcon />}
+            >
+              Message
+            </Button>
+          </div>
+          {/* <Button pill outline size="sm" className="mb-2">
         <i className="material-icons mr-1">person_add</i> Follow
       </Button> */}
-              </Card.Header>
+        </Card.Header>
 
-              <ListGroup flush>
-                <ListGroupItem>
-                  <strong className="text-muted d-block mb-0 text-left">
-                    Địa chỉ
-                  </strong>
-                  <Typography component="legend" className="text-left">
-                    {tutorData ? tutorData.address : <Skeleton />}
-                  </Typography>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <strong className="text-muted d-block mb-0 text-left">
-                    Học phí
-                  </strong>
-                  <Typography component="legend" className="text-left">
-                    {tutorData ? tutorData.pricePerHour : <Skeleton />}K VNĐ/giờ
-                  </Typography>
-                </ListGroupItem>
-                <ListGroupItem className="p-4">
-                  <strong className="text-muted d-block mb-2 text-left">
-                    Tỉ lệ thành công
-                  </strong>
-                  <ProgressBar
-                    variant="determinate"
-                    className="progress-sm"
-                    now={tutorData ? tutorData.successfullyRatio : <Skeleton />}
-                    label={tutorData ? `${tutorData.successfullyRatio}%` : ''}
-                  />
-                </ListGroupItem>
-                <ListGroupItem>
-                  <strong className="text-muted d-block mb-0 text-left">
-                    Giới thiệu
-                  </strong>
-                  <span className="text-left float-left">
-                    {introduce ? introduce.content : <Skeleton count={6} />}
-                  </span>
-                </ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-        <div className="blank-div-tutor-info h-100" />
+        <ListGroup flush>
+          <ListGroupItem>
+            <strong className="text-muted d-block mb-0 text-left">
+              Địa chỉ
+            </strong>
+            <Typography component="legend" className="text-left">
+              {tutorData ? tutorData.address : <Skeleton />}
+            </Typography>
+          </ListGroupItem>
+          <ListGroupItem>
+            <strong className="text-muted d-block mb-0 text-left">
+              Học phí
+            </strong>
+            <Typography component="legend" className="text-left">
+              {tutorData ? tutorData.pricePerHour : <Skeleton />}K VNĐ/giờ
+            </Typography>
+          </ListGroupItem>
+          <ListGroupItem className="p-4">
+            <strong className="text-muted d-block mb-2 text-left">
+              Tỉ lệ thành công
+            </strong>
+            <ProgressBar
+              variant="determinate"
+              className="progress-sm"
+              now={tutorData ? tutorData.successfullyRatio : <Skeleton />}
+              label={tutorData ? `${tutorData.successfullyRatio}%` : ''}
+            />
+          </ListGroupItem>
+          <ListGroupItem>
+            <strong className="text-muted d-block mb-0 text-left">
+              Giới thiệu
+            </strong>
+            <span className="text-left float-left">
+              {introduce ? introduce.content : <Skeleton count={6} />}
+            </span>
+          </ListGroupItem>
+        </ListGroup>
         <div>
           <Dialog
             open={openDialog}
@@ -185,15 +185,22 @@ class TutorInfo extends React.Component {
             <DialogTitle id="form-dialog-title">Đăng ký học</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Để đăng ký học, vui lòng nhập tổng số giờ bạn muốn đăng ký
+                Để đăng ký học, vui lòng nhập tổng số giờ bạn muốn đăng ký học
               </DialogContentText>
               <TextField
                 autoFocus
                 margin="dense"
+                type="number"
                 id="name"
+                name="hoursHire"
                 label="Tổng số giờ"
+                InputProps={{ inputProps: { min: 0, max: 24 } }}
+                onChange={this.onChangeHandler}
                 fullWidth
               />
+              <DialogContentText>
+                Tổng tiền: {totalPrice || 0}K VNĐ
+              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={() => this.handleClose()} color="primary">
@@ -205,24 +212,16 @@ class TutorInfo extends React.Component {
             </DialogActions>
           </Dialog>
         </div>
-      </Container>
+      </Card>
     );
   }
 }
 
-function mapState(state) {
-  const { loggingIn } = state.login;
-  return { loggingIn };
-}
-
-const actionCreators = {
-  // login: userActions.login
-  // logout: userActions.logout
+const mapDispatchToProps = {
+  registerPolicy: userActions.requestRegisterPolicy
 };
 
-const connectedTutorInfoPage = connect(
-  mapState,
-  actionCreators
+export default connect(
+  null,
+  mapDispatchToProps
 )(TutorInfo);
-
-export default connectedTutorInfoPage;

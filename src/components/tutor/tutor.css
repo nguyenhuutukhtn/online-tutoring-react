@@ -83,12 +83,10 @@
 
 .timeline {
   background: #6782a3;
-  margin-top: 48px;
 }
 
 .list-skill {
   background: white;
-  margin-top: 48px;
 }
 
 .button-register {
@@ -115,18 +113,19 @@
 }
 
 .blank-div-tutor-info {
-  display: flex;
-  flex-grow: 1;
   background: white;
-  overflow: hidden;
   border-bottom: 1px solid grey;
   border-left: 1px solid grey;
   border-right: 1px solid grey;
+  margin-bottom: 600px !important;
 }
 
-.tutor-info-col {
-  display: flex;
-  flex-direction: column;
+.tutor-info-container {
+  padding-top: 0 !important;
+}
+
+.col-tutor-info {
+  margin-top: 52px;
 }
 
 .main-tutor-review {
@@ -148,4 +147,25 @@
 .tutor-name {
   font-size: 20px;
   height: 40px;
+}
+
+.main-row {
+  background: white;
+  padding-top: 0 !important;
+  margin-top: 41px;
+}
+
+.list-history-row {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.history-container {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background: #6782a3;
+}
+
+.list-skill-container {
+  padding-top: 0 !important;
 }
