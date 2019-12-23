@@ -73,6 +73,11 @@ class CommonNavbar extends React.Component {
     return (
       <Nav navbar>
         <NavItem className="nav-item">
+          <NavLink to="/student-contract" tag={Link} className="nav-link">
+            Quản lí hợp đồng học
+          </NavLink>
+        </NavItem>
+        <NavItem className="nav-item">
           <NavLink to="/list-tutor" tag={Link} className="nav-link">
             Tìm gia sư
           </NavLink>

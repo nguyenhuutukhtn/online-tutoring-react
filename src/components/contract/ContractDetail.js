@@ -334,7 +334,10 @@ class ContractDetail extends Component {
                               Hủy
                             </Button>
                             <Button
-                              disabled={policy.payment_status === 'yes'}
+                              disabled={
+                                policy.payment_status === 'yes' ||
+                                policy.status === 'cancel'
+                              }
                               variant="outlined"
                               style={{
                                 color: '#1D4575',

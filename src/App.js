@@ -21,6 +21,8 @@ import ListTutor from './components/tutor/ListTutor';
 import history from './helpers/history';
 import alertActions from './actions/alert.action';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import StudentRoute from './components/StudentRoute/StudentRoute';
+import TutorRoute from './components/TutorRoute/TutorRoute';
 import CommonNavbar from './components/navbar/CommonNavbar';
 import Footer from './components/footer/Footer';
 import TutorInfo from './components/tutor/TutorInfo';
@@ -86,11 +88,17 @@ class App extends React.Component {
               <Route path="/tutor-history" component={TutorHistory} />
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
-              <Route path="/tutor-contract" component={TutorContracy} />
-              <Route path="/student-contract" component={StudentContract} />
+              <TutorRoute path="/tutor-contract" component={TutorContracy} />
+              <StudentRoute
+                path="/student-contract"
+                component={StudentContract}
+              />
               <Route path="/personal-info" component={PersonalInfo} />
-              <Route path="/contract-detail" component={ContractDetail} />
-              <Route
+              <StudentRoute
+                path="/contract-detail"
+                component={ContractDetail}
+              />
+              <TutorRoute
                 path="/tutor-contract-detail"
                 component={TutorContractDetail}
               />

@@ -21,6 +21,7 @@ class UserHeader extends React.Component {
     const userInfo = JSON.parse(data);
     const { getProfile } = this.props;
     getProfile(userInfo.userId, res => {
+      console.log('---------info', res.data);
       this.setState({
         userDetail: res.data
       });
@@ -52,6 +53,12 @@ class UserHeader extends React.Component {
               <div style={{ display: 'inline' }} className="ml-3">
                 {userDetail ? userDetail.name : null}
               </div>
+              <div
+                style={{ display: 'inline', color: '#CC0000' }}
+                className="ml-3"
+              >
+                {userDetail ? userDetail.balance : 0}K VNĐ
+              </div>
             </div>
           }
           id="basic-nav-dropdown"
@@ -62,7 +69,7 @@ class UserHeader extends React.Component {
             </NavLink>
           </NavDropdown.Item>
           <NavDropdown.Item>
-            <NavLink to="/profile" tag={Link}>
+            <NavLink to="/student-contract" tag={Link}>
               Lịch sử thuê
             </NavLink>
           </NavDropdown.Item>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Card, ListGroup, ListGroupItem, ProgressBar } from 'react-bootstrap';
 import {
   Box,
@@ -25,6 +26,7 @@ class TutorInfo extends React.Component {
 
     this.state = {
       openDialog: false,
+      clickRegister: false,
       hoursHire: null,
       totalPrice: null
     };
@@ -39,10 +41,29 @@ class TutorInfo extends React.Component {
     });
   };
 
-  handleRegisterClick(e) {
+  handleRegisterClick = e => {
     e.preventDefault();
-    this.setState({ openDialog: true });
-  }
+    this.setState({
+      clickRegister: true
+    });
+    if (!this.handleCheck()) {
+      this.setState({
+        openDialog: true
+      });
+    }
+  };
+
+  handleCheck = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) {
+      return true;
+    }
+    const { role } = JSON.parse(userInfo);
+    if (role === 'tutor') {
+      return true;
+    }
+    return false;
+  };
 
   handleClose() {
     this.setState({ openDialog: false });
@@ -56,14 +77,17 @@ class TutorInfo extends React.Component {
     if (hoursHire > 0) {
       registerPolicy(tutorData.id, hoursHire, token);
     }
-    // console.log('senddddddddddddđ');
-    // Call API Register and redirect to list contract
-    // history.push('/tutor-contract');
   }
 
   render() {
     const { tutorData, introduce } = this.props;
-    const { openDialog, totalPrice } = this.state;
+    const { openDialog, totalPrice, clickRegister } = this.state;
+    console.log('-----click', clickRegister);
+    console.log('-------', this.handleCheck());
+    if (clickRegister && this.handleCheck()) {
+      console.log('----xxxx');
+      return <Redirect to="/login" />;
+    }
     return (
       <Card
         small

@@ -34,8 +34,11 @@ function login(username, password) {
     userApis.login(username, password).then(
       () => {
         dispatch(success());
-        history.push('/');
         dispatch(alertActions.success('Đăng nhập thành công'));
+        history.push({
+          pathname: history.location.pathname,
+          search: history.location.search
+        });
         window.location.reload();
       },
       error => {
@@ -90,6 +93,9 @@ function updateAvatar(id, avatarUrl) {
       .updateAvatar(id, avatarUrl)
       .then(() => {
         dispatch(alertActions.success('Cập nhật ảnh đại diện thành công'));
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
       })
       .catch(error => {
         dispatch(failure(error));
