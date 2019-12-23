@@ -1,184 +1,131 @@
-import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+/* eslint-disable react/destructuring-assignment */
+import React from 'react';
+import { connect } from 'react-redux';
 import Compose from '../Compose';
 import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
 import Message from '../Message';
+import userActions from '../../../actions/user.action';
 
 import './MessageList.css';
 
-const MY_USER_ID = 'apple';
+const MY_USER_ID = JSON.parse(localStorage.getItem('userInfo'))
+  ? JSON.parse(localStorage.getItem('userInfo')).userId
+  : '';
+class MessageList extends React.Component {
+  constructor(props) {
+    super(props);
 
-export default function MessageList() {
-  const [messages, setMessages] = useState([]);
+    this.state = {
+      // eslint-disable-next-line react/destructuring-assignment
+      message: this.props.message
+    };
+  }
 
-  const getMessages = () => {
-    const tempMessages = [
-      {
-        id: 1,
-        author: 'apple',
-        message:
-          'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 2,
-        author: 'orange',
-        message:
-          'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 3,
-        author: 'orange',
-        message:
-          'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 4,
-        author: 'apple',
-        message:
-          'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 5,
-        author: 'apple',
-        message:
-          'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 6,
-        author: 'apple',
-        message:
-          'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 7,
-        author: 'orange',
-        message:
-          'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 8,
-        author: 'orange',
-        message:
-          'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 9,
-        author: 'apple',
-        message:
-          'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 10,
-        author: 'orange',
-        message:
-          'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-        timestamp: new Date().getTime()
-      }
-    ];
-    setMessages([...messages, ...tempMessages]);
-  };
+  componentDidMount() {}
 
-  useEffect(() => {
-    getMessages();
-  }, []);
-
-  const renderMessages = () => {
-    let i = 0;
-    const messageCount = messages.length;
+  renderMessages = () => {
+    let { messages } = this.state;
+    if (!messages) {
+      // eslint-disable-next-line react/destructuring-assignment
+      messages = this.props.message;
+    }
     const tempMessages = [];
-
-    while (i < messageCount) {
-      const previous = messages[i - 1];
-      const current = messages[i];
-      const next = messages[i + 1];
-      const isMine = current.author === MY_USER_ID;
-      const currentMoment = moment(current.timestamp);
-      let prevBySameAuthor = false;
-      let nextBySameAuthor = false;
-      let startsSequence = true;
-      let endsSequence = true;
-      let showTimestamp = true;
-
-      if (previous) {
-        const previousMoment = moment(previous.timestamp);
-        const previousDuration = moment.duration(
-          currentMoment.diff(previousMoment)
+    if (messages) {
+      messages.data.forEach(element => {
+        const isMine = element.idSender === MY_USER_ID;
+        const showTimestamp = false;
+        const startsSequence = true;
+        tempMessages.push(
+          <Message
+            isMine={isMine}
+            startsSequence={startsSequence}
+            endsSequence={!startsSequence}
+            showTimestamp={showTimestamp}
+            data={element}
+          />
         );
-        prevBySameAuthor = previous.author === current.author;
-
-        if (prevBySameAuthor && previousDuration.as('hours') < 1) {
-          startsSequence = false;
-        }
-
-        if (previousDuration.as('hours') < 1) {
-          showTimestamp = false;
-        }
-      }
-
-      if (next) {
-        const nextMoment = moment(next.timestamp);
-        const nextDuration = moment.duration(nextMoment.diff(currentMoment));
-        nextBySameAuthor = next.author === current.author;
-
-        if (nextBySameAuthor && nextDuration.as('hours') < 1) {
-          endsSequence = false;
-        }
-      }
-
-      tempMessages.push(
-        <Message
-          key={i}
-          isMine={isMine}
-          startsSequence={startsSequence}
-          endsSequence={endsSequence}
-          showTimestamp={showTimestamp}
-          data={current}
-        />
-      );
-
-      // Proceed to the next message.
-      i += 1;
+      });
     }
 
+    // Proceed to the next message.
     return tempMessages;
   };
 
-  return (
-    <div className="message-list">
-      <Toolbar
-        title="Conversation Title"
-        rightItems={[
-          <ToolbarButton
-            key="info"
-            icon="ion-ios-information-circle-outline"
-          />,
-          <ToolbarButton key="video" icon="ion-ios-videocam" />,
-          <ToolbarButton key="phone" icon="ion-ios-call" />
-        ]}
-      />
+  handleSubmit = content => {
+    let userInfo = localStorage.getItem('userInfo');
+    userInfo = JSON.parse(userInfo);
+    const { otherData } = this.props;
+    let { message } = this.state;
+    if (!message) {
+      message = this.props.message;
+    }
+    const data = {
+      idSender: userInfo.userId,
+      idReceiver: otherData.data.userId,
+      content,
+      time: new Date()
+    };
+    message.data.push(data);
+    this.setState({
+      message
+    });
+    const { sendMessage } = this.props;
+    sendMessage(data);
+  };
 
-      <div className="message-list-container">{renderMessages()}</div>
+  render() {
+    const { otherData } = this.props;
+    let otherName = '';
+    if (otherData && otherData.data) {
+      otherName = otherData.data.name;
+    }
+    return (
+      <div className="message-list">
+        <Toolbar
+          title={otherName || ''}
+          rightItems={[
+            <ToolbarButton
+              key="info"
+              icon="ion-ios-information-circle-outline"
+            />,
+            <ToolbarButton key="video" icon="ion-ios-videocam" />,
+            <ToolbarButton key="phone" icon="ion-ios-call" />
+          ]}
+        />
 
-      <Compose
-        rightItems={[
-          <ToolbarButton key="photo" icon="ion-ios-camera" />,
-          <ToolbarButton key="image" icon="ion-ios-image" />,
-          <ToolbarButton key="audio" icon="ion-ios-mic" />,
-          <ToolbarButton key="money" icon="ion-ios-card" />,
-          <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
-          <ToolbarButton key="emoji" icon="ion-ios-happy" />
-        ]}
-      />
-    </div>
-  );
+        <div className="message-list-container">{this.renderMessages()}</div>
+
+        <Compose
+          handleSubmit={this.handleSubmit}
+          rightItems={[
+            <ToolbarButton key="photo" icon="ion-ios-camera" />,
+            <ToolbarButton key="image" icon="ion-ios-image" />,
+            <ToolbarButton key="audio" icon="ion-ios-mic" />,
+            <ToolbarButton key="money" icon="ion-ios-card" />,
+            <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
+            <ToolbarButton key="emoji" icon="ion-ios-happy" />
+          ]}
+        />
+      </div>
+    );
+  }
 }
+
+function mapState(state) {
+  const { loggingIn } = state.login;
+  const { message, otherData } = state.chat;
+  return { loggingIn, message, otherData };
+}
+const actionCreators = {
+  // login: userActions.login
+  // logout: userActions.logout
+  // getAllMessage: userActions.getAllMessage
+  sendMessage: userActions.sendMessage
+};
+
+const connectedChatPage = connect(
+  mapState,
+  actionCreators
+)(MessageList);
+export default connectedChatPage;

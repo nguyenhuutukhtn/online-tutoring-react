@@ -5,9 +5,7 @@ import { MDBBtn, MDBIcon } from 'mdbreact';
 import userActions from '../../actions/user.action';
 
 class Facebook extends Component {
-  componentClicked = () => {
-    console.log('clicked!!!');
-  };
+  componentClicked = () => {};
 
   responseFacebook = response => {
     const { loginFB } = this.props;

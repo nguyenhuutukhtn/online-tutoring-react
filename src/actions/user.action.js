@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import userApis from '../apis/user.api';
 import alertActions from './alert.action';
 import history from '../helpers/history';
@@ -7,6 +8,7 @@ import {
   successRegister,
   failureRegister
 } from './register.actions';
+import userConstants from '../constants/user.constants';
 
 function register(user) {
   return dispatch => {
@@ -242,7 +244,36 @@ const requestProfile = (id, cb) => {
       });
   };
 };
+const allMessageAction = data => {
+  return { type: userConstants.GET_MESSAGE_SUCCESS, allMessage: data };
+};
+function getAllMessage(idStudent, idTutor) {
+  return dispatch => {
+    userApis.getAllMessage(idStudent, idTutor).then(data => {
+      dispatch(allMessageAction(data));
+    });
+  };
+}
 
+const loadDataOtherAction = data => {
+  return { type: userConstants.LOAD_DATA_TUTOR, data };
+};
+function loadDataOther(id) {
+  return dispatch => {
+    dispatch(
+      requestProfile(id, function cb(res) {
+        dispatch(loadDataOtherAction(res));
+      })
+    );
+  };
+}
+function sendMessage(message) {
+  return dispatch => {
+    userApis.sendMessage(message).then(res => {
+      return res;
+    });
+  };
+}
 const requestRegisterPolicy = (tutorId, hoursHire, token) => {
   return dispatch => {
     userApis
@@ -327,6 +358,9 @@ const userActions = {
   requestProfile,
   updateProfile,
   changePassword,
+  getAllMessage,
+  loadDataOther,
+  sendMessage,
   requestRegisterPolicy,
   requestPolicyOfStudent,
   requestPolicyDetail,

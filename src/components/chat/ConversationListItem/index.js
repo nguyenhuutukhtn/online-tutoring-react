@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
 import shave from 'shave';
 
@@ -11,9 +13,9 @@ export default function ConversationListItem(props) {
   const {
     data: { photo, name, text }
   } = props;
-
+  const { handleClick, id } = props;
   return (
-    <div className="conversation-list-item">
+    <div className="conversation-list-item" onClick={() => handleClick(id)}>
       <img className="conversation-photo" src={photo} alt="conversation" />
       <div className="conversation-info">
         <h1 className="conversation-title">{name}</h1>

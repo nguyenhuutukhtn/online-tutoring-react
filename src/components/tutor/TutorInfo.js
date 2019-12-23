@@ -1,3 +1,6 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable import/imports-first */
+/* eslint-disable import/order */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -16,7 +19,7 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import MessageIcon from '@material-ui/icons/Message';
 import Skeleton from 'react-loading-skeleton';
-// import history from '../../helpers/history';
+import history from '../../helpers/history';
 import './tutor.css';
 import userActions from '../../actions/user.action';
 
@@ -79,6 +82,11 @@ class TutorInfo extends React.Component {
     }
   }
 
+  handleSendMessage = () => {
+    const { tutorData } = this.props;
+    history.push(`/chat?idOther=${tutorData.id}`);
+  };
+
   render() {
     const { tutorData, introduce } = this.props;
     const { openDialog, totalPrice, clickRegister } = this.state;
@@ -134,7 +142,6 @@ class TutorInfo extends React.Component {
               className="ml-4 button-register"
               color="info"
               type="button"
-              href="#pablo"
               onClick={e => this.handleRegisterClick(e)}
               size="sm"
             >
@@ -144,8 +151,7 @@ class TutorInfo extends React.Component {
               style={{ color: '#007bff' }}
               className="float-right mr-4"
               color="default"
-              href="#pablo"
-              onClick={e => e.preventDefault()}
+              onClick={this.handleSendMessage}
               size="sm"
               startIcon={<MessageIcon />}
             >

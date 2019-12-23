@@ -4,29 +4,37 @@ import ConversationSearch from '../ConversationSearch';
 import ConversationListItem from '../ConversationListItem';
 import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
-
+import history from '../../../helpers/history';
 import './ConversationList.css';
 
 export default function ConversationList() {
   const [conversations, setConversations] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const getConversations = () => {
-    axios.get('https://randomuser.me/api/?results=20').then(response => {
-      const newConversations = response.data.results.map(result => {
-        return {
-          photo: result.picture.large,
-          name: `${result.name.first} ${result.name.last}`,
-          text:
-            'Hello world! This is a long message that needs to be truncated.'
-        };
+    axios
+      .get(
+        `http://localhost:3100/users/getConverstationList?id=${userInfo.userId}`
+      )
+      .then(response => {
+        const newConversations = response.data.data.map(result => {
+          return {
+            id: result.id,
+            photo: result.avatar,
+            name: `${result.name}`,
+            text:
+              'Hello world! This is a long message that needs to be truncated.'
+          };
+        });
+        setConversations([...conversations, ...newConversations]);
       });
-      setConversations([...conversations, ...newConversations]);
-    });
   };
 
   useEffect(() => {
     getConversations();
   }, []);
-
+  const handleClick = id => {
+    history.push(`/chat?idOther=${id}`);
+  };
   return (
     <div className="conversation-list">
       <Toolbar
@@ -38,7 +46,12 @@ export default function ConversationList() {
       />
       <ConversationSearch />
       {conversations.map(conversation => (
-        <ConversationListItem key={conversation.name} data={conversation} />
+        <ConversationListItem
+          key={conversation.name}
+          data={conversation}
+          id={conversation.id}
+          handleClick={handleClick}
+        />
       ))}
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // import authHeader from '../helpers/auth-header';
 import constantApi from './constants.api';
 
@@ -47,7 +48,6 @@ function login(email, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
   };
-  console.log(`request: ${requestOptions}`);
 
   // eslint-disable-next-line no-undef
   return fetch(`${constantApi.url}/users/login`, requestOptions)
@@ -66,7 +66,6 @@ function loginFB(name, fbId) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, fbId })
   };
-  console.log(`request: ${requestOptions}`);
 
   // eslint-disable-next-line no-undef
   return fetch(`${constantApi.url}/users/loginFB`, requestOptions)
@@ -85,7 +84,6 @@ function loginGG(name, googleId) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, googleId })
   };
-  console.log(`request: ${requestOptions}`);
 
   // eslint-disable-next-line no-undef
   return fetch(`${constantApi.url}/users/loginGG`, requestOptions)
@@ -144,6 +142,19 @@ function changePassword(token, currentPassword, newPassword, confirmPassword) {
       return data;
     });
 }
+function getAllMessage(idStudent, idTutor) {
+  const requestOptions = {
+    method: 'GET'
+  };
+  return fetch(
+    `${constantApi.url}/users/getMessage?idStudent=${idStudent}&idTutor=${idTutor}`,
+    requestOptions
+  )
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
 
 function requestPayPolicy(token, id) {
   const requestOptions = {
@@ -195,7 +206,20 @@ function requestCompletePolicy(token, id, comment, rate) {
       return data;
     });
 }
-
+function sendMessage(message) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(message)
+  };
+  return fetch(`${constantApi.url}/users/sendMessage`, requestOptions)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
 function requestReportPolicy(token, id, content) {
   const requestOptions = {
     method: 'POST',
@@ -264,6 +288,8 @@ const userApis = {
   updateAvatar,
   updateProfile,
   changePassword,
+  getAllMessage,
+  sendMessage,
   registerPolicy,
   requestPolicyDetail,
   requestPayPolicy,
