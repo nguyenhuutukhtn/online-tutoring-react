@@ -1,4 +1,5 @@
 import React from 'react';
+import io from 'socket.io-client';
 import { Dialog } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Messenger from './Messenger';
@@ -12,6 +13,9 @@ class Chat extends React.Component {
     this.state = {
       idOther: searchParams.get('idOther')
     };
+
+    this.socket = null;
+    this.socket = io('localhost:3100');
   }
 
   componentDidMount() {
@@ -23,6 +27,7 @@ class Chat extends React.Component {
       getAllMessage(userInfo.userId, idOther);
       loadDataOther(idOther);
     }
+    this.socket.emit('send-user-id', userInfo.userId);
   }
 
   render() {
@@ -30,7 +35,11 @@ class Chat extends React.Component {
     return (
       <div>
         <Dialog fullScreen open>
-          <Messenger message={message} otherData={otherData} />
+          <Messenger
+            message={message}
+            otherData={otherData}
+            socket={this.socket}
+          />
         </Dialog>
       </div>
     );

@@ -22,7 +22,23 @@ class MessageList extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount = () => {
+    const { socket } = this.props;
+    socket.on('message-from', data => {
+      this.hanleGetMessage(data);
+    });
+  };
+
+  hanleGetMessage = data => {
+    let { message } = this.state;
+    if (!message) {
+      message = this.props.message;
+    }
+    message.data.push(data);
+    this.setState({
+      message
+    });
+  };
 
   renderMessages = () => {
     let { messages } = this.state;
@@ -55,7 +71,7 @@ class MessageList extends React.Component {
   handleSubmit = content => {
     let userInfo = localStorage.getItem('userInfo');
     userInfo = JSON.parse(userInfo);
-    const { otherData } = this.props;
+    const { otherData, socket } = this.props;
     let { message } = this.state;
     if (!message) {
       message = this.props.message;
@@ -66,6 +82,7 @@ class MessageList extends React.Component {
       content,
       time: new Date()
     };
+    socket.emit('message-to', data);
     message.data.push(data);
     this.setState({
       message

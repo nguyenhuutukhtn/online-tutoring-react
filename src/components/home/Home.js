@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import './home.css';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import Banner from './Banner';
 import WebsiteInfo from './WebsiteInfo';
 import OutstandingTutor from './OutstandingTutor';
@@ -15,8 +15,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listOutStandingTutor: [],
-      socket: null
+      listOutStandingTutor: []
     };
   }
 
@@ -27,12 +26,16 @@ class Home extends Component {
         listOutStandingTutor: res.data
       });
     });
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      const socket = io('http://localhost:3100');
-      socket.on('connect', () => {});
-      this.setState({ socket });
-    }
+    // const userInfo = localStorage.getItem('userInfo');
+    // if (userInfo) {
+    //   const socket = io('http://localhost:3100');
+    //   socket.on('connect', () => {
+    //     socket.userId = JSON.parse(userInfo).userId;
+    //   });
+    //   console.log('xxx', socket.userId);
+    //   socket.emit('abc', 'a')
+    //   this.setState({ socket });
+    // }
   }
 
   render() {

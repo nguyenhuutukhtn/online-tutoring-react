@@ -101,7 +101,7 @@ class ListContracts extends Component {
   renderPage = () => {
     const { currentPage } = this.state;
     const { count } = this.props;
-    const totalPage = Math.ceil(count / 5);
+    const totalPage = Math.ceil(count / 9);
     const listPage = [];
     for (let i = 0; i < totalPage; i += 1) {
       listPage.push(

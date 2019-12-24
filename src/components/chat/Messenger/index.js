@@ -3,7 +3,8 @@ import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import './Messenger.css';
 
-export default function Messenger() {
+export default function Messenger(props) {
+  const { socket } = props;
   return (
     <div className="messenger">
       {/* <Toolbar
@@ -30,7 +31,7 @@ export default function Messenger() {
       </div>
 
       <div className="scrollable content">
-        <MessageList />
+        <MessageList socket={socket} />
       </div>
     </div>
   );
