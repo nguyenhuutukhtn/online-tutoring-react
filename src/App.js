@@ -40,6 +40,7 @@ import Chat from './components/chat/Chat';
 import IncomeStatistic from './components/tutor/IncomStatistic';
 import CustomAlert from './customs/CustomAlert';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -88,6 +89,7 @@ class App extends React.Component {
               <Route path="/tutor-history" component={TutorHistory} />
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
+        
               <TutorRoute path="/tutor-contract" component={TutorContracy} />
               <StudentRoute
                 path="/student-contract"

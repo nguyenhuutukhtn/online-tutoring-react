@@ -24,3 +24,16 @@
   font-weight: normal;
   font-size: 14px;
 }
+
+.noPadding {
+  padding: 0 !important;
+}
+
+.noMargin {
+  margin: 0 !important;
+}
+.MuiListItemIcon-root {
+  min-width: 35px !important;
+}
+
+

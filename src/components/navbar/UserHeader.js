@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // reactstrap components
-import { NavDropdown } from 'react-bootstrap';
+import { NavDropdown, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'reactstrap';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+
 import './navbar.css';
 import userActions from '../../actions/user.action';
 import history from '../../helpers/history';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 class UserHeader extends React.Component {
   constructor(props) {
@@ -47,22 +50,32 @@ class UserHeader extends React.Component {
             >
               <img
                 className="thumbnail-image rounded-circle"
-                src={userDetail ? userDetail.avatar : null}
-                alt="user pic"
+                src={
+                  userDetail && userDetail.avatar
+                    ? userDetail.avatar
+                    : 'https://res.cloudinary.com/dsqfchskj/image/upload/v1576583327/Tutor/default-avatar_iyzn7y.png'
+                }
+                alt="avatar"
               />
               <div style={{ display: 'inline' }} className="ml-3">
                 {userDetail ? userDetail.name : null}
-              </div>
-              <div
-                style={{ display: 'inline', color: '#CC0000' }}
-                className="ml-3"
-              >
-                {userDetail ? userDetail.balance : 0}K VNĐ
               </div>
             </div>
           }
           id="basic-nav-dropdown"
         >
+          <NavDropdown.Item className=" noPadding ">
+            <ListItem>
+              <ListItemIcon>
+                <AccountBalanceWalletIcon style={{ color: '#F7BF54' }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={(userDetail ? userDetail.balance : 0) + 'K VND'}
+                className="noMargin noPadding"
+              />
+            </ListItem>
+          </NavDropdown.Item>
+          <Dropdown.Divider />
           <NavDropdown.Item>
             <NavLink to="/profile" tag={Link}>
               Thông tin cá nhân
