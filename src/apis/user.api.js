@@ -253,6 +253,33 @@ function registerPolicy(tutorId, hoursHire, token) {
       return data;
     });
 }
+
+function createPayment(bankValue, amount) {
+  const MY_USER_ID = JSON.parse(localStorage.getItem('userInfo'))
+    ? JSON.parse(localStorage.getItem('userInfo')).userId
+    : '';
+  const requestBody = {
+    orderType: 'billpayment',
+    amount,
+    orderDescription: MY_USER_ID,
+    bankCode: bankValue,
+    language: 'vn'
+  };
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestBody)
+  };
+
+  // eslint-disable-next-line no-undef
+  return fetch(`${constantApi.url}/payment/create_payment_url`, requestOptions)
+    .then(handleResponse)
+    .then(res => {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+      return res;
+    });
+}
 const requestPolicyDetail = (id, token, cb) => {
   let check = true;
   const requestOptions = {
@@ -295,7 +322,8 @@ const userApis = {
   requestPayPolicy,
   requestCancelPolicy,
   requestCompletePolicy,
-  requestReportPolicy
+  requestReportPolicy,
+  createPayment
 };
 
 export default userApis;

@@ -280,6 +280,24 @@ function sendMessage(message) {
     });
   };
 }
+
+function createPayment(bankValue, amount) {
+  return dispatch => {
+    // dispatch(requestRegister(user));
+    userApis.createPayment(bankValue, amount).then(
+      res => {
+        dispatch(alertActions.success('Đang chuyển tới trang thanh toán'));
+        if (res.code === '00') window.location.href = res.data;
+        else {
+          dispatch(alertActions.error(res.message));
+        }
+      },
+      error => {
+        dispatch(alertActions.error(error));
+      }
+    );
+  };
+}
 const requestRegisterPolicy = (tutorId, hoursHire, token) => {
   return dispatch => {
     userApis
@@ -373,7 +391,8 @@ const userActions = {
   requestPayPolicy,
   requestCancelPolicy,
   requestCompletePolicy,
-  requestReportPolicy
+  requestReportPolicy,
+  createPayment
 };
 
 export default userActions;
