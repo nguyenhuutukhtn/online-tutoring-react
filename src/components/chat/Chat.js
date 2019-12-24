@@ -16,7 +16,7 @@ class Chat extends React.Component {
     };
 
     this.socket = null;
-    this.socket = io('localhost:3100');
+    this.socket = io('https://smart-tutor-server.herokuapp.com/');
   }
 
   componentDidMount() {
