@@ -13,7 +13,7 @@ export default function ConversationList() {
   const getConversations = () => {
     axios
       .get(
-        `http://localhost:3100/users/getConverstationList?id=${userInfo.userId}`
+        `https://smart-tutor-server.herokuapp.com/users/getConverstationList?id=${userInfo.userId}`
       )
       .then(response => {
         const newConversations = response.data.data.map(result => {

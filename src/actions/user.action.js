@@ -228,7 +228,7 @@ const requestReportPolicy = (token, id, content) => {
 const requestProfile = (id, cb) => {
   let check = true;
   return () => {
-    const url = `http://localhost:3100/users/profile?id=${id}`;
+    const url = `https://smart-tutor-server.herokuapp.com/users/profile?id=${id}`;
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -306,7 +306,7 @@ export const requestPolicyOfStudent = (
   cb
 ) => {
   let check = true;
-  let url = 'http://localhost:3100/student/policy';
+  let url = 'https://smart-tutor-server.herokuapp.com/student/policy';
   const params = {
     p: page,
     unpaidPolicy,

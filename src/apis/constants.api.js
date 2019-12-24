@@ -1,5 +1,5 @@
 const constantApi = {
-  url: 'http://localhost:3100'
+  url: 'https://smart-tutor-server.herokuapp.com'
 };
 
 export default constantApi;

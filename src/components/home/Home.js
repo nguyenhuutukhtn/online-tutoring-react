@@ -28,7 +28,7 @@ class Home extends Component {
     });
     // const userInfo = localStorage.getItem('userInfo');
     // if (userInfo) {
-    //   const socket = io('http://localhost:3100');
+    //   const socket = io('https://smart-tutor-server.herokuapp.com');
     //   socket.on('connect', () => {
     //     socket.userId = JSON.parse(userInfo).userId;
     //   });
