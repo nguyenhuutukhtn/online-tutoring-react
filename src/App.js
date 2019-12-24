@@ -88,6 +88,7 @@ class App extends React.Component {
               <Route path="/tutor-history" component={TutorHistory} />
               <Route path="/tutor-detail" component={TutorDetail} />
               <Route path="/tutor-review" component={TutorReview} />
+
               <TutorRoute path="/tutor-contract" component={TutorContracy} />
               <StudentRoute
                 path="/student-contract"

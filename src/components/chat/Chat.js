@@ -1,9 +1,10 @@
 import React from 'react';
 import io from 'socket.io-client';
-import { Dialog } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import Messenger from './Messenger';
 import userActions from '../../actions/user.action';
+import './chat.css';
 
 class Chat extends React.Component {
   constructor(props) {
@@ -33,15 +34,21 @@ class Chat extends React.Component {
   render() {
     const { message, otherData } = this.props;
     return (
-      <div>
-        <Dialog fullScreen open>
-          <Messenger
-            message={message}
-            otherData={otherData}
-            socket={this.socket}
-          />
-        </Dialog>
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Messenger
+                  message={message}
+                  otherData={otherData}
+                  socket={this.socket}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

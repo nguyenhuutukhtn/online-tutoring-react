@@ -13,8 +13,11 @@ import {
   Nav,
   Container
 } from 'reactstrap';
-import UserHeader from './UserHeader';
+import { Badge } from '@material-ui/core';
+import MailIcon from '@material-ui/icons/Mail';
 import './navbar.css';
+import UserHeader from './UserHeader';
+import history from '../../helpers/history';
 
 // reactstrap components
 
@@ -102,6 +105,10 @@ class CommonNavbar extends React.Component {
     document.documentElement.classList.toggle('nav-open');
   };
 
+  handleMailClick = () => {
+    history.push('/chat');
+  };
+
   render() {
     const { navbarCollapse } = this.state;
 
@@ -143,7 +150,19 @@ class CommonNavbar extends React.Component {
           >
             {this.renderNav()}
           </Collapse>
+
           {this.renderUserHeader()}
+          {localStorage.getItem('userInfo') ? (
+            <Badge
+              badgeContent=""
+              color="secondary"
+              variant="dot"
+              className="pl-2"
+              onClick={() => this.handleMailClick()}
+            >
+              <MailIcon style={{ color: '#1D4575' }} />
+            </Badge>
+          ) : null}
         </Container>
       </Navbar>
     );
