@@ -3,6 +3,8 @@ import { Dialog } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Messenger from './Messenger';
 import userActions from '../../actions/user.action';
+import { Card, Container, Row, Col } from 'react-bootstrap';
+import './chat.css';
 
 class Chat extends React.Component {
   constructor(props) {
@@ -28,11 +30,17 @@ class Chat extends React.Component {
   render() {
     const { message, otherData } = this.props;
     return (
-      <div>
-        <Dialog fullScreen open>
-          <Messenger message={message} otherData={otherData} />
-        </Dialog>
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Messenger message={message} otherData={otherData} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
