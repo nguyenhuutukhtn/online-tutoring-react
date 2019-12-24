@@ -1,9 +1,9 @@
 import React from 'react';
-import { Dialog } from '@material-ui/core';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import Messenger from './Messenger';
 import userActions from '../../actions/user.action';
-import { Card, Container, Row, Col } from 'react-bootstrap';
 import './chat.css';
 
 class Chat extends React.Component {
@@ -14,6 +14,9 @@ class Chat extends React.Component {
     this.state = {
       idOther: searchParams.get('idOther')
     };
+
+    this.socket = null;
+    this.socket = io('https://smart-tutor-server.herokuapp.com/');
   }
 
   componentDidMount() {
@@ -25,6 +28,7 @@ class Chat extends React.Component {
       getAllMessage(userInfo.userId, idOther);
       loadDataOther(idOther);
     }
+    this.socket.emit('send-user-id', userInfo.userId);
   }
 
   render() {
@@ -35,7 +39,11 @@ class Chat extends React.Component {
           <Col>
             <Card>
               <Card.Body>
-                <Messenger message={message} otherData={otherData} />
+                <Messenger
+                  message={message}
+                  otherData={otherData}
+                  socket={this.socket}
+                />
               </Card.Body>
             </Card>
           </Col>

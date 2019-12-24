@@ -5,7 +5,7 @@ import history from '../helpers/history';
 export const requestListTutor = (page, listSkill, from, to, cb) => {
   let check = true;
   return () => {
-    let url = 'http://localhost:3100/tutor/list';
+    let url = 'https://smart-tutor-server.herokuapp.com/tutor/list';
     const params = {
       p: page,
       skill: listSkill,
@@ -48,7 +48,7 @@ export const requestListTutor = (page, listSkill, from, to, cb) => {
 export const requestListSkill = cb => {
   return () => {
     let check = true;
-    const url = 'http://localhost:3100/skill';
+    const url = 'https://smart-tutor-server.herokuapp.com/skill';
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -74,7 +74,7 @@ export const requestListSkill = cb => {
 export const requestTutorDetail = (id, cb) => {
   return () => {
     let check = true;
-    const url = `http://localhost:3100/tutor/${id}`;
+    const url = `https://smart-tutor-server.herokuapp.com/tutor/${id}`;
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -100,7 +100,7 @@ export const requestTutorDetail = (id, cb) => {
 export const requestOutStandingTutor = cb => {
   return () => {
     let check = true;
-    const url = `http://localhost:3100/tutor/listOutStanding`;
+    const url = `https://smart-tutor-server.herokuapp.com/tutor/listOutStanding`;
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -126,7 +126,7 @@ export const requestOutStandingTutor = cb => {
 export const requestTutorIntroduce = (id, cb) => {
   let check = true;
   return () => {
-    const url = `http://localhost:3100/tutor/introduce?id=${id}`;
+    const url = `https://smart-tutor-server.herokuapp.com/tutor/introduce?id=${id}`;
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -152,7 +152,7 @@ export const requestTutorIntroduce = (id, cb) => {
 export const requestTutorSkills = (id, cb) => {
   let check = true;
   return () => {
-    const url = `http://localhost:3100/tutor/listSkill?id=${id}`;
+    const url = `https://smart-tutor-server.herokuapp.com/tutor/listSkill?id=${id}`;
     // eslint-disable-next-line no-undef
     fetch(url, {
       method: 'get',
@@ -177,7 +177,7 @@ export const requestTutorSkills = (id, cb) => {
 
 export const requestPolicyOfTutor = (page, isNew, token, cb) => {
   let check = true;
-  let url = 'http://localhost:3100/tutor/policy';
+  let url = 'https://smart-tutor-server.herokuapp.com/tutor/policy';
   const params = {
     p: page,
     isNew

@@ -41,7 +41,6 @@ class UserHeader extends React.Component {
     const userInfo = JSON.parse(data);
     const { getProfile } = this.props;
     getProfile(userInfo.userId, res => {
-      console.log('---------info', res.data);
       this.setState({
         userDetail: res.data
       });
