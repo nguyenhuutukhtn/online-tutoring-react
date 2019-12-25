@@ -1,4 +1,12 @@
 .message-list-container {
   padding: 10px;
-  padding-bottom: 60px;
+  padding-bottom: 70px;
+}
+
+.message-list-container-big {
+  height: 100vh;
+}
+
+.compose-container {
+  /* position: absolute; */
 }

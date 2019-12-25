@@ -1,12 +1,11 @@
 .compose {
   padding: 10px;
-  display: flex;
-  align-items: center;
-  background: white;
+
+  background: rgba(255, 255, 255, 0.8);
   border-top: 1px solid #eeeef1;
-  /* position: fixed; */
+  position: fixed;
   width: calc(100% - 20px);
-  bottom: 0px;
+  bottom: 10px;
 }
 
 @supports (backdrop-filter: blur(20px)) {
@@ -18,11 +17,15 @@
 }
 
 .compose-input {
-  flex: 1;
   border: none;
   font-size: 14px;
+  border-radius: 24px;
   height: 40px;
-  background: none;
+  width: 80%;
+  margin-top: 15px;
+  padding-left: 30px;
+  margin-right: 16px;
+  background: #f2f2f2;
 }
 
 .compose-input::placeholder {

@@ -19,21 +19,10 @@ const Footer = () => {
             />
           </MDBCol>
           <MDBCol md="6">
-            <h5 className="title">Links</h5>
-            <ul>
-              <li className="list-unstyled">
-                <a href="#!">Link 1</a>
-              </li>
-              <li className="list-unstyled">
-                <a href="#!">Link 2</a>
-              </li>
-              <li className="list-unstyled">
-                <a href="#!">Link 3</a>
-              </li>
-              <li className="list-unstyled">
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
+            <h6 className="title">
+              Đồ án môn phát triển ứng dựng web nâng cao
+            </h6>
+            <h7 className="title">Thầy Nguyễn Huy Khánh</h7>
           </MDBCol>
         </MDBRow>
       </MDBContainer>

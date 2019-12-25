@@ -31,6 +31,7 @@ import history from '../../helpers/history';
 import userActions from '../../actions/user.action';
 
 import './contract.css';
+import ContractDetailSkeleton from '../skeleton/ContractDetailSkeleton';
 
 class ContractDetail extends Component {
   constructor(props) {
@@ -585,7 +586,7 @@ class ContractDetail extends Component {
         </div>
       );
     }
-    return null;
+    return <ContractDetailSkeleton />;
   }
 }
 

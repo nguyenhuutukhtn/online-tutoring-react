@@ -44,7 +44,9 @@
 }
 
 .detail-button {
-  padding: 6px !important;
+  padding: 5px !important;
+  font-size: 9px !important;
+  text-align: center;
 }
 
 .title-field {

@@ -186,7 +186,7 @@ class UserHeader extends React.Component {
               type="number"
               id="name"
               name="amount"
-              label="Số tiền muốn nạp"
+              label="Số tiền muốn nạp (Đơn vị: VND)"
               onChange={e => this.onChange(e)}
               fullWidth
             />
