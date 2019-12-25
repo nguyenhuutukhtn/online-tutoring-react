@@ -75,6 +75,10 @@ class UserHeader extends React.Component {
 
   render() {
     const { userDetail, openTopupDialog } = this.state;
+    const ROLE = JSON.parse(localStorage.getItem('userInfo'))
+      ? JSON.parse(localStorage.getItem('userInfo')).role
+      : '';
+    console.log('ROLE', ROLE);
     return (
       <>
         <NavDropdown
@@ -128,17 +132,23 @@ class UserHeader extends React.Component {
             </NavLink>
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item
-            className=" noPadding "
-            onSelect={() => this.handleTopupClick()}
-          >
-            <ListItem>
-              <ListItemIcon>
-                <AttachMoneyIcon style={{ color: '#F7BF54' }} />
-              </ListItemIcon>
-              <ListItemText primary="Nạp tiền" className="noMargin noPadding" />
-            </ListItem>
-          </NavDropdown.Item>
+          {ROLE === 'student' ? (
+            <NavDropdown.Item
+              className=" noPadding "
+              onSelect={() => this.handleTopupClick()}
+            >
+              <ListItem>
+                <ListItemIcon>
+                  <AttachMoneyIcon style={{ color: '#F7BF54' }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Nạp tiền"
+                  className="noMargin noPadding"
+                />
+              </ListItem>
+            </NavDropdown.Item>
+          ) : null}
+
           <NavDropdown.Divider />
           <NavDropdown.Item>
             <NavLink tag={Link} onClick={this.logOut}>
