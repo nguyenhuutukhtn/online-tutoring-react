@@ -289,3 +289,31 @@ export const requestCancelPolicy = (id, token) => {
       });
   };
 };
+
+export const requestIncomeStatistic = (token, cb) => {
+  let check = true;
+  const url = 'https://smart-tutor-server.herokuapp.com/tutor/incomeStatistic';
+  return () => {
+    // eslint-disable-next-line no-undef
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          check = false;
+        }
+        return response.json();
+      })
+      .then(response => {
+        if (check) {
+          cb(response);
+        }
+        return null;
+      });
+  };
+};

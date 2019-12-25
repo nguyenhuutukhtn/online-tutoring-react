@@ -2,6 +2,9 @@ import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import { requestIncomeStatistic } from '../../actions/tutor.action';
 
 class IncomeStatistic extends React.Component {
   constructor(props) {
@@ -25,20 +28,7 @@ class IncomeStatistic extends React.Component {
         datasets: [
           {
             label: 'Doanh thu',
-            data: [
-              1200,
-              1300,
-              1400,
-              1500,
-              1600,
-              1500,
-              1200,
-              1300,
-              1400,
-              1500,
-              1400,
-              1500
-            ],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             backgroundColor: '#A7B7CA',
             borderWidth: 1
           }
@@ -73,6 +63,27 @@ class IncomeStatistic extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    const { getIncomeStatistic } = this.props;
+    const { dataBar } = this.state;
+    const { token } = JSON.parse(localStorage.getItem('userInfo'));
+    getIncomeStatistic(token, res => {
+      this.setState({
+        dataBar: {
+          ...dataBar,
+          datasets: [
+            {
+              label: 'Doanh thu',
+              data: res.data,
+              backgroundColor: '#A7B7CA',
+              borderWidth: 1
+            }
+          ]
+        }
+      });
+    });
+  };
+
   render() {
     const { dataBar, barChartOptions } = this.state;
     return (
@@ -94,4 +105,11 @@ class IncomeStatistic extends React.Component {
   }
 }
 
-export default IncomeStatistic;
+const mapDispatchToProps = dispatch => ({
+  getIncomeStatistic: (token, cb) => dispatch(requestIncomeStatistic(token, cb))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(IncomeStatistic);

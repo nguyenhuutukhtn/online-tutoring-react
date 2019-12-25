@@ -107,8 +107,11 @@ class App extends React.Component {
                 path="/change-password"
                 component={ChangePassword}
               />
-              <Route path="/chat" component={Chat} />
-              <Route path="/income-statistic" component={IncomeStatistic} />
+              <PrivateRoute path="/chat" component={Chat} />
+              <TutorRoute
+                path="/income-statistic"
+                component={IncomeStatistic}
+              />
               <Route path="/" component={Home} />
 
               <Redirect from="*" to="/" />
