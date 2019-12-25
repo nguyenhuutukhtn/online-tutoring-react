@@ -78,7 +78,6 @@ class UserHeader extends React.Component {
     const ROLE = JSON.parse(localStorage.getItem('userInfo'))
       ? JSON.parse(localStorage.getItem('userInfo')).role
       : '';
-    console.log('ROLE', ROLE);
     return (
       <>
         <NavDropdown
