@@ -70,6 +70,11 @@ class CommonNavbar extends React.Component {
               Quản lí hợp đồng học
             </NavLink>
           </NavItem>
+          <NavItem className="nav-item">
+            <NavLink to="/income-statistic" tag={Link} className="nav-link">
+              Thống kê doanh thu
+            </NavLink>
+          </NavItem>
         </Nav>
       );
     }
